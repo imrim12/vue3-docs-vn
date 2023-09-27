@@ -3,16 +3,20 @@ outline: deep
 ---
 
 # Reactivity Fundamentals {#reactivity-fundamentals}
+# Reactivity cơ bản {#reactivity-fundamentals}
 
-:::tip API Preference
+:::tip Tuỳ chọn API
 This page and many other chapters later in the guide contain different content for the Options API and the Composition API. Your current preference is <span class="options-api">Options API</span><span class="composition-api">Composition API</span>. You can toggle between the API styles using the "API Preference" switches at the top of the left sidebar.
+Trang này và nhiều chương khác sau này trong hướng dẫn chứa nội dung khác nhau cho Options API và Composition API. Tuỳ chọn hiện tại của bạn là <span class="options-api">Options API</span><span class="composition-api">Composition API</span>. Bạn có thể chuyển đổi giữa các kiểu API bằng cách sử dụng các công tắc "Tuỳ chọn API" ở đầu thanh bên trái.
 :::
 
 <div class="options-api">
 
 ## Declaring Reactive State \* {#declaring-reactive-state}
+## Khai báo trạng thái Reactive \* {#declaring-reactive-state}
 
 With the Options API, we use the `data` option to declare reactive state of a component. The option value should be a function that returns an object. Vue will call the function when creating a new component instance, and wrap the returned object in its reactivity system. Any top-level properties of this object are proxied on the component instance (`this` in methods and lifecycle hooks):
+Với Options API, chúng ta sử dụng tùy chọn `data` để khai báo trạng thái reactive của một component. Giá trị tùy chọn phải là một hàm trả về một object. Vue sẽ gọi hàm khi tạo một instance component mới, và bọc object được trả về trong hệ thống reactivity của nó. Bất kỳ thuộc tính cấp cao nào của object này đều được proxy trong instance component (`this` trong methods và lifecycle hooks):
 
 ```js{2-6}
 export default {
@@ -23,27 +27,36 @@ export default {
   },
 
   // `mounted` is a lifecycle hook which we will explain later
+  // `mounted` là một hàm trong vòng đời của Vue (Vue lifecycle hook) mà chúng ta sẽ giải thích sau
   mounted() {
     // `this` refers to the component instance.
+    // `this` tham chiếu đến instance của component hiện tại
     console.log(this.count) // => 1
 
     // data can be mutated as well
+    // data có thể bị thay đổi
     this.count = 2
   }
 }
 ```
 
 [Try it in the Playground](https://play.vuejs.org/#eNpFUNFqhDAQ/JXBpzsoHu2j3B2U/oYPpnGtoetGkrW2iP/eRFsPApthd2Zndilex7H8mqioimu0wY16r4W+Rx8ULXVmYsVSC9AaNafz/gcC6RTkHwHWT6IVnne85rI+1ZLr5YJmyG1qG7gIA3Yd2R/LhN77T8y9sz1mwuyYkXazcQI2SiHz/7iP3VlQexeb5KKjEKEe2lPyMIxeSBROohqxVO4E6yV6ppL9xykTy83tOQvd7tnzoZtDwhrBO2GYNFloYWLyxrzPPOi44WWLWUt618txvASUhhRCKSHgbZt2scKy7HfCujGOqWL9BVfOgyI=)
+[Dùng thử ở Playground](https://play.vuejs.org/#eNpFUNFqhDAQ/JXBpzsoHu2j3B2U/oYPpnGtoetGkrW2iP/eRFsPApthd2Zndilex7H8mqioimu0wY16r4W+Rx8ULXVmYsVSC9AaNafz/gcC6RTkHwHWT6IVnne85rI+1ZLr5YJmyG1qG7gIA3Yd2R/LhN77T8y9sz1mwuyYkXazcQI2SiHz/7iP3VlQexeb5KKjEKEe2lPyMIxeSBROohqxVO4E6yV6ppL9xykTy83tOQvd7tnzoZtDwhrBO2GYNFloYWLyxrzPPOi44WWLWUt618txvASUhhRCKSHgbZt2scKy7HfCujGOqWL9BVfOgyI=)
 
 These instance properties are only added when the instance is first created, so you need to ensure they are all present in the object returned by the `data` function. Where necessary, use `null`, `undefined` or some other placeholder value for properties where the desired value isn't yet available.
+Những thuộc tính này chỉ được thêm vào khi instance được tạo lần đầu tiên, vì vậy bạn cần đảm bảo chúng đều có mặt trong object được trả về bởi hàm `data`. Nếu cần thiết, hãy sử dụng `null`, `undefined` hoặc một giá trị tạm thời khác cho các thuộc tính mà giá trị mong muốn chưa có sẵn.
 
 It is possible to add a new property directly to `this` without including it in `data`. However, properties added this way will not be able to trigger reactive updates.
+Chúng ta có thể thêm một thuộc tính trực tiếp vào trong con trỏ `this` mà không cần phải bao gồm nó trong `data`. Tuy nhiên, các thuộc tính được thêm theo cách này sẽ không reactive.
 
 Vue uses a `$` prefix when exposing its own built-in APIs via the component instance. It also reserves the prefix `_` for internal properties. You should avoid using names for top-level `data` properties that start with either of these characters.
+Vue sử dụng dấu `$` làm tiền tố khi khao báo toàn cục các APIs có sẵn của nó trong các instance của component. Nó cũng dành tiền tố `_` cho các thuộc tính nội bộ. Bạn nên tránh sử dụng các tiền tố trên khi khai báo các thuộc tính trong `data`.
 
 ### Reactive Proxy vs. Original \* {#reactive-proxy-vs-original}
+### Reactive sử dụng Proxy và cách cũ \* {#reactive-proxy-vs-original}
 
 In Vue 3, data is made reactive by leveraging [JavaScript Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy). Users coming from Vue 2 should be aware of the following edge case:
+Ở Vue 3, dữ liệu được làm cho reactive bằng cách sử dụng [Proxy trong JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy). Người dùng từ Vue 2 nên biết về các trường hợp đặc biệt sau:
 
 ```js
 export default {
@@ -62,16 +75,19 @@ export default {
 ```
 
 When you access `this.someObject` after assigning it, the value is a reactive proxy of the original `newObject`. **Unlike in Vue 2, the original `newObject` is left intact and will not be made reactive: make sure to always access reactive state as a property of `this`.**
+Khi bạn truy cập `this.someObject` sau khi gán nó, giá trị của nó là một proxy có reactive của `newObject` gốc. **Khác với Vue 2, `newObject` gốc được giữ nguyên và sẽ không được reactive: hãy đảm bảo luôn truy cập vào trạng thái reactive như một thuộc tính của `this`.**
 
 </div>
 
 <div class="composition-api">
 
 ## Declaring Reactive State \*\* {#declaring-reactive-state-1}
+## Khai báo trạng thái reactive \*\* {#declaring-reactive-state-1}
 
 ### `ref()` \*\* {#ref}
 
 In Composition API, the recommended way to declare reactive state is using the [`ref()`](/api/reactivity-core#ref) function:
+Ở trong Composition API, cách khuyến nghị để khai báo trạng thái reactive là sử dụng hàm [`ref()`](/api/reactivity-core#ref):
 
 ```js
 import { ref } from 'vue'
@@ -80,6 +96,7 @@ const count = ref(0)
 ```
 
 `ref()` takes the argument and returns it wrapped within a ref object with a `.value` property:
+`ref()` nhận đối số và trả về nó được bọc trong một object ref với thuộc tính `.value`:
 
 ```js
 const count = ref(0)
@@ -92,8 +109,10 @@ console.log(count.value) // 1
 ```
 
 > See also: [Typing Refs](/guide/typescript/composition-api#typing-ref) <sup class="vt-badge ts" />
+> Tham khảo thêm: [Refs với Typescript](/guide/typescript/composition-api#typing-ref) <sup class="vt-badge ts" />
 
 To access refs in a component's template, declare and return them from a component's `setup()` function:
+Để truy cập vào refs trong template của component, khai báo và trả về chúng từ hàm `setup()` của component:
 
 ```js{5,9-11}
 import { ref } from 'vue'
@@ -116,8 +135,10 @@ export default {
 ```
 
 Notice that we did **not** need to append `.value` when using the ref in the template. For convenience, refs are automatically unwrapped when used inside templates (with a few [caveats](#caveat-when-unwrapping-in-templates)).
+Chú ý rằng chúng ta **không** cần phải thêm `.value` khi sử dụng ref trong template. Để tiện lợi, refs được tự động được gỡ ra khi sử dụng trong template (với một vài [caveats](#caveat-when-unwrapping-in-templates)).
 
 You can also mutate a ref directly in event handlers:
+Bạn có thể thay đổi giá trị của `ref` trực tiếp trong event handlers:
 
 ```vue-html{1}
 <button @click="count++">
@@ -126,6 +147,7 @@ You can also mutate a ref directly in event handlers:
 ```
 
 For more complex logic, we can declare functions that mutate refs in the same scope and expose them as methods alongside the state:
+Đối với logic phức tạp hơn, chúng ta có thể khai báo các hàm thay đổi giá trị của ref trong cùng scope và expose chúng như các phương thức cùng với state:
 
 ```js{7-10,15}
 import { ref } from 'vue'
@@ -149,6 +171,7 @@ export default {
 ```
 
 Exposed methods can then be used as event handlers:
+Các phương thức được expose có thể được sử dụng như event handlers:
 
 ```vue-html{1}
 <button @click="increment">
@@ -157,10 +180,12 @@ Exposed methods can then be used as event handlers:
 ```
 
 Here's the example live on [Codepen](https://codepen.io/vuejs-examples/pen/WNYbaqo), without using any build tools.
+Đây là ví dụ trực quan trên [Codepen](https://codepen.io/vuejs-examples/pen/WNYbaqo), không sử dụng bất kỳ công cụ build nào.
 
 ### `<script setup>` \*\* {#script-setup}
 
 Manually exposing state and methods via `setup()` can be verbose. Luckily, it can be avoided when using [Single-File Components (SFCs)](/guide/scaling-up/sfc). We can simplify the usage with `<script setup>`:
+Việc expose state và methods thủ công qua `setup()` có thể dài dòng. May mắn thay, ta có thể tráng điều đó khi sử dụng [Single-File Components (SFCs)](/guide/scaling-up/sfc). Chúng ta có thể đơn giản hóa việc sử dụng với `<script setup>`:
 
 ```vue{1}
 <script setup>
@@ -181,27 +206,36 @@ function increment() {
 ```
 
 [Try it in the Playground](https://play.vuejs.org/#eNo9jUEKgzAQRa8yZKMiaNcllvYe2dgwQqiZhDhxE3L3jrW4/DPvv1/UK8Zhz6juSm82uciwIef4MOR8DImhQMIFKiwpeGgEbQwZsoE2BhsyMUwH0d66475ksuwCgSOb0CNx20ExBCc77POase8NVUN6PBdlSwKjj+vMKAlAvzOzWJ52dfYzGXXpjPoBAKX856uopDGeFfnq8XKp+gWq4FAi)
+[Thử nó trong Playground](https://play.vuejs.org/#eNo9jUEKgzAQRa8yZKMiaNcllvYe2dgwQqiZhDhxE3L3jrW4/DPvv1/UK8Zhz6juSm82uciwIef4MOR8DImhQMIFKiwpeGgEbQwZsoE2BhsyMUwH0d66475ksuwCgSOb0CNx20ExBCc77POase8NVUN6PBdlSwKjj+vMKAlAvzOzWJ52dfYzGXXpjPoBAKX856uopDGeFfnq8XKp+gWq4FAi)
 
 Top-level imports, variables and functions declared in `<script setup>` are automatically usable in the template of the same component. Think of the template as a JavaScript function declared in the same scope - it naturally has access to everything declared alongside it.
+Các import, biến và hàm cấp cao được khai báo trong `<script setup>` có thể được sử dụng tự động trong template của cùng một component. Hãy nghĩ về template như là một hàm JavaScript được khai báo trong cùng scope - nó tự nhiên có quyền truy cập vào tất cả những thứ được khai báo cùng với nó.
 
 :::tip
 For the rest of the guide, we will be primarily using SFC + `<script setup>` syntax for the Composition API code examples, as that is the most common usage for Vue developers.
+Trong phần còn lại của hướng dẫn, chúng ta sẽ chủ yếu sử dụng cú pháp SFC + `<script setup>` cho các ví dụ code của Composition API, vì đó là cách sử dụng phổ biến nhất cho các lập trình viên Vue.
 
 If you are not using SFC, you can still use Composition API with the [`setup()`](/api/composition-api-setup) option.
+Nếu bạn không sử dụng SFC, bạn vẫn có thể sử dụng Composition API với tùy chọn [`setup()`](/api/composition-api-setup).
 :::
 
-### Why Refs? \*\* {#why-refs}
+### Tại sao dùng Refs? \*\* {#why-refs}
 
 You might be wondering why we need refs with the `.value` instead of plain variables. To explain that, we will need to briefly discuss how Vue's reactivity system works.
+Bạn có thể đang tự hỏi tại sao chúng ta cần refs với `.value` thay vì các biến đơn giản. Để giải thích điều đó, chúng ta sẽ cần phải thảo luận ngắn gọn về cách hệ thống reactivity của Vue hoạt động.
 
 When you use a ref in a template, and change the ref's value later, Vue automatically detects the change and updates the DOM accordingly. This is made possible with a dependency-tracking based reactivity system. When a component is rendered for the first time, Vue **tracks** every ref that was used during the render. Later on, when a ref is mutated, it will **trigger** a re-render for components that are tracking it.
+Khi bạn sử dụng một ref trong template, và thay đổi giá trị của ref sau đó, Vue tự động phát hiện thay đổi và cập nhật DOM tương ứng. Điều này được thực hiện với một hệ thống reactivity dựa trên việc theo dõi các biến phụ thuộc. Khi một component được render lần đầu tiên, Vue **theo dõi** mọi ref được sử dụng trong quá trình render. Sau đó, khi một ref bị thay đổi, nó sẽ **kích hoạt** một lần re-render cho các component đang theo dõi nó.
 
 In standard JavaScript, there is no way to detect the access or mutation of plain variables. However, we can intercept the get and set operations of an object's properties using getter and setter methods.
+Trong JavaScript tiêu chuẩn, không có cách nào để phát hiện việc truy cập hoặc thay đổi các biến. Tuy nhiên, chúng ta có thể can thiệp các cú pháp get và set của các thuộc tính của một object bằng cách sử dụng các phương thức getter và setter.
 
 The `.value` property gives Vue the opportunity to detect when a ref has been accessed or mutated. Under the hood, Vue performs the tracking in its getter, and performs triggering in its setter. Conceptually, you can think of a ref as an object that looks like this:
+Thuộc tính `.value` cho phép Vue có cơ hội phát hiện khi một ref đã được truy cập hoặc thay đổi. Ở cơ chế bên dưới, Vue thực hiện việc theo dõi trong getter của nó, và thực hiện việc kích hoạt trong setter của nó. Về mặt khái niệm, bạn có thể nghĩ về một ref như một object có dạng như sau:
 
 ```js
 // pseudo code, not actual implementation
+// pseudo code, không phải là code thực tế
 const myRef = {
   _value: 0,
   get value() {
@@ -216,17 +250,22 @@ const myRef = {
 ```
 
 Another nice trait of refs is that unlike plain variables, you can pass refs into functions while retaining access to the latest value and the reactivity connection. This is particularly useful when refactoring complex logic into reusable code.
+Một đặc điểm hay khác của refs là khác với các biến đơn giản, bạn có thể truyền refs vào các hàm trong khi vẫn giữ quyền truy cập vào giá trị mới nhất và kết nối reactivity. Điều này đặc biệt hữu ích khi tái cấu trúc logic phức tạp thành code có thể tái sử dụng.
 
 The reactivity system is discussed in more details in the [Reactivity in Depth](/guide/extras/reactivity-in-depth) section.
+Hệ thống reactivity được thảo luận chi tiết hơn trong phần [Reactivity in Depth](/guide/extras/reactivity-in-depth).
 </div>
 
 <div class="options-api">
 
 ## Declaring Methods \* {#declaring-methods}
+## Khai báo các phương thức (Methods) \* {#declaring-methods}
 
 <VueSchoolLink href="https://vueschool.io/lessons/methods-in-vue-3" title="Free Vue.js Methods Lesson"/>
+<VueSchoolLink href="https://vueschool.io/lessons/methods-in-vue-3" title="Bài học Methods miễn phí"/>
 
 To add methods to a component instance we use the `methods` option. This should be an object containing the desired methods:
+Để thêm các phương thức cho một component instance, chúng ta sử dụng tùy chọn `methods`. Đây là một object chứa các phương thức mong muốn:
 
 ```js{7-11}
 export default {
@@ -242,32 +281,38 @@ export default {
   },
   mounted() {
     // methods can be called in lifecycle hooks, or other methods!
+    // các phương thức có thể được gọi trong lifecycle hooks, hoặc trong các phương thức khác!
     this.increment()
   }
 }
 ```
 
 Vue automatically binds the `this` value for `methods` so that it always refers to the component instance. This ensures that a method retains the correct `this` value if it's used as an event listener or callback. You should avoid using arrow functions when defining `methods`, as that prevents Vue from binding the appropriate `this` value:
+Vue tự động bind giá trị `this` cho `methods` để luôn tham chiếu đến instance của component. Điều này đảm bảo rằng một phương thức giữ giá trị `this` đúng nếu nó được sử dụng như một event listener hoặc callback. Bạn nên tránh sử dụng arrow functions khi định nghĩa `methods`, vì điều đó ngăn Vue bind giá trị `this` thích hợp:
 
 ```js
 export default {
   methods: {
     increment: () => {
       // BAD: no `this` access here!
+      // SAI: không có `this` ở đây!
     }
   }
 }
 ```
 
 Just like all other properties of the component instance, the `methods` are accessible from within the component's template. Inside a template they are most commonly used as event listeners:
+Giống như tất cả các thuộc tính khác của instance component, `methods` có thể truy cập từ trong template của component. Trong template, chúng thường được sử dụng như event listeners:
 
 ```vue-html
 <button @click="increment">{{ count }}</button>
 ```
 
 [Try it in the Playground](https://play.vuejs.org/#eNplj9EKwyAMRX8l+LSx0e65uLL9hy+dZlTWqtg4BuK/z1baDgZicsPJgUR2d656B2QN45P02lErDH6c9QQKn10YCKIwAKqj7nAsPYBHCt6sCUDaYKiBS8lpLuk8/yNSb9XUrKg20uOIhnYXAPV6qhbF6fRvmOeodn6hfzwLKkx+vN5OyIFwdENHmBMAfwQia+AmBy1fV8E2gWBtjOUASInXBcxLvN4MLH0BCe1i4Q==)
+[Thử nó trong Playground](https://play.vuejs.org/#eNplj9EKwyAMRX8l+LSx0e65uLL9hy+dZlTWqtg4BuK/z1baDgZicsPJgUR2d656B2QN45P02lErDH6c9QQKn10YCKIwAKqj7nAsPYBHCt6sCUDaYKiBS8lpLuk8/yNSb9XUrKg20uOIhnYXAPV6qhbF6fRvmOeodn6hfzwLKkx+vN5OyIFwdENHmBMAfwQia+AmBy1fV8E2gWBtjOUASInXBcxLvN4MLH0BCe1i4Q==)
 
 In the example above, the method `increment` will be called when the `<button>` is clicked.
+Trong ví dụ trên, phương thức `increment` sẽ được gọi khi `<button>` được click.
 
 </div>
 
@@ -276,6 +321,7 @@ In the example above, the method `increment` will be called when the `<button>` 
 <div class="options-api">
 
 In Vue, state is deeply reactive by default. This means you can expect changes to be detected even when you mutate nested objects or arrays:
+Trong Vue, các trạng thái mặc định là deep reactive. Điều này có nghĩa là bạn có thể mong đợi các thay đổi được phát hiện ngay cả khi bạn thay đổi các object hoặc mảng lồng nhau:
 
 ```js
 export default {
@@ -290,6 +336,7 @@ export default {
   methods: {
     mutateDeeply() {
       // these will work as expected.
+      // các thay đổi này sẽ hoạt động như mong đợi.
       this.obj.nested.count++
       this.obj.arr.push('baz')
     }
@@ -302,11 +349,13 @@ export default {
 <div class="composition-api">
 
 Refs can hold any value type, including deeply nested objects, arrays, or JavaScript built-in data structures like `Map`.
+Refs có thể chứa bất kỳ kiểu giá trị nào, bao gồm các object lồng nhau, mảng, hoặc các cấu trúc dữ liệu có sẵn của JavaScript như `Map`.
 
 A ref will make its value deeply reactive. This means you can expect changes to be detected even when you mutate nested objects or arrays:
+Một ref sẽ làm cho giá trị của nó deep reactive. Điều này có nghĩa là bạn có thể mong đợi các thay đổi được phát hiện ngay cả khi bạn thay đổi các object hoặc mảng lồng nhau:
 
 ```js
-import { ref } from 'vue'
+import { ref } from 'vue' 
 
 const obj = ref({
   nested: { count: 0 },
@@ -315,27 +364,36 @@ const obj = ref({
 
 function mutateDeeply() {
   // these will work as expected.
+  // các thay đổi này sẽ hoạt động như mong đợi.
   obj.value.nested.count++
   obj.value.arr.push('baz')
 }
 ```
 
 Non-primitive values are turned into reactive proxies via [`reactive()`](#reactive), which is discussed below.
+Các giá trị không nguyên thủy được chuyển thành reactive proxies thông qua [`reactive()`](#reactive), được thảo luận ở phía dưới.
 
 It is also possible to opt-out of deep reactivity with [shallow refs](/api/reactivity-advanced#shallowref). For shallow refs, only `.value` access is tracked for reactivity. Shallow refs can be used for optimizing performance by avoiding the observation cost of large objects, or in cases where the inner state is managed by an external library.
+Cũng có thể tùy chọn không sử dụng deep reactivity với [shallow refs](/api/reactivity-advanced#shallowref). Đối với shallow refs, chỉ có `.value` được theo dõi để reactive. Shallow refs có thể được sử dụng để tối ưu hóa hiệu suất bằng cách tránh chi phí quan sát của các object lớn, hoặc trong các trường hợp mà trạng thái bên trong được quản lý bởi một thư viện bên ngoài.
 
 Further reading:
+Đọc thêm:
 
 - [Reduce Reactivity Overhead for Large Immutable Structures](/guide/best-practices/performance#reduce-reactivity-overhead-for-large-immutable-structures)
+- [Giảm thiểu việc dư thừa reactivity đối với các cấu trúc dữ liệu lớn](/guide/best-practices/performance#reduce-reactivity-overhead-for-large-immutable-structures)
 - [Integration with External State Systems](/guide/extras/reactivity-in-depth#integration-with-external-state-systems)
+- [Tích hợp với các hệ thống state bên ngoài](/guide/extras/reactivity-in-depth#integration-with-external-state-systems)
 
 </div>
 
 ### DOM Update Timing {#dom-update-timing}
+### Thời điểm cập nhật DOM {#dom-update-timing}
 
 When you mutate reactive state, the DOM is updated automatically. However, it should be noted that the DOM updates are not applied synchronously. Instead, Vue buffers them until the "next tick" in the update cycle to ensure that each component updates only once no matter how many state changes you have made.
+Khi bạn thay đổi trạng thái reactive, DOM được cập nhật tự động. Tuy nhiên, cần lưu ý rằng các cập nhật DOM không được áp dụng đồng bộ. Thay vào đó, Vue buffer chúng cho đến "tick tiếp theo" trong chu kỳ cập nhật để đảm bảo rằng mỗi component chỉ cập nhật một lần bất kể bạn đã thay đổi trạng thái bao nhiêu lần.
 
 To wait for the DOM update to complete after a state change, you can use the [nextTick()](/api/general#nexttick) global API:
+Để đợi cho việc cập nhật DOM hoàn tất sau khi thay đổi trạng thái, bạn có thể sử dụng [nextTick()](/api/general#nexttick) global API:
 
 <div class="composition-api">
 
@@ -346,6 +404,7 @@ async function increment() {
   count.value++
   await nextTick()
   // Now the DOM is updated
+  // Bây giờ DOM đã được cập nhật
 }
 ```
 
@@ -361,6 +420,7 @@ export default {
       this.count++
       await nextTick()
       // Now the DOM is updated
+      // Bây giờ DOM đã được cập nhật
     }
   }
 }
@@ -373,6 +433,7 @@ export default {
 ## `reactive()` \*\* {#reactive}
 
 There is another way to declare reactive state, with the `reactive()` API. Unlike a ref which wraps the inner value in a special object, `reactive()` makes an object itself reactive:
+Có một cách khác để khai báo trạng thái reactive, với API `reactive()`. Khác với ref mà bọc giá trị bên trong trong một object đặc biệt, `reactive()` làm cho một object trở thành reactive:
 
 ```js
 import { reactive } from 'vue'
@@ -381,8 +442,10 @@ const state = reactive({ count: 0 })
 ```
 
 > See also: [Typing Reactive](/guide/typescript/composition-api#typing-reactive) <sup class="vt-badge ts" />
+> Tham khảo thêm: [Reactive với Typescript](/guide/typescript/composition-api#typing-reactive) <sup class="vt-badge ts" />
 
 Usage in template:
+Sử dụng trong template:
 
 ```vue-html
 <button @click="state.count++">
@@ -391,8 +454,10 @@ Usage in template:
 ```
 
 Reactive objects are [JavaScript Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) and behave just like normal objects. The difference is that Vue is able to intercept the access and mutation of all properties of a reactive object for reactivity tracking and triggering.
+Các object reactive là [JavaScript Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) và hoạt động giống như các object bình thường. Sự khác biệt là Vue có thể can thiệp vào việc truy cập và thay đổi tất cả các thuộc tính của một object reactive để theo dõi và kích hoạt reactivity.
 
 `reactive()` converts the object deeply: nested objects are also wrapped with `reactive()` when accessed. It is also called by `ref()` internally when the ref value is an object. Similar to shallow refs, there is also the [`shallowReactive()`](/api/reactivity-advanced#shallowreactive) API for opting-out of deep reactivity.
+`reactive()` chuyển đổi cả các object lồng nhau: các object lồng nhau cũng được bọc bởi `reactive()` khi truy cập. Nó cũng được gọi bởi `ref()` bên trong khi giá trị của ref là một object. Tương tự như shallow refs, cũng có API [`shallowReactive()`](/api/reactivity-advanced#shallowreactive) để tùy chọn không sử dụng deep reactivity.
 
 ### Reactive Proxy vs. Original \*\* {#reactive-proxy-vs-original-1}
 
