@@ -2,31 +2,31 @@
 footer: false
 ---
 
-# Quick Start {#quick-start}
+# Bắt đầu nhanh {#quick-start}
 
-## Try Vue Online {#try-vue-online}
+## Thử Vue online {#try-vue-online}
 
-- To quickly get a taste of Vue, you can try it directly in our [Playground](https://play.vuejs.org/#eNo9jcEKwjAMhl/lt5fpQYfXUQfefAMvvRQbddC1pUuHUPrudg4HIcmXjyRZXEM4zYlEJ+T0iEPgXjn6BB8Zhp46WUZWDjCa9f6w9kAkTtH9CRinV4fmRtZ63H20Ztesqiylphqy3R5UYBqD1UyVAPk+9zkvV1CKbCv9poMLiTEfR2/IXpSoXomqZLtti/IFwVtA9A==).
+- Để nhanh chóng có một cái nhìn tổng quan về Vue, bạn có thể thử nó trực tiếp trên [Playground](https://play.vuejs.org/#eNo9jcEKwjAMhl/lt5fpQYfXUQfefAMvvRQbddC1pUuHUPrudg4HIcmXjyRZXEM4zYlEJ+T0iEPgXjn6BB8Zhp46WUZWDjCa9f6w9kAkTtH9CRinV4fmRtZ63H20Ztesqiylphqy3R5UYBqD1UyVAPk+9zkvV1CKbCv9poMLiTEfR2/IXpSoXomqZLtti/IFwVtA9A==).
 
-- If you prefer a plain HTML setup without any build steps, you can use this [JSFiddle](https://jsfiddle.net/yyx990803/2ke1ab0z/) as your starting point.
+- Nếu bạn thích thiết lập HTML đơn giản mà không có bất kỳ bước build nào, bạn có thể sử dụng [JSFiddle](https://jsfiddle.net/yyx990803/2ke1ab0z/) này làm điểm bắt đầu.
 
-- If you are already familiar with Node.js and the concept of build tools, you can also try a complete build setup right within your browser on [StackBlitz](https://vite.new/vue).
+- Nếu bạn đã quen thuộc với Node.js và khái niệm về các công cụ build, bạn cũng có thể thử thiết lập build hoàn chỉnh ngay trong chính trình duyệt của bạn trên [StackBlitz](https://vite.new/vue).
 
-## Creating a Vue Application {#creating-a-vue-application}
+## Tạo một ứng dụng Vue {#creating-a-vue-application}
 
-:::tip Prerequisites
+:::tip Yêu cầu tiên quyết
 
-- Familiarity with the command line
-- Install [Node.js](https://nodejs.org/) version 16.0 or higher
+- Quen thuộc với dòng lệnh
+- Cài đặt [Node.js](https://nodejs.org/) phiên bản 16.0 hoặc cao hơn
   :::
 
-In this section we will introduce how to scaffold a Vue [Single Page Application](/guide/extras/ways-of-using-vue#single-page-application-spa) on your local machine. The created project will be using a build setup based on [Vite](https://vitejs.dev) and allow us to use Vue [Single-File Components](/guide/scaling-up/sfc) (SFCs).
+Trong phần này, chúng tôi sẽ giới thiệu cách tạo một [Single Page Application](/guide/extras/ways-of-using-vue#single-page-application-spa) Vue trên máy cục bộ của bạn. Dự án sẽ thiết lập build dựa trên [Vite](https://vitejs.dev) và cho phép chúng ta sử dụng [Single-File Components](/guide/scaling-up/sfc) (SFCs) Vue.
 
-Make sure you have an up-to-date version of [Node.js](https://nodejs.org/) installed and your current working directory is the one where you intend to create a project. Run the following command in your command line (without the `>` sign):
+Đảm bảo bạn đã cài đặt phiên bản [Node.js](https://nodejs.org/) mới nhất và thư mục làm việc hiện tại của bạn là thư mục mà bạn dự định tạo dự án. Chạy lệnh sau trong command line của bạn (không có dấu `>`):
 
 <div class="language-sh"><pre><code><span class="line"><span style="color:var(--vt-c-green);">&gt;</span> <span style="color:#A6ACCD;">npm create vue@latest</span></span></code></pre></div>
 
-This command will install and execute [create-vue](https://github.com/vuejs/create-vue), the official Vue project scaffolding tool. You will be presented with prompts for several optional features such as TypeScript and testing support:
+Lệnh này sẽ cài đặt và thực thi [create-vue](https://github.com/vuejs/create-vue), công cụ tạo cấu trúc dự án Vue chính thức. Bạn sẽ được yêu cầu nhập một số lựa chọn như TypeScript và hỗ trợ test:
 
 <div class="language-sh"><pre><code><span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">Project name: <span style="color:#888;">… <span style="color:#89DDFF;">&lt;</span><span style="color:#888;">your-project-name</span><span style="color:#89DDFF;">&gt;</span></span></span>
 <span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">Add TypeScript? <span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
@@ -41,44 +41,44 @@ This command will install and execute [create-vue](https://github.com/vuejs/crea
 <span style="color:#A6ACCD;">Scaffolding project in ./<span style="color:#89DDFF;">&lt;</span><span style="color:#888;">your-project-name</span><span style="color:#89DDFF;">&gt;</span>...</span>
 <span style="color:#A6ACCD;">Done.</span></code></pre></div>
 
-If you are unsure about an option, simply choose `No` by hitting enter for now. Once the project is created, follow the instructions to install dependencies and start the dev server:
+Nếu bạn không chắc về một lựa chọn nào đó, chỉ cần chọn `No` bằng cách nhấn enter. Sau khi dự án được tạo, làm theo hướng dẫn để cài đặt các dependency và start server dev:
 
 <div class="language-sh"><pre><code><span class="line"><span style="color:var(--vt-c-green);">&gt; </span><span style="color:#A6ACCD;">cd</span><span style="color:#A6ACCD;"> </span><span style="color:#89DDFF;">&lt;</span><span style="color:#888;">your-project-name</span><span style="color:#89DDFF;">&gt;</span></span>
 <span class="line"><span style="color:var(--vt-c-green);">&gt; </span><span style="color:#A6ACCD;">npm install</span></span>
 <span class="line"><span style="color:var(--vt-c-green);">&gt; </span><span style="color:#A6ACCD;">npm run dev</span></span>
 <span class="line"></span></code></pre></div>
 
-You should now have your first Vue project running! Note that the example components in the generated project are written using the [Composition API](/guide/introduction#composition-api) and `<script setup>`, rather than the [Options API](/guide/introduction#options-api). Here are some additional tips:
+Bây giờ bạn đã có dự án Vue đầu tiên của mình! Lưu ý rằng các component ví dụ trong dự án được viết bằng [Composition API](/guide/introduction#composition-api) và `<script setup>`, thay vì [Options API](/guide/introduction#options-api). Dưới đây là một số mẹo bổ sung:
 
-- The recommended IDE setup is [Visual Studio Code](https://code.visualstudio.com/) + [Volar extension](https://marketplace.visualstudio.com/items?itemName=Vue.volar). If you use other editors, check out the [IDE support section](/guide/scaling-up/tooling#ide-support).
-- More tooling details, including integration with backend frameworks, are discussed in the [Tooling Guide](/guide/scaling-up/tooling).
-- To learn more about the underlying build tool Vite, check out the [Vite docs](https://vitejs.dev).
-- If you choose to use TypeScript, check out the [TypeScript Usage Guide](typescript/overview).
+- IDE được đề xuất sử dụng là [Visual Studio Code](https://code.visualstudio.com/) + [Volar extension](https://marketplace.visualstudio.com/items?itemName=Vue.volar). Nếu bạn sử dụng các trình soạn thảo khác, hãy xem [Phần hỗ trợ IDE](/guide/scaling-up/tooling#ide-support).
+- Chi tiết về các công cụ, bao gồm tích hợp với các framework backend, được thảo luận trong [Hướng dẫn công cụ](/guide/scaling-up/tooling).
+- Để tìm hiểu thêm về công cụ build Vite, hãy xem [Tài liệu Vite](https://vitejs.dev).
+- Nếu bạn chọn sử dụng TypeScript, hãy xem [Hướng dẫn sử dụng TypeScript](typescript/overview).
 
-When you are ready to ship your app to production, run the following:
+Khi bạn đã sẵn sàng deploy ứng dụng của mình lên production, hãy chạy lệnh sau:
 
 <div class="language-sh"><pre><code><span class="line"><span style="color:var(--vt-c-green);">&gt; </span><span style="color:#A6ACCD;">npm run build</span></span>
 <span class="line"></span></code></pre></div>
 
-This will create a production-ready build of your app in the project's `./dist` directory. Check out the [Production Deployment Guide](/guide/best-practices/production-deployment) to learn more about shipping your app to production.
+Việc này sẽ tạo ra một bộ build sẵn dành cho production của ứng dụng trong thư mục `./dist` của dự án. Hãy xem [Hướng dẫn deploy production](/guide/best-practices/production-deployment) để tìm hiểu thêm về việc deploy ứng dụng của bạn lên production.
 
-[Next Steps >](#next-steps)
+[Những bước tiếp theo >](#next-steps)
 
-## Using Vue from CDN {#using-vue-from-cdn}
+## Sử dụng Vue từ CDN {#using-vue-from-cdn}
 
-You can use Vue directly from a CDN via a script tag:
+Bạn có thể sử dụng Vue trực tiếp từ CDN thông qua một thẻ script:
 
 ```html
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 ```
 
-Here we are using [unpkg](https://unpkg.com/), but you can also use any CDN that serves npm packages, for example [jsdelivr](https://www.jsdelivr.com/package/npm/vue) or [cdnjs](https://cdnjs.com/libraries/vue). Of course, you can also download this file and serve it yourself.
+Đây là ví dụ sử dụng [unpkg](https://unpkg.com/), nhưng bạn cũng có thể sử dụng bất kỳ CDN nào cung cấp các package npm, ví dụ như [jsdelivr](https://www.jsdelivr.com/package/npm/vue) hoặc [cdnjs](https://cdnjs.com/libraries/vue). Tất nhiên, bạn cũng có thể tải xuống file này và tự sử dụng.
 
-When using Vue from a CDN, there is no "build step" involved. This makes the setup a lot simpler, and is suitable for enhancing static HTML or integrating with a backend framework. However, you won't be able to use the Single-File Component (SFC) syntax.
+Khi sử dụng Vue từ CDN, không có "bước build" nào được thực hiện. Việc này làm cho công việc thiết lập đơn giản hơn rất nhiều và phù hợp cho HTML tĩnh hoặc tích hợp với một framework backend. Tuy nhiên, bạn sẽ không thể sử dụng cú pháp Single-File Component (SFC).
 
-### Using the Global Build {#using-the-global-build}
+### Sử dụng Global Build {#using-the-global-build}
 
-The above link loads the _global build_ of Vue, where all top-level APIs are exposed as properties on the global `Vue` object. Here is a full example using the global build:
+Liên kết trên tải _global build_ của Vue, trong đó tất cả các API cấp cao nhất được thể hiện như các thuộc tính trên đối tượng `Vue` global. Dưới đây là một ví dụ đầy đủ sử dụng global build:
 
 <div class="options-api">
 
@@ -128,14 +128,14 @@ The above link loads the _global build_ of Vue, where all top-level APIs are exp
 [Codepen demo](https://codepen.io/vuejs-examples/pen/eYQpQEG)
 
 :::tip
-Many of the examples for Composition API throughout the guide will be using the `<script setup>` syntax, which requires build tools. If you intend to use Composition API without a build step, consult the usage of the [`setup()` option](/api/composition-api-setup).
+Những ví dụ về Composition API trong suốt hướng dẫn sẽ sử dụng cú pháp `<script setup>`, yêu cầu các công cụ build. Nếu bạn dự định sử dụng Composition API mà không có bước build, hãy xem cách sử dụng [option `setup()`](/api/composition-api-setup).
 :::
 
 </div>
 
-### Using the ES Module Build {#using-the-es-module-build}
+### Sử dụng ES Module Build {#using-the-es-module-build}
 
-Throughout the rest of the documentation, we will be primarily using [ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) syntax. Most modern browsers now support ES modules natively, so we can use Vue from a CDN via native ES modules like this:
+Trong phần còn lại của tài liệu, chúng ta sẽ chủ yếu sử dụng cú pháp [ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). Hầu hết các trình duyệt hiện đại bây giờ hỗ trợ các native ES module, vì vậy chúng ta có thể sử dụng Vue từ CDN thông qua các native ES module như sau:
 
 <div class="options-api">
 
@@ -178,7 +178,7 @@ Throughout the rest of the documentation, we will be primarily using [ES modules
 
 </div>
 
-Notice that we are using `<script type="module">`, and the imported CDN URL is pointing to the **ES modules build** of Vue instead.
+Lưu ý rằng chúng ta đang sử dụng `<script type="module">`, và URL CDN được import đang trỏ đến **ES modules build** của Vue.
 
 <div class="options-api">
 
@@ -191,15 +191,15 @@ Notice that we are using `<script type="module">`, and the imported CDN URL is p
 
 </div>
 
-### Enabling Import maps {#enabling-import-maps}
+### Kích hoạt Import maps {#enabling-import-maps}
 
-In the above example, we are importing from the full CDN URL, but in the rest of the documentation you will see code like this:
+Trong ví dụ trên, chúng ta đang import từ URL CDN đầy đủ, nhưng trong phần còn lại của tài liệu bạn sẽ thấy code như sau:
 
 ```js
 import { createApp } from 'vue'
 ```
 
-We can teach the browser where to locate the `vue` import by using [Import Maps](https://caniuse.com/import-maps):
+Chúng ta có thể dạy trình duyệt nơi đặt `vue` import bằng cách sử dụng [Import Maps](https://caniuse.com/import-maps):
 
 <div class="options-api">
 
@@ -262,19 +262,18 @@ We can teach the browser where to locate the `vue` import by using [Import Maps]
 
 </div>
 
-You can also add entries for other dependencies to the import map - but make sure they point to the ES modules version of the library you intend to use.
+Bạn cũng có thể thêm các mục khác cho các dependency vào map import - nhưng hãy đảm bảo chúng trỏ đến phiên bản ES modules của thư viện bạn dự định sử dụng.
 
-:::tip Import Maps Browser Support
-Import Maps is a relatively new browser feature. Make sure to use a browser within its [support range](https://caniuse.com/import-maps). In particular, it is only supported in Safari 16.4+.
+:::tip Hỗ trợ trình duyệt Import Maps
+Import Maps là một tính năng trình duyệt tương đối mới. Hãy đảm bảo sử dụng trình duyệt trong [phạm vi hỗ trợ](https://caniuse.com/import-maps). Đặc biệt, nó chỉ được hỗ trợ trong Safari 16.4+.
 :::
 
-:::warning Notes on Production Use
-The examples so far are using the development build of Vue - if you intend to use Vue from a CDN in production, make sure to check out the [Production Deployment Guide](/guide/best-practices/production-deployment#without-build-tools).
+Các ví dụ cho đến nay đang sử dụng development build của Vue - nếu bạn dự định sử dụng Vue từ CDN trong production, hãy đảm bảo kiểm tra [hướng dẫn deploy production](/guide/best-practices/production-deployment#without-build-tools).
 :::
 
-### Splitting Up the Modules {#splitting-up-the-modules}
+### Chia các Modules {#splitting-up-the-modules}
 
-As we dive deeper into the guide, we may need to split our code into separate JavaScript files so that they are easier to manage. For example:
+Khi chúng ta đào sâu hơn vào hướng dẫn, chúng ta có thể cần phải chia code thành các file JavaScript riêng biệt để chúng dễ quản lý hơn. Ví dụ:
 
 ```html
 <!-- index.html -->
@@ -317,29 +316,29 @@ export default {
 
 </div>
 
-If you directly open the above `index.html` in your browser, you will find that it throws an error because ES modules cannot work over the `file://` protocol, which is the protocol the browser uses when you open a local file.
+Nếu bạn mở trực tiếp `index.html` trên trong trình duyệt của bạn, bạn sẽ thấy nó báo lỗi vì ES modules không thể hoạt động trên giao thức `file://`, đó là giao thức mà trình duyệt sử dụng khi bạn mở một file local.
 
-Due to security reasons, ES modules can only work over the `http://` protocol, which is what the browsers use when opening pages on the web. In order for ES modules to work on our local machine, we need to serve the `index.html` over the `http://` protocol, with a local HTTP server.
+Vì lý do bảo mật, ES modules chỉ có thể hoạt động trên giao thức `http://`, đó là giao thức mà các trình duyệt sử dụng khi mở các trang web. Để ES modules có thể hoạt động trên máy cục bộ của chúng ta, chúng ta cần phải phục vụ `index.html` qua giao thức `http://`, với một local HTTP server.
 
-To start a local HTTP server, first make sure you have [Node.js](https://nodejs.org/en/) installed, then run `npx serve` from the command line in the same directory where your HTML file is. You can also use any other HTTP server that can serve static files with the correct MIME types.
+Để bắt đầu một server local HTTP, trước tiên đảm bảo bạn đã cài đặt [Node.js](https://nodejs.org/en/), sau đó chạy `npx serve` từ command line trong cùng thư mục với file HTML của bạn. Bạn cũng có thể sử dụng bất kỳ server HTTP nào khác có thể phục vụ các file tĩnh với các MIME type chính xác.
 
-You may have noticed that the imported component's template is inlined as a JavaScript string. If you are using VSCode, you can install the [es6-string-html](https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html) extension and prefix the strings with a `/*html*/` comment to get syntax highlighting for them.
+Bạn có thể nhận thấy rằng template của component được import trên một dòng như một chuỗi JavaScript. Nếu bạn đang sử dụng VSCode, bạn có thể cài đặt extension [es6-string-html](https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html) và thêm prefix `/*html*/` vào đầu chuỗi để có được syntax highlighting cho chúng.
 
-## Next Steps {#next-steps}
+## Những bước tiếp theo {#next-steps}
 
-If you skipped the [Introduction](/guide/introduction), we strongly recommend reading it before moving on to the rest of the documentation.
+Nếu bạn bỏ qua [Giới thiệu](/guide/introduction), chúng tôi khuyến khích bạn nên đọc nó trước khi chuyển sang phần còn lại của tài liệu.
 
 <div class="vt-box-container next-steps">
   <a class="vt-box" href="/guide/essentials/application.html">
-    <p class="next-steps-link">Continue with the Guide</p>
-    <p class="next-steps-caption">The guide walks you through every aspect of the framework in full detail.</p>
+    <p class="next-steps-link">Tiếp tục với Hướng dẫn</p>
+    <p class="next-steps-caption">Hướng dẫn sẽ đưa bạn đi qua mọi khía cạnh của framework một cách chi tiết đầy đủ.</p>
   </a>
   <a class="vt-box" href="/tutorial/">
-    <p class="next-steps-link">Try the Tutorial</p>
-    <p class="next-steps-caption">For those who prefer learning things hands-on.</p>
+    <p class="next-steps-link">Thử xem video hướng dẫn</p>
+    <p class="next-steps-caption">Dành cho những người thích học bằng cách thực hành.</p>
   </a>
   <a class="vt-box" href="/examples/">
-    <p class="next-steps-link">Check out the Examples</p>
-    <p class="next-steps-caption">Explore examples of core features and common UI tasks.</p>
+    <p class="next-steps-link">Xem các ví dụ</p>
+    <p class="next-steps-caption">Khám phá các ví dụ về các tính năng cốt lõi và các tác vụ UI chung.</p>
   </a>
 </div>
