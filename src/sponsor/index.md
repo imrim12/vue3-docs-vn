@@ -9,71 +9,71 @@ sponsors: false
 import SponsorsGroup from '@theme/components/SponsorsGroup.vue'
 </script>
 
-# Trở thành nhà tài trợ Vue.js {#become-a-vue-js-sponsor}
+# Become a Vue.js Sponsor {#become-a-vue-js-sponsor}
 
-Vue.js là một dự án mã nguồn mở được cấp phép MIT và hoàn toàn miễn phí.
-Lượng công sức khổng lồ cần thiết để duy trì một hệ sinh thái lớn như vậy và phát triển các tính năng mới cho dự án chỉ có thể được bảo đảm nhờ vào sự hỗ trợ tài chính rộng lượng của các nhà tài trợ của chúng tôi.
+Vue.js is an MIT licensed open source project and completely free to use.
+The tremendous amount of effort needed to maintain such a large ecosystem and develop new features for the project is only made sustainable thanks to the generous financial backing of our sponsors.
 
-## Làm thế nào để trở thành nhà tài trợ {#how-to-sponsor}
+## How to Sponsor {#how-to-sponsor}
 
-Việc tài trợ có thể được thực hiện thông qua [GitHub Sponsors](https://github.com/sponsors/yyx990803) hoặc [OpenCollective](https://opencollective.com/vuejs). Hóa đơn có thể được lấy từ qua hệ thống thanh toán của GitHub. Cả tài trợ định kỳ hàng tháng và đóng góp một lần đều được chấp nhận. Các nhà tài trợ định kỳ được đặt tên trong các vị trí logo được chỉ định trong [Các lợi ích của tài trợ](#tier-benefits).
+Sponsorships can be done via [GitHub Sponsors](https://github.com/sponsors/yyx990803) or [OpenCollective](https://opencollective.com/vuejs). Invoices can be obtained via GitHub's payment system. Both monthly-recurring sponsorships and one-time donations are accepted. Recurring sponsorships are entitled to logo placements as specified in [Sponsorship Tiers](#tier-benefits).
 
-Nếu bạn có bất kỳ câu hỏi nào liên quan đến các hạng mục tài trợ, các vấn đề về thanh toán hoặc dữ liệu về sự xuất hiện của nhà tài trợ, vui lòng liên hệ với chúng tôi qua email [
+If you have questions regarding tiers, payment logistics, or sponsor exposure data, please reach out to [sponsor@vuejs.org](mailto:sponsor@vuejs.org).
 
-## Tài trợ Vue như một doanh nghiệp {#sponsoring-vue-as-a-business}
+## Sponsoring Vue as a Business {#sponsoring-vue-as-a-business}
 
-Việc tài trợ Vue mang lại cho bạn sự tiếp cận với hơn **1,7 triệu** nhà phát triển Vue trên toàn thế giới thông qua website và GitHub README của dự án. Ngoài ra, việc hỗ trợ OSS còn cải thiện danh tiếng của thương hiệu của bạn, đây là một tài sản quan trọng đối với bất kỳ công ty nào tương tác với các nhà phát triển.
+Sponsoring Vue gives you great exposure to over **1.7 million** Vue developers around the world through our website and GitHub project READMEs. In addition, supporting OSS improves the reputation of your brand, which is an important asset for any company that interacts with developers.
 
-Nếu bạn đang sử dụng Vue để xây dựng một sản phẩm tạo ra doanh thu, thì việc tài trợ Vue là hoàn toàn ơhù hợp về quy tắc kinh doanh: **nó đảm bảo dự án mà sản phẩm của bạn phụ thuộc vào luôn khỏe mạnh và được duy trì tích cực.** Sự xuất hiện và hình ảnh thương hiệu tích cực trong cộng đồng Vue cũng giúp thu hút và tuyển dụng các nhà phát triển Vue dễ dàng hơn.
+If you are using Vue to build a revenue-generating product, it makes business sense to sponsor Vue's development: **it ensures the project that your product relies on stays healthy and actively maintained.** The exposure and positive brand image in the Vue community also makes it easier to attract and recruit Vue developers.
 
-Nếu bạn đang xây dựng một sản phẩm mà khách hàng mục tiêu của bạn là các nhà phát triển, bạn sẽ có được lưu lượng truy cập chất lượng cao thông qua sự xuất hiện của nhà tài trợ, vì tất cả khách truy cập của chúng tôi đều là các nhà phát triển. Việc tài trợ cũng xây dựng sự nhận diện thương hiệu và cải thiện tỷ lệ chuyển đổi.
+If you are building a product where your target customers are developers, you will gain high quality traffic through the sponsorship exposure, since all our visitors are developers. The sponsorship also builds brand recognition and improves conversion.
 
-## Tài trợ Vue như một cá nhân {#sponsoring-vue-as-an-individual}
+## Sponsoring Vue as an Individual {#sponsoring-vue-as-an-individual}
 
-Nếu bạn là một người dùng cá nhân và đã tận dụng được năng suất khi sử dụng Vue, hãy xem xét việc quyên góp như một dấu hiệu của sự thiện chí - giống như việc bạn thi thoảng mua cho chúng tôi một ly cà phê. Nhiều thành viên trong nhóm của chúng tôi chấp nhận tài trợ và quyên góp thông qua GitHub Sponsors. Tìm kiếm nút "Sponsor" trên từng trang hồ sơ của các thành viên trong nhóm trên [trang nhóm của chúng tôi](/about/team).
+If you are an individual user and have enjoyed the productivity of using Vue, consider donating as a sign of appreciation - like buying us coffee once in a while. Many of our team members accept sponsorships and donations via GitHub Sponsors. Look for the "Sponsor" button on each team member's profile on our [team page](/about/team).
 
-Bạn cũng có thể cố gắng thuyết phục nhà tuyển dụng của bạn tài trợ Vue như một doanh nghiệp. Điều này có thể không dễ dàng, nhưng các nhà tài trợ doanh nghiệp thường tạo ra một tác động lớn hơn nhiều so với các khoản quyên góp cá nhân, vì vậy bạn sẽ giúp đỡ chúng tôi được nhiều hơn nếu như bạn thành công.
+You can also try to convince your employer to sponsor Vue as a business. This may not be easy, but business sponsorships typically make a much larger impact on the sustainability of OSS projects than individual donations, so you will help us much more if you succeed.
 
-## Lợi ích của các hạng mục tài trợ {#tier-benefits}
+## Tier Benefits {#tier-benefits}
 
-- **Đặc biệt toàn cầu**:
-  - Giới hạn một nhà tài trợ trên toàn cầu (hiện đã được điền).
-  - Đặt logo trên trang chủ của [vuejs.org](/).
-  - Vị trí đặt logo nổi bật nhất ở tất cả các vị trí trong các hạng mục bên dưới.
-- **Bạch kim (USD$2,000/tháng)**:
-  - Vị trí đặt logo nổi bật nhất trên trang chủ của [vuejs.org](/).
-  - Vị trí đặt logo nổi bật nhất trong sidebar của tất cả các trang nội dung.
-  - Vị trí đặt logo nổi bật nhất trong tệp README của [`vuejs/core`](https://github.com/vuejs/core) và [`vuejs/vue`](https://github.com/vuejs/core).
-- **Vàng (USD$500/tháng)**:
-  - Vị trí đặt logo nổi bật nhất trên trang chủ của [vuejs.org](/).
-  - Vị trí đặt logo nổi bật nhất trong tệp README của `vuejs/core` và `vuejs/vue`.
-- **Bạc (USD$250/tháng)**:
-  - Vị trí đặt logo trung bình trong tệp `BACKERS.md` của `vuejs/core` và `vuejs/vue`.
-- **Đồng (USD$100/tháng)**:
-  - Vị trí đặt logo nhỏ trong tệp `BACKERS.md` của `vuejs/core` và `vuejs/vue`.
-- **Nhà tài trợ hào phóng (USD$50/tháng)**:
-  - Tên được liệt kê trong tệp `BACKERS.md` của `vuejs/core` và `vuejs/vue`, trên các nhà tài trợ cá nhân khác.
-- **Nhà tài trợ cá nhân (USD$5/tháng)**:
-  - Tên được liệt kê trong tệp `BACKERS.md` của `vuejs/core` và `vuejs/vue`.
+- **Global Special**:
+  - Limited to one sponsor globally (currently filled).
+  - Exclusive above the fold logo placement on the front page of [vuejs.org](/).
+  - Most prominent logo placement in all locations from tiers below.
+- **Platinum (USD$2,000/mo)**:
+  - Prominent logo placement on the front page of [vuejs.org](/).
+  - Prominent logo placement in sidebar of all content pages.
+  - Prominent logo placement in the README of [`vuejs/core`](https://github.com/vuejs/core) and [`vuejs/vue`](https://github.com/vuejs/core).
+- **Gold (USD$500/mo)**:
+  - Large logo placement on the front page of [vuejs.org](/).
+  - Large logo placement in the README of `vuejs/core` and `vuejs/vue`.
+- **Silver (USD$250/mo)**:
+  - Medium logo placement in the `BACKERS.md` file of `vuejs/core` and `vuejs/vue`.
+- **Bronze (USD$100/mo)**:
+  - Small logo placement in the `BACKERS.md` file of `vuejs/core` and `vuejs/vue`.
+- **Generous Backer (USD$50/mo)**:
+  - Name listed in the `BACKERS.md` file of `vuejs/core` and `vuejs/vue`, above other individual backers.
+- **Individual Backer (USD$5/mo)**:
+  - Name listed in the `BACKERS.md` file of `vuejs/core` and `vuejs/vue`.
 
-## Các nhà tài trợ hiện tại {#current-sponsors}
+## Current Sponsors {#current-sponsors}
 
-### Nhà tài trợ đặc biệt toàn cầu {#special-global-sponsor}
+### Special Global Sponsor {#special-global-sponsor}
 
 <SponsorsGroup tier="special" placement="page" />
 
-### Bạch kim {#platinum}
+### Platinum {#platinum}
 
 <SponsorsGroup tier="platinum" placement="page" />
 
-### Bạch kim (Trung Quốc) {#platinum-china}
+### Platinum (China) {#platinum-china}
 
 <SponsorsGroup tier="platinum_china" placement="page" />
 
-### Vàng {#gold}
+### Gold {#gold}
 
 <SponsorsGroup tier="gold" placement="page" />
 
-### Bạc {#silver}
+### Silver {#silver}
 
 <SponsorsGroup tier="silver" placement="page" />
