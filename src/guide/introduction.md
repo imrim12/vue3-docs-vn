@@ -2,13 +2,13 @@
 footer: false
 ---
 
-# Introduction {#introduction}
+# Giới thiệu {#introduction}
 
-:::info You are reading the documentation for Vue 3!
+:::info Bạn đang đọc tài liệu dành cho Vue 3!
 
-- Vue 2 support will end on Dec 31, 2023. Learn more about [Vue 2 Extended LTS](https://v2.vuejs.org/lts/).
-- Vue 2 documentation has been moved to [v2.vuejs.org](https://v2.vuejs.org/).
-- Upgrading from Vue 2? Check out the [Migration Guide](https://v3-migration.vuejs.org/).
+- Vue 2 sẽ ngừng hỗ trợ vào ngày 31 tháng 12 năm 2023. Tìm hiểu thêm về [Vue 2 Extended LTS](https://v2.vuejs.org/lts/).
+- Tài liệu Vue 2 đã được chuyển sang [v2.vuejs.org](https://v2.vuejs.org/).
+- Nâng cấp từ Vue 2? Hãy xem [Hướng dẫn migration](https://v3-migration.vuejs.org/).
   :::
 
 <style src="@theme/styles/vue-mastery.css"></style>
@@ -17,18 +17,18 @@ footer: false
     <div class="banner-wrapper">
       <img class="banner" alt="Vue Mastery banner" width="96px" height="56px" src="https://storage.googleapis.com/vue-mastery.appspot.com/flamelink/media/vuemastery-graphical-link-96x56.png" />
     </div>
-    <p class="description">Learn Vue with video tutorials on <span>VueMastery.com</span></p>
+    <p class="description">Học Vue với các video hướng dẫn trên <span>VueMastery.com</span></p>
     <div class="logo-wrapper">
         <img alt="Vue Mastery Logo" width="25px" src="https://storage.googleapis.com/vue-mastery.appspot.com/flamelink/media/vue-mastery-logo.png" />
     </div>
   </a>
 </div>
 
-## What is Vue? {#what-is-vue}
+## Vue là gì? {#what-is-vue}
 
-Vue (pronounced /vjuː/, like **view**) is a JavaScript framework for building user interfaces. It builds on top of standard HTML, CSS, and JavaScript and provides a declarative and component-based programming model that helps you efficiently develop user interfaces, be they simple or complex.
+Vue (phát âm /vjuː/, giống như **view**) là một framework JavaScript xây dựng giao diện người dùng. Vue được xây dựng dựa trên HTML, CSS và JavaScript chuẩn; cung cấp một mô hình lập trình dựa trên component và declarative giúp bạn phát triển giao diện người dùng hiệu quả, dù đơn giản hay phức tạp.
 
-Here is a minimal example:
+Dưới đây là một ví dụ nhỏ:
 
 <div class="options-api">
 
@@ -69,7 +69,7 @@ createApp({
 </div>
 ```
 
-**Result**
+**Kết quả**
 
 <script setup>
 import { ref } from 'vue'
@@ -82,38 +82,38 @@ const count = ref(0)
   </button>
 </div>
 
-The above example demonstrates the two core features of Vue:
+Ví dụ trên thể hiện hai tính năng cốt lõi của Vue:
 
-- **Declarative Rendering**: Vue extends standard HTML with a template syntax that allows us to declaratively describe HTML output based on JavaScript state.
+- **Declarative Rendering**: Vue mở rộng HTML chuẩn với cú pháp template cho phép chúng ta mô tả HTML dựa trên state của JavaScript.
 
-- **Reactivity**: Vue automatically tracks JavaScript state changes and efficiently updates the DOM when changes happen.
+- **Reactivity**: Vue tự động theo dõi các thay đổi state của JavaScript và cập nhật DOM một cách hiệu quả khi có thay đổi.
 
-You may already have questions - don't worry. We will cover every little detail in the rest of the documentation. For now, please read along so you can have a high-level understanding of what Vue offers.
+Bạn có thể có những thắc mắc - đừng lo lắng. Chúng tôi sẽ bao quát tất cả các chi tiết trong phần còn lại của tài liệu. Bây giờ, hãy đọc tiếp để có thể hiểu được những gì Vue cung cấp.
 
-:::tip Prerequisites
-The rest of the documentation assumes basic familiarity with HTML, CSS, and JavaScript. If you are totally new to frontend development, it might not be the best idea to jump right into a framework as your first step - grasp the basics and then come back! You can check your knowledge level with [this JavaScript overview](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript). Prior experience with other frameworks helps, but is not required.
+:::tip Yêu cầu tiên quyết
+Phần còn lại của tài liệu giả định rằng bạn đã quen thuộc với HTML, CSS và JavaScript. Nếu bạn hoàn toàn mới với lập trình frontend, có lẽ việc nhảy ngay vào một framework từ bước đầu tiên không phải là ý tốt nhất - hãy nắm vững những kiến thức cơ bản và quay lại sau! Bạn có thể kiểm tra trình độ của mình với [tổng quan về JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript). Có kinh nghiệm trước với các framework khác sẽ có ích, nhưng không bắt buộc.
 :::
 
-## The Progressive Framework {#the-progressive-framework}
+## Một framework hiện đại {#the-progressive-framework}
 
-Vue is a framework and ecosystem that covers most of the common features needed in frontend development. But the web is extremely diverse - the things we build on the web may vary drastically in form and scale. With that in mind, Vue is designed to be flexible and incrementally adoptable. Depending on your use case, Vue can be used in different ways:
+Vue là một framework và hệ sinh thái bao gồm hầu hết các tính năng cần thiết trong lập trình frontend. Nhưng web rất đa dạng - những thứ chúng ta xây dựng trên web có thể khác nhau một cách đáng kể về hình thức và quy mô. Suy nghĩ về điều đó, Vue được thiết kế để linh hoạt và có thể áp dụng theo từng bước. Tùy thuộc vào trường hợp sử dụng, Vue có thể được sử dụng theo nhiều cách khác nhau:
 
-- Enhancing static HTML without a build step
-- Embedding as Web Components on any page
+- Tăng cường HTML tĩnh mà không cần bước build
+- Nhúng như Web Components trên bất kỳ trang nào
 - Single-Page Application (SPA)
 - Fullstack / Server-Side Rendering (SSR)
 - Jamstack / Static Site Generation (SSG)
-- Targeting desktop, mobile, WebGL, and even the terminal
+- Mục tiêu là desktop, mobile, WebGL, và thậm chí là terminal
 
-If you find these concepts intimidating, don't worry! The tutorial and guide only require basic HTML and JavaScript knowledge, and you should be able to follow along without being an expert in any of these.
+Nếu bạn thấy những khái niệm này khó hiểu, đừng lo lắng! Hướng dẫn này chỉ yêu cầu kiến thức cơ bản về HTML và JavaScript, bạn có thể theo dõi mà không cần phải là một chuyên gia về bất kỳ thứ gì.
 
-If you are an experienced developer interested in how to best integrate Vue into your stack, or you are curious about what these terms mean, we discuss them in more detail in [Ways of Using Vue](/guide/extras/ways-of-using-vue).
+Nếu bạn là một nhà phát triển có kinh nghiệm quan tâm đến cách tích hợp Vue vào stack của bạn, hoặc bạn tò mò về những thuật ngữ này có nghĩa là gì, chúng tôi sẽ thảo luận chi tiết hơn trong [Cách sử dụng Vue](/guide/extras/ways-of-using-vue).
 
-Despite the flexibility, the core knowledge about how Vue works is shared across all these use cases. Even if you are just a beginner now, the knowledge gained along the way will stay useful as you grow to tackle more ambitious goals in the future. If you are a veteran, you can pick the optimal way to leverage Vue based on the problems you are trying to solve, while retaining the same productivity. This is why we call Vue "The Progressive Framework": it's a framework that can grow with you and adapt to your needs.
+Mặc dù linh hoạt, nhưng kiến thức cốt lõi về cách Vue hoạt động được mô tả trong tất cả các trường hợp sử dụng này. Ngay cả khi bạn chỉ là một người mới bắt đầu, kiến thức được học dần theo thời gian sẽ rất hữu ích khi bạn phát triển để đạt được nhiều mục tiêu tham vọng hơn trong tương lai. Nếu bạn là một người có kinh nghiệm, bạn có thể chọn cách tối ưu để tận dụng Vue dựa trên các vấn đề bạn đang cố gắng giải quyết, đồng thời vẫn giữ nguyên hiệu suất làm việc. Đây là lý do tại sao chúng tôi gọi Vue là "Framework hiện đại": đó là một framework có thể phát triển cùng bạn và thích nghi với nhu cầu của bạn.
 
 ## Single-File Components {#single-file-components}
 
-In most build-tool-enabled Vue projects, we author Vue components using an HTML-like file format called **Single-File Component** (also known as `*.vue` files, abbreviated as **SFC**). A Vue SFC, as the name suggests, encapsulates the component's logic (JavaScript), template (HTML), and styles (CSS) in a single file. Here's the previous example, written in SFC format:
+Trong hầu hết các dự án Vue có sử dụng build tool, chúng ta sẽ viết Vue components bằng một định dạng file giống HTML gọi là **Single-File Component** (còn được gọi là file `*.vue`, viết tắt là **SFC**). Một Vue SFC, như tên gọi của nó, đóng gói logic của component (JavaScript), template (HTML) và styles (CSS) trong một file duy nhất. Dưới đây là ví dụ trước, được viết dưới định dạng SFC:
 
 <div class="options-api">
 
@@ -161,38 +161,38 @@ button {
 
 </div>
 
-SFC is a defining feature of Vue and is the recommended way to author Vue components **if** your use case warrants a build setup. You can learn more about the [how and why of SFC](/guide/scaling-up/sfc) in its dedicated section - but for now, just know that Vue will handle all the build tools setup for you.
+SFC là một tính năng quan trọng của Vue và là cách được khuyến khích để viết Vue components **nếu** trường hợp sử dụng của bạn đòi hỏi một build setup. Bạn có thể tìm hiểu thêm về [cách sử dụng và lý do dùng SFC](/guide/scaling-up/sfc) trong phần được dành riêng cho nó - nhưng bây giờ, chỉ cần biết rằng Vue sẽ xử lý tất cả các thiết lập build tool cho bạn.
 
-## API Styles {#api-styles}
+s## Loại API {#api-styles}
 
-Vue components can be authored in two different API styles: **Options API** and **Composition API**.
+Vue components có thể được viết bằng hai loại API khác nhau: **Options API** và **Composition API**.
 
 ### Options API {#options-api}
 
-With Options API, we define a component's logic using an object of options such as `data`, `methods`, and `mounted`. Properties defined by options are exposed on `this` inside functions, which points to the component instance:
+Với Options API, chúng ta định nghĩa logic của một component bằng một object các options như `data`, `methods` và `mounted`. Các thuộc tính được định nghĩa bởi options được truy cập thông qua `this` bên trong các hàm, `this` trỏ tới thực thể của component:
 
 ```vue
 <script>
 export default {
-  // Properties returned from data() become reactive state
-  // and will be exposed on `this`.
+  // Các thuộc tính được trả về từ data() trở thành state reactive
+  // và sẽ được truy cập thông qua `this`.
   data() {
     return {
       count: 0
     }
   },
 
-  // Methods are functions that mutate state and trigger updates.
-  // They can be bound as event handlers in templates.
+  // Methods là các hàm mutate state và trigger updates.
+  // Chúng có thể được gắn vào như event handlers trong template.
   methods: {
     increment() {
       this.count++
     }
   },
 
-  // Lifecycle hooks are called at different stages
-  // of a component's lifecycle.
-  // This function will be called when the component is mounted.
+  // Lifecycle hooks được gọi ở các giai đoạn khác nhau
+  // trong vòng đời của một component.
+  // Hàm này sẽ được gọi khi component được mounted.
   mounted() {
     console.log(`The initial count is ${this.count}.`)
   }
@@ -204,13 +204,13 @@ export default {
 </template>
 ```
 
-[Try it in the Playground](https://play.vuejs.org/#eNptkMFqxCAQhl9lkB522ZL0HNKlpa/Qo4e1ZpLIGhUdl5bgu9es2eSyIMio833zO7NP56pbRNawNkivHJ25wV9nPUGHvYiaYOYGoK7Bo5CkbgiBBOFy2AkSh2N5APmeojePCkDaaKiBt1KnZUuv3Ky0PppMsyYAjYJgigu0oEGYDsirYUAP0WULhqVrQhptF5qHQhnpcUJD+wyQaSpUd/Xp9NysVY/yT2qE0dprIS/vsds5Mg9mNVbaDofL94jZpUgJXUKBCvAy76ZUXY53CTd5tfX2k7kgnJzOCXIF0P5EImvgQ2olr++cbRE4O3+t6JxvXj0ptXVpye1tvbFY+ge/NJZt)
+[Thử nó trong Playground](https://play.vuejs.org/#eNptkMFqxCAQhl9lkB522ZL0HNKlpa/Qo4e1ZpLIGhUdl5bgu9es2eSyIMio833zO7NP56pbRNawNkivHJ25wV9nPUGHvYiaYOYGoK7Bo5CkbgiBBOFy2AkSh2N5APmeojePCkDaaKiBt1KnZUuv3Ky0PppMsyYAjYJgigu0oEGYDsirYUAP0WULhqVrQhptF5qHQhnpcUJD+wyQaSpUd/Xp9NysVY/yT2qE0dprIS/vsds5Mg9mNVbaDofL94jZpUgJXUKBCvAy76ZUXY53CTd5tfX2k7kgnJzOCXIF0P5EImvgQ2olr++cbRE4O3+t6JxvXj0ptXVpye1tvbFY+ge/NJZt)
 
 ### Composition API {#composition-api}
 
-With Composition API, we define a component's logic using imported API functions. In SFCs, Composition API is typically used with [`<script setup>`](/api/sfc-script-setup). The `setup` attribute is a hint that makes Vue perform compile-time transforms that allow us to use Composition API with less boilerplate. For example, imports and top-level variables / functions declared in `<script setup>` are directly usable in the template.
+Với Composition API, chúng ta định nghĩa logic của một component bằng cách import các hàm API. Trong SFCs, Composition API thường được sử dụng với [`<script setup>`](/api/sfc-script-setup). Thuộc tính `setup` là một gợi ý giúp Vue thực hiện các biến đổi compile-time cho phép chúng ta sử dụng Composition API với ít boilerplate hơn. Ví dụ, các import và các biến / hàm cấp cao được khai báo trong `<script setup>` có thể được sử dụng trực tiếp trong template.
 
-Here is the same component, with the exact same template, but using Composition API and `<script setup>` instead:
+Dưới đây là cùng một component, với cùng một template, nhưng sử dụng Composition API và `<script setup>` thay vì Options API:
 
 ```vue
 <script setup>
@@ -219,7 +219,7 @@ import { ref, onMounted } from 'vue'
 // reactive state
 const count = ref(0)
 
-// functions that mutate state and trigger updates
+// hàm mutate state và trigger updates
 function increment() {
   count.value++
 }
@@ -235,49 +235,49 @@ onMounted(() => {
 </template>
 ```
 
-[Try it in the Playground](https://play.vuejs.org/#eNpNkMFqwzAQRH9lMYU4pNg9Bye09NxbjzrEVda2iLwS0spQjP69a+yYHnRYad7MaOfiw/tqSliciybqYDxDRE7+qsiM3gWGGQJ2r+DoyyVivEOGLrgRDkIdFCmqa1G0ms2EELllVKQdRQa9AHBZ+PLtuEm7RCKVd+ChZRjTQqwctHQHDqbvMUDyd7mKip4AGNIBRyQujzArgtW/mlqb8HRSlLcEazrUv9oiDM49xGGvXgp5uT5his5iZV1f3r4HFHvDprVbaxPhZf4XkKub/CDLaep1T7IhGRhHb6WoTADNT2KWpu/aGv24qGKvrIrr5+Z7hnneQnJu6hURvKl3ryL/ARrVkuI=)
+[Thử nó trong Playground](https://play.vuejs.org/#eNpNkMFqwzAQRH9lMYU4pNg9Bye09NxbjzrEVda2iLwS0spQjP69a+yYHnRYad7MaOfiw/tqSliciybqYDxDRE7+qsiM3gWGGQJ2r+DoyyVivEOGLrgRDkIdFCmqa1G0ms2EELllVKQdRQa9AHBZ+PLtuEm7RCKVd+ChZRjTQqwctHQHDqbvMUDyd7mKip4AGNIBRyQujzArgtW/mlqb8HRSlLcEazrUv9oiDM49xGGvXgp5uT5his5iZV1f3r4HFHvDprVbaxPhZf4XkKub/CDLaep1T7IhGRhHb6WoTADNT2KWpu/aGv24qGKvrIrr5+Z7hnneQnJu6hURvKl3ryL/ARrVkuI=)
 
-### Which to Choose? {#which-to-choose}
+### Chọn cái nào? {#which-to-choose}
 
-Both API styles are fully capable of covering common use cases. They are different interfaces powered by the exact same underlying system. In fact, the Options API is implemented on top of the Composition API! The fundamental concepts and knowledge about Vue are shared across the two styles.
+Cả hai loại API đều có khả năng hoàn toàn đáp ứng các trường hợp sử dụng phổ biến. Chúng là các giao diện khác nhau được hỗ trợ bởi cùng một hệ thống cơ bản. Trên thực tế, Options API được triển khai trên Composition API! Các khái niệm và kiến thức cơ bản về Vue được thể hiện trong cả hai loại API.
 
-The Options API is centered around the concept of a "component instance" (`this` as seen in the example), which typically aligns better with a class-based mental model for users coming from OOP language backgrounds. It is also more beginner-friendly by abstracting away the reactivity details and enforcing code organization via option groups.
+Options API tập trung vào khái niệm của một "component instance" (`this` được xem là một ví dụ), điều này thường phù hợp hơn với mô hình tư duy dựa trên class cho người dùng có kinh nghiệm với các ngôn ngữ OOP. Nó cũng thân thiện hơn với người mới bắt đầu bằng cách trừu tượng hóa các chi tiết về reactivity và áp dụng tổ chức code thông qua các nhóm options.
 
-The Composition API is centered around declaring reactive state variables directly in a function scope and composing state from multiple functions together to handle complexity. It is more free-form and requires an understanding of how reactivity works in Vue to be used effectively. In return, its flexibility enables more powerful patterns for organizing and reusing logic.
+Composition API tập trung vào việc khai báo các biến reactive state trực tiếp trong phạm vi của một hàm và kết hợp state từ nhiều hàm với nhau để xử lý tính phức tạp. Nó tự do hơn và yêu cầu người dùng hiểu cách reactivity hoạt động trong Vue để sử dụng hiệu quả. Đổi lại, tính linh hoạt của nó cho phép các pattern mạnh mẽ hơn để tổ chức và tái sử dụng logic.
 
-You can learn more about the comparison between the two styles and the potential benefits of Composition API in the [Composition API FAQ](/guide/extras/composition-api-faq).
+Bạn có thể tìm hiểu thêm về sự so sánh giữa hai loại API và các lợi ích tiềm năng của Composition API trong [Composition API FAQ](/guide/extras/composition-api-faq).
 
-If you are new to Vue, here's our general recommendation:
+Nếu bạn mới bắt đầu với Vue, đây là đề xuất chung của chúng tôi:
 
-- For learning purposes, go with the style that looks easier to understand to you. Again, most of the core concepts are shared between the two styles. You can always pick up the other style later.
+- Với mục đích học tập, hãy chọn loại API dễ hiểu nhất với bạn. Một lần nữa, hầu hết các khái niệm cốt lõi được thể hiện trong cả hai loại API. Bạn luôn có thể chọn loại API khác sau này.
 
-- For production use:
+- Với mục đích sử dụng trong production:
 
-  - Go with Options API if you are not using build tools, or plan to use Vue primarily in low-complexity scenarios, e.g. progressive enhancement.
+  - Sử dụng Options API nếu bạn không sử dụng build tools, hoặc dự định sử dụng Vue chủ yếu trong các trường hợp đơn giản, ví dụ như progressive enhancement.
 
-  - Go with Composition API + Single-File Components if you plan to build full applications with Vue.
+  - Sử dụng Composition API + Single-File Components nếu bạn dự định xây dựng các ứng dụng đầy đủ với Vue.
 
-You don't have to commit to only one style during the learning phase. The rest of the documentation will provide code samples in both styles where applicable, and you can toggle between them at any time using the **API Preference switches** at the top of the left sidebar.
+Bạn không cần phải lo lắng về việc phải chọn một loại API trong giai đoạn học tập. Phần còn lại của tài liệu sẽ cung cấp các ví dụ code trong cả hai loại API, và bạn có thể chuyển đổi giữa chúng bất cứ lúc nào bằng cách sử dụng **Chuyển đổi API Preference** ở đầu của thanh bên trái.
 
-## Still Got Questions? {#still-got-questions}
+## Vẫn còn thắc mắc? {#still-got-questions}
 
-Check out our [FAQ](/about/faq).
+Hãy xem [FAQ](/about/faq).
 
-## Pick Your Learning Path {#pick-your-learning-path}
+## Chọn con đường học tập của bạn {#pick-your-learning-path}
 
-Different developers have different learning styles. Feel free to pick a learning path that suits your preference - although we do recommend going over all of the content, if possible!
+Các nhà phát triển khác nhau có các phong cách học tập khác nhau. Hãy chọn một con đường học tập phù hợp với sở thích của bạn - mặc dù chúng tôi khuyến khích bạn nên xem qua tất cả nội dung, nếu có thể!
 
 <div class="vt-box-container next-steps">
   <a class="vt-box" href="/tutorial/">
-    <p class="next-steps-link">Try the Tutorial</p>
-    <p class="next-steps-caption">For those who prefer learning things hands-on.</p>
+    <p class="next-steps-link">Thử tutorial</p>
+    <p class="next-steps-caption">Dành cho những người thích học bằng cách thực hành.</p>
   </a>
   <a class="vt-box" href="/guide/quick-start.html">
-    <p class="next-steps-link">Read the Guide</p>
-    <p class="next-steps-caption">The guide walks you through every aspect of the framework in full detail.</p>
+    <p class="next-steps-link">Đọc hướng dẫn</p>
+    <p class="next-steps-caption">Hướng dẫn sẽ trình bày mọi khía cạnh của framework một cách chi tiết.</p>
   </a>
   <a class="vt-box" href="/examples/">
-    <p class="next-steps-link">Check out the Examples</p>
-    <p class="next-steps-caption">Explore examples of core features and common UI tasks.</p>
+    <p class="next-steps-link">Xem các ví dụ</p>
+    <p class="next-steps-caption">Khám phá các ví dụ về các tính năng cốt lõi và các nhiệm vụ UI phổ biến.</p>
   </a>
 </div>
