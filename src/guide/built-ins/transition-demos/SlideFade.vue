@@ -7,7 +7,7 @@ const show = ref(true)
   <div class="demo">
     <button @click="show = !show">Toggle Slide + Fade</button>
     <Transition name="slide-fade">
-      <p style="margin-top: 20px" v-if="show">hello</p>
+      <p style="margin-top: 20px" v-if="show">xin chào</p>
     </Transition>
   </div>
 </template>
