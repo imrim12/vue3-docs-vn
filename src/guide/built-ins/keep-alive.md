@@ -77,7 +77,7 @@ Phần trùng khớp sẽ được đối chiếu với tên của component, đ
 Từ phiên bản 3.2.34, một single-file component sử dụng `<script setup>` sẽ tự động suy ra option `name` dựa trên tên file, loại bỏ nhu cầu khai báo tên một cách thủ công.
 :::
 
-## Max Cached Instances {#max-cached-instances}
+## Số Instances tối đa được cached {#max-cached-instances}
 
 Chúng ta có thể giới hạn số lượng instance component được cache tối đa thông qua prop `max`. Khi `max` được chỉ định, `<KeepAlive>` sẽ hoạt động như một [LRU cache](<https://en.wikipedia.org/wiki/Cache_replacement_policies#Least_recently_used_(LRU)>): nếu số lượng instance component được cache sắp vượt quá số lượng tối đa được chỉ định, instance component được truy cập ít nhất sẽ bị hủy để tạo chỗ cho instance mới.
 
@@ -87,13 +87,13 @@ Chúng ta có thể giới hạn số lượng instance component được cache
 </KeepAlive>
 ```
 
-## Lifecycle of Cached Instance {#lifecycle-of-cached-instance}
+## Vòng đời của một instance khi được cached {#lifecycle-of-cached-instance}
 
 Khi một instance component bị gỡ khỏi DOM nhưng vẫn là một phần của component tree được cache bởi `<KeepAlive>`, nó sẽ vào trạng thái **deactivated** thay vì bị unmount. Khi một instance component được chèn vào DOM như một phần của cached tree, nó sẽ được **activated**.
 
 <div class="composition-api">
 
-Một kept-alive component có thể đăng ký lifecycle hooks cho hai trạng thái này thông qua việc sử dụng [`onActivated()`](/api/composition-api-lifecycle#onactivated) và [`onDeactivated()`](/api/composition-api-lifecycle#ondeactivated):
+Một component `kept-alive` có thể đăng ký lifecycle hooks cho hai trạng thái này thông qua việc sử dụng [`onActivated()`](/api/composition-api-lifecycle#onactivated) và [`onDeactivated()`](/api/composition-api-lifecycle#ondeactivated):
 
 ```vue
 <script setup>
