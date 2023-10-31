@@ -2,26 +2,26 @@
 
  <VueSchoolLink href="https://vueschool.io/lessons/vue-3-teleport" title="Free Vue.js Teleport Lesson"/>
 
-`<Teleport>` is a built-in component that allows us to "teleport" a part of a component's template into a DOM node that exists outside the DOM hierarchy of that component.
+`<Teleport>` là một component tích hợp sẵn cho phép chúng ta "**dịch chuyển**" một phần của template của component vào một DOM node tồn tại bên ngoài cây DOM của component đó.
 
-## Basic Usage {#basic-usage}
+## Ứng dụng cơ bản {#basic-usage}
 
-Sometimes we may run into the following scenario: a part of a component's template belongs to it logically, but from a visual standpoint, it should be displayed somewhere else in the DOM, outside of the Vue application.
+Đôi khi chúng ta có thể gặp phải tình huống sau: một phần của template của component vốn thuộc chính nó, nhưng từ mặt trực quan, nó nên được hiển thị ở một nơi khác trong DOM, bên ngoài ứng dụng Vue.
 
-The most common example of this is when building a full-screen modal. Ideally, we want the modal's button and the modal itself to live within the same component, since they are both related to the open / close state of the modal. But that means the modal will be rendered alongside the button, deeply nested in the application's DOM hierarchy. This can create some tricky issues when positioning the modal via CSS.
+Ví dụ phổ biến nhất là khi xây dựng một modal full-screen. Lý tưởng nhất, chúng ta muốn button của modal và modal chính nó nằm trong cùng một component, vì chúng đều liên quan đến trạng thái mở / đóng của modal. Nhưng điều đó có nghĩa là modal sẽ được render cùng với button, nằm sâu trong cây DOM của ứng dụng. Điều này có thể tạo ra một số vấn đề khó khăn khi định vị modal thông qua CSS.
 
-Consider the following HTML structure.
+Hãy xem xét cấu trúc HTML sau.
 
 ```vue-html
 <div class="outer">
-  <h3>Vue Teleport Example</h3>
+  <h3>Ví dụ về Vue Teleport</h3>
   <div>
     <MyModal />
   </div>
 </div>
 ```
 
-And here is the implementation of `<MyModal>`:
+Và đây là cấu trúc của `<MyModal>`:
 
 <div class="composition-api">
 
@@ -33,11 +33,11 @@ const open = ref(false)
 </script>
 
 <template>
-  <button @click="open = true">Open Modal</button>
+  <button @click="open = true">Mở Modal</button>
 
   <div v-if="open" class="modal">
-    <p>Hello from the modal!</p>
-    <button @click="open = false">Close</button>
+    <p>Xin chào, đây là modal!</p>
+    <button @click="open = false">Đóng</button>
   </div>
 </template>
 
@@ -68,11 +68,11 @@ export default {
 </script>
 
 <template>
-  <button @click="open = true">Open Modal</button>
+  <button @click="open = true">Mở Modal</button>
 
   <div v-if="open" class="modal">
-    <p>Hello from the modal!</p>
-    <button @click="open = false">Close</button>
+    <p>Xin chào, đây là modal!</p>
+    <button @click="open = false">Đóng</button>
   </div>
 </template>
 
@@ -90,30 +90,30 @@ export default {
 
 </div>
 
-The component contains a `<button>` to trigger the opening of the modal, and a `<div>` with a class of `.modal`, which will contain the modal's content and a button to self-close.
+Component chứa một `<button>` để kích hoạt mở modal, và một `<div>` với class `.modal`, chứa nội dung của modal và một button để đóng modal.
 
-When using this component inside the initial HTML structure, there are a number of potential issues:
+Khi sử dụng component này trong cấu trúc HTML ban đầu, có một số vấn đề tiềm ẩn:
 
-- `position: fixed` only places the element relative to the viewport when no ancestor element has `transform`, `perspective` or `filter` property set. If, for example, we intend to animate the ancestor `<div class="outer">` with a CSS transform, it would break the modal layout!
+- `position: fixed` chỉ định vị trí của element dựa trên viewport khi không có ancestor element nào có thuộc tính `transform`, `perspective` hoặc `filter` được set. Nếu, ví dụ, chúng ta có ý định animate ancestor `<div class="outer">` với một CSS transform, nó sẽ làm hỏng layout của modal!
 
-- The modal's `z-index` is constrained by its containing elements. If there is another element that overlaps with `<div class="outer">` and has a higher `z-index`, it would cover our modal.
+- Thuộc tính `z-index` của model được giới hạn bởi các element chứa nó. Nếu có một element khác mà trùng với `<div class="outer">` và có `z-index` cao hơn, nó sẽ che phủ modal của chúng ta.
 
-`<Teleport>` provides a clean way to work around these, by allowing us to break out of the nested DOM structure. Let's modify `<MyModal>` to use `<Teleport>`:
+`<Teleport>` cung cấp một cách ổn định để giải quyết những vấn đề này, cho phép chúng ta thoát khỏi cấu trúc DOM lồng nhau. Hãy sửa đổi `<MyModal>` để sử dụng `<Teleport>`:
 
 ```vue-html{3,8}
-<button @click="open = true">Open Modal</button>
+<button @click="open = true">Mở Modal</button>
 
 <Teleport to="body">
   <div v-if="open" class="modal">
-    <p>Hello from the modal!</p>
-    <button @click="open = false">Close</button>
+    <p>Xin chào, đây là modal!</p>
+    <button @click="open = false">Đóng</button>
   </div>
 </Teleport>
 ```
 
-The `to` target of `<Teleport>` expects a CSS selector string or an actual DOM node. Here, we are essentially telling Vue to "**teleport** this template fragment **to** the **`body`** tag".
+Thuộc tính `to` chỉ định mục tiêu của `<Teleport>` sẽ nhận một chuỗi CSS selector hoặc một DOM node. Ở đây, chúng ta đang nói với Vue rằng "**dịch chuyển**" nội dung của `<Teleport>` vào `<body>`.
 
-You can click the button below and inspect the `<body>` tag via your browser's devtools:
+Bạn có thể click vào button bên dưới và kiểm tra `<body>` tag trong devtools của trình duyệt:
 
 <script setup>
 import { ref } from 'vue'
@@ -121,12 +121,12 @@ const open = ref(false)
 </script>
 
 <div class="demo">
-  <button @click="open = true">Open Modal</button>
+  <button @click="open = true">Mở Modal</button>
   <ClientOnly>
     <Teleport to="body">
       <div v-if="open" class="demo modal-demo">
-        <p style="margin-bottom:20px">Hello from the modal!</p>
-        <button @click="open = false">Close</button>
+        <p style="margin-bottom:20px">Xin chào, đây là modal!</p>
+        <button @click="open = false">Đóng</button>
       </div>
     </Teleport>
   </ClientOnly>
@@ -147,21 +147,21 @@ const open = ref(false)
 }
 </style>
 
-You can combine `<Teleport>` with [`<Transition>`](./transition) to create animated modals - see [Example here](/examples/#modal).
+Bạn có thể kết hợp `<Teleport>` với [`<Transition>`](./transition) để tạo ra modal có hiệu ứng - xem [Ví dụ](/examples/#modal).
 
 :::tip
-The teleport `to` target must be already in the DOM when the `<Teleport>` component is mounted. Ideally, this should be an element outside the entire Vue application. If targeting another element rendered by Vue, you need to make sure that element is mounted before the `<Teleport>`.
+Mục tiêu được khai báo trong thuộc tính `to` phải tồn tại trong DOM khi component `<Teleport>` được mounted. Lý tưởng nhất đó là một element nằm bên ngoài toàn bộ ứng dụng Vue. Nếu muốn dịch chuyển đến một element khác được render bởi Vue, bạn cần đảm bảo element đó đã được mounted trước khi `<Teleport>` được mounted.
 :::
 
-## Using with Components {#using-with-components}
+## Sử dụng với component {#using-with-components}
 
-`<Teleport>` only alters the rendered DOM structure - it does not affect the logical hierarchy of the components. That is to say, if `<Teleport>` contains a component, that component will remain a logical child of the parent component containing the `<Teleport>`. Props passing and event emitting will continue to work the same way.
+`<Teleport>` chỉ chỉnh sửa cấu trúc DOM đã được render, nó không ảnh hưởng đến cấu trúc component. Nói cách khác, nếu `<Teleport>` chứa một component, component đó vẫn là con trực tiếp của component chứa `<Teleport>`. Props và event vẫn hoạt động như bình thường.
 
-This also means that injections from a parent component work as expected, and that the child component will be nested below the parent component in the Vue Devtools, instead of being placed where the actual content moved to.
+Điều này cũng có nghĩa là inject từ component cha vẫn hoạt động bình thường, và component con sẽ được lồng vào dưới component cha trong Vue Devtools, thay vì được đặt vào nơi nội dung thực sự được dịch chuyển đến.
 
-## Disabling Teleport {#disabling-teleport}
+## Tắt Teleport {#disabling-teleport}
 
-In some cases, we may want to conditionally disable `<Teleport>`. For example, we may want to render a component as an overlay for desktop, but inline on mobile. `<Teleport>` supports the `disabled` prop which can be dynamically toggled:
+Trong một vài trường hợp chúng ta có thể muốn tắt `<Teleport>` theo điều kiện. Ví dụ, chúng ta có thể muốn render một component như một overlay cho desktop, nhưng inline cho mobile. `<Teleport>` hỗ trợ thuộc tính `disabled` có thể được toggle một cách dynamic:
 
 ```vue-html
 <Teleport :disabled="isMobile">
@@ -169,13 +169,13 @@ In some cases, we may want to conditionally disable `<Teleport>`. For example, w
 </Teleport>
 ```
 
-Where the `isMobile` state can be dynamically updated by detecting media query changes.
+State `isMobile` có thể được cập nhật dynamic bằng cách kiểm tra sự thay đổi của media query.
 
-## Multiple Teleports on the Same Target {#multiple-teleports-on-the-same-target}
+## Nhiều Teleport trên cùng một mục tiêu {#multiple-teleports-on-the-same-target}
 
-A common use case would be a reusable `<Modal>` component, with the potential for multiple instances to be active at the same time. For this kind of scenario, multiple `<Teleport>` components can mount their content to the same target element. The order will be a simple append - later mounts will be located after earlier ones within the target element.
+Một use case phổ biến đó là một component `<Modal>` có thể được sử dụng lại, với khả năng có nhiều instance hoạt động cùng một lúc. Với loại scenario này, nhiều `<Teleport>` có thể mount nội dung của chúng vào cùng một element mục tiêu. Thứ tự của các modal sẽ theo như phương thức append - các mount sau sẽ được đặt sau các mount trước đó trong element mục tiêu.
 
-Given the following usage:
+Ví dụ, chúng ta có thể có một component `<Modal>` như sau:
 
 ```vue-html
 <Teleport to="#modals">
@@ -197,7 +197,7 @@ The rendered result would be:
 
 ---
 
-**Related**
+**Xem thêm**
 
-- [`<Teleport>` API reference](/api/built-in-components#teleport)
-- [Handling Teleports in SSR](/guide/scaling-up/ssr#teleports)
+- [Tham khảo `<Teleport>` API](/api/built-in-components#teleport)
+- [Xử lý Teleport trong SSR](/guide/scaling-up/ssr#teleports)

@@ -4,55 +4,55 @@ import SwitchComponent from './keep-alive-demos/SwitchComponent.vue'
 
 # KeepAlive {#keepalive}
 
-`<KeepAlive>` is a built-in component that allows us to conditionally cache component instances when dynamically switching between multiple components.
+`<KeepAlive>` là một component tích hợp sẵn cho phép chúng ta lưu trữ các của instance component theo điều kiện khi chuyển đổi giữa các component khác nhau.
 
-## Basic Usage {#basic-usage}
+## Ứng dụng cơ bản {#basic-usage}
 
-In the Component Basics chapter, we introduced the syntax for [Dynamic Components](/guide/essentials/component-basics#dynamic-components), using the `<component>` special element:
+Trong chương [Component Basics](/guide/essentials/component-basics), chúng ta đã giới thiệu cú pháp cho [Dynamic Components](/guide/essentials/component-basics#dynamic-components), sử dụng phần tử đặc biệt `<component>`:
 
 ```vue-html
 <component :is="activeComponent" />
 ```
 
-By default, an active component instance will be unmounted when switching away from it. This will cause any changed state it holds to be lost. When this component is displayed again, a new instance will be created with only the initial state.
+Theo mặc định thì một instance component đang hoạt động sẽ bị unmount khi chuyển đổi sang component khác. Điều này sẽ khiến cho mọi state của nó bị mất. Khi component này được hiển thị lại, một instance mới sẽ được tạo ra với trạng thái ban đầu.
 
-In the example below, we have two stateful components - A contains a counter, while B contains a message synced with an input via `v-model`. Try updating the state of one of them, switch away, and then switch back to it:
+Trong ví dụ dưới đây, chúng ta có hai component stateful - A chứa một counter, trong khi B chứa một message được đồng bộ với một input thông qua `v-model`. Hãy thử cập nhật state của một trong chúng, chuyển đổi sang component khác, và sau đó chuyển đổi lại:
 
 <SwitchComponent />
 
-You'll notice that when switched back, the previous changed state would have been reset.
+Bạn sẽ thấy rằng khi chuyển lại, trạng thái đã được thay đổi trước đó sẽ bị reset.
 
-Creating fresh component instance on switch is normally useful behavior, but in this case, we'd really like the two component instances to be preserved even when they are inactive. To solve this problem, we can wrap our dynamic component with the `<KeepAlive>` built-in component:
+Tạo mới một instance component khi chuyển đổi là một hành vi bình thường, nhưng trong trường hợp này, chúng ta muốn giữ lại hai instance component ngay cả khi chúng không hoạt động. Để giải quyết vấn đề này, chúng ta có thể bọc dynamic component của chúng ta bằng phần tử `<KeepAlive>`:
 
 ```vue-html
-<!-- Inactive components will be cached! -->
+<!-- Những component không hoạt động sẽ được cache! -->
 <KeepAlive>
   <component :is="activeComponent" />
 </KeepAlive>
 ```
 
-Now, the state will be persisted across component switches:
+Lúc này, state của component sẽ được lưu trữ khi chuyển đổi giữa các component khác nhau:
 
 <SwitchComponent use-KeepAlive />
 
 <div class="composition-api">
 
-[Try it in the Playground](https://play.vuejs.org/#eNqtUsFOwzAM/RWrl4IGC+cqq2h3RFw495K12YhIk6hJi1DVf8dJSllBaAJxi+2XZz8/j0lhzHboeZIl1NadMA4sd73JKyVaozsHI9hnJqV+feJHmODY6RZS/JEuiL1uTTEXtiREnnINKFeAcgZUqtbKOqj7ruPKwe6s2VVguq4UJXEynAkDx1sjmeMYAdBGDFBLZu2uShre6ioJeaxIduAyp0KZ3oF7MxwRHWsEQmC4bXXDJWbmxpjLBiZ7DwptMUFyKCiJNP/BWUbO8gvnA+emkGKIgkKqRrRWfh+Z8MIWwpySpfbxn6wJKMGV4IuSs0UlN1HVJae7bxYvBuk+2IOIq7sLnph8P9u5DJv5VfpWWLaGqTzwZTCOM/M0IaMvBMihd04ruK+lqF/8Ajxms8EFbCiJxR8khsP6ncQosLWnWV6a/kUf2nqu75Fby04chA0iPftaYryhz6NBRLjdtajpHZTWPio=)
+[Thử trong Playground](https://play.vuejs.org/#eNqtUsFOwzAM/RWrl4IGC+cqq2h3RFw495K12YhIk6hJi1DVf8dJSllBaAJxi+2XZz8/j0lhzHboeZIl1NadMA4sd73JKyVaozsHI9hnJqV+feJHmODY6RZS/JEuiL1uTTEXtiREnnINKFeAcgZUqtbKOqj7ruPKwe6s2VVguq4UJXEynAkDx1sjmeMYAdBGDFBLZu2uShre6ioJeaxIduAyp0KZ3oF7MxwRHWsEQmC4bXXDJWbmxpjLBiZ7DwptMUFyKCiJNP/BWUbO8gvnA+emkGKIgkKqRrRWfh+Z8MIWwpySpfbxn6wJKMGV4IuSs0UlN1HVJae7bxYvBuk+2IOIq7sLnph8P9u5DJv5VfpWWLaGqTzwZTCOM/M0IaMvBMihd04ruK+lqF/8Ajxms8EFbCiJxR8khsP6ncQosLWnWV6a/kUf2nqu75Fby04chA0iPftaYryhz6NBRLjdtajpHZTWPio=)
 
 </div>
 <div class="options-api">
 
-[Try it in the Playground](https://play.vuejs.org/#eNqtU8tugzAQ/JUVl7RKWveMXFTIseofcHHAiawasPxArRD/3rVNSEhbpVUrIWB3x7PM7jAkuVL3veNJmlBTaaFsVraiUZ22sO0alcNedw2s7kmIPHS1ABQLQDEBAMqWvwVQzffMSQuDz1aI6VreWpPCEBtsJppx4wE1s+zmNoIBNLdOt8cIjzut8XAKq3A0NAIY/QNveFEyi8DA8kZJZjlGALQWPVSSGfNYJjVvujIJeaxItuMyo6JVzoJ9VxwRmtUCIdDfNV3NJWam5j7HpPOY8BEYkwxySiLLP1AWkbK4oHzmXOVS9FFOSM3jhFR4WTNfRslcO54nSwJKcCD4RsnZmJJNFPXJEl8t88quOuc39fCrHalsGyWcnJL62apYNoq12UQ8DLEFjCMy+kKA7Jy1XQtPlRTVqx+Jx6zXOJI1JbH4jejg3T+KbswBzXnFlz9Tjes/V/3CjWEHDsL/OYNvdCE8Wu3kLUQEhy+ljh+brFFu)
+[Thử trong Playground](https://play.vuejs.org/#eNqtU8tugzAQ/JUVl7RKWveMXFTIseofcHHAiawasPxArRD/3rVNSEhbpVUrIWB3x7PM7jAkuVL3veNJmlBTaaFsVraiUZ22sO0alcNedw2s7kmIPHS1ABQLQDEBAMqWvwVQzffMSQuDz1aI6VreWpPCEBtsJppx4wE1s+zmNoIBNLdOt8cIjzut8XAKq3A0NAIY/QNveFEyi8DA8kZJZjlGALQWPVSSGfNYJjVvujIJeaxItuMyo6JVzoJ9VxwRmtUCIdDfNV3NJWam5j7HpPOY8BEYkwxySiLLP1AWkbK4oHzmXOVS9FFOSM3jhFR4WTNfRslcO54nSwJKcCD4RsnZmJJNFPXJEl8t88quOuc39fCrHalsGyWcnJL62apYNoq12UQ8DLEFjCMy+kKA7Jy1XQtPlRTVqx+Jx6zXOJI1JbH4jejg3T+KbswBzXnFlz9Tjes/V/3CjWEHDsL/OYNvdCE8Wu3kLUQEhy+ljh+brFFu)
 
 </div>
 
 :::tip
-When used in [in-DOM templates](/guide/essentials/component-basics#in-dom-template-parsing-caveats), it should be referenced as `<keep-alive>`.
+Khi sử dụng trong [in-DOM templates](/guide/essentials/component-basics#in-dom-template-parsing-caveats), phần tử này nên được tham chiếu như `<keep-alive>`.
 :::
 
 ## Include / Exclude {#include-exclude}
 
-By default, `<KeepAlive>` will cache any component instance inside. We can customize this behavior via the `include` and `exclude` props. Both props can be a comma-delimited string, a `RegExp`, or an array containing either types:
+Theo mặc định, `<KeepAlive>` sẽ cache bất kỳ instance component nào được bọc bên trong nó. Chúng ta có thể tùy chỉnh hành vi này thông qua các props `include` và `exclude`. Cả hai props này có thể là một chuỗi phân tách bằng dấu phẩy, một `RegExp`, hoặc một mảng chứa các kiểu:
 
 ```vue-html
 <!-- comma-delimited string -->
@@ -71,15 +71,15 @@ By default, `<KeepAlive>` will cache any component instance inside. We can custo
 </KeepAlive>
 ```
 
-The match is checked against the component's [`name`](/api/options-misc#name) option, so components that need to be conditionally cached by `KeepAlive` must explicitly declare a `name` option.
+Phần trùng khớp sẽ được đối chiếu với tên của component, được khai báo thông qua option [`name`](/api/options-misc#name), vì vậy các component cần được cache theo điều kiện bởi `KeepAlive` phải khai báo rõ ràng một option `name`.
 
 :::tip
-Since version 3.2.34, a single-file component using `<script setup>` will automatically infer its `name` option based on the filename, removing the need to manually declare the name.
+Từ phiên bản 3.2.34, một single-file component sử dụng `<script setup>` sẽ tự động suy ra option `name` dựa trên tên file, loại bỏ nhu cầu khai báo tên một cách thủ công.
 :::
 
-## Max Cached Instances {#max-cached-instances}
+## Số Instances tối đa được cached {#max-cached-instances}
 
-We can limit the maximum number of component instances that can be cached via the `max` prop. When `max` is specified, `<KeepAlive>` behaves like an [LRU cache](<https://en.wikipedia.org/wiki/Cache_replacement_policies#Least_recently_used_(LRU)>): if the number of cached instances is about to exceed the specified max count, the least recently accessed cached instance will be destroyed to make room for the new one.
+Chúng ta có thể giới hạn số lượng instance component được cache tối đa thông qua prop `max`. Khi `max` được chỉ định, `<KeepAlive>` sẽ hoạt động như một [LRU cache](<https://en.wikipedia.org/wiki/Cache_replacement_policies#Least_recently_used_(LRU)>): nếu số lượng instance component được cache sắp vượt quá số lượng tối đa được chỉ định, instance component được truy cập ít nhất sẽ bị hủy để tạo chỗ cho instance mới.
 
 ```vue-html
 <KeepAlive :max="10">
@@ -87,26 +87,26 @@ We can limit the maximum number of component instances that can be cached via th
 </KeepAlive>
 ```
 
-## Lifecycle of Cached Instance {#lifecycle-of-cached-instance}
+## Vòng đời của một instance khi được cached {#lifecycle-of-cached-instance}
 
-When a component instance is removed from the DOM but is part of a component tree cached by `<KeepAlive>`, it goes into a **deactivated** state instead of being unmounted. When a component instance is inserted into the DOM as part of a cached tree, it is **activated**.
+Khi một instance component bị gỡ khỏi DOM nhưng vẫn là một phần của component tree được cache bởi `<KeepAlive>`, nó sẽ vào trạng thái **deactivated** thay vì bị unmount. Khi một instance component được chèn vào DOM như một phần của cached tree, nó sẽ được **activated**.
 
 <div class="composition-api">
 
-A kept-alive component can register lifecycle hooks for these two states using [`onActivated()`](/api/composition-api-lifecycle#onactivated) and [`onDeactivated()`](/api/composition-api-lifecycle#ondeactivated):
+Một component `kept-alive` có thể đăng ký lifecycle hooks cho hai trạng thái này thông qua việc sử dụng [`onActivated()`](/api/composition-api-lifecycle#onactivated) và [`onDeactivated()`](/api/composition-api-lifecycle#ondeactivated):
 
 ```vue
 <script setup>
 import { onActivated, onDeactivated } from 'vue'
 
 onActivated(() => {
-  // called on initial mount
-  // and every time it is re-inserted from the cache
+  // được gọi khi component được mount lần đầu tiên
+  // và mỗi lần nó được chèn vào từ cache
 })
 
 onDeactivated(() => {
-  // called when removed from the DOM into the cache
-  // and also when unmounted
+  // được gọi khi component bị gỡ khỏi DOM vào cache
+  // và cũng được gọi khi component bị unmount
 })
 </script>
 ```
@@ -114,31 +114,31 @@ onDeactivated(() => {
 </div>
 <div class="options-api">
 
-A kept-alive component can register lifecycle hooks for these two states using [`activated`](/api/options-lifecycle#activated) and [`deactivated`](/api/options-lifecycle#deactivated) hooks:
+Một kept-alive component có thể đăng ký lifecycle hooks cho hai trạng thái này thông qua việc sử dụng [`activated`](/api/options-lifecycle#activated) và [`deactivated`](/api/options-lifecycle#deactivated):
 
 ```js
 export default {
   activated() {
-    // called on initial mount
-    // and every time it is re-inserted from the cache
+    // được gọi khi component được mount lần đầu tiên
+    // và mỗi lần nó được chèn vào từ cache
   },
   deactivated() {
-    // called when removed from the DOM into the cache
-    // and also when unmounted
+    // được gọi khi component bị gỡ khỏi DOM vào cache
+    // và cũng được gọi khi component bị unmount
   }
 }
 ```
 
 </div>
 
-Note that:
+Lưu ý rằng:
 
-- <span class="composition-api">`onActivated`</span><span class="options-api">`activated`</span> is also called on mount, and <span class="composition-api">`onDeactivated`</span><span class="options-api">`deactivated`</span> on unmount.
+- <span class="composition-api">`onActivated`</span><span class="options-api">`activated`</span> cũng được gọi khi component được mount, và <span class="composition-api">`onDeactivated`</span><span class="options-api">`deactivated`</span> được gọi khi component bị unmount.
 
-- Both hooks work for not only the root component cached by `<KeepAlive>`, but also descendant components in the cached tree.
+- Cả hai hook này không chỉ hoạt động cho component gốc được cache bởi `<KeepAlive>`, mà còn cho các component con trong cây được cache.
 
 ---
 
-**Related**
+**Tham khảo thêm**
 
-- [`<KeepAlive>` API reference](/api/built-in-components#keepalive)
+- [Tham khảo `<KeepAlive>` API](/api/built-in-components#keepalive)

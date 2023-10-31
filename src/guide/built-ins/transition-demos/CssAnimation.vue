@@ -8,7 +8,7 @@ const show = ref(true)
     <button @click="show = !show">Toggle</button>
     <Transition name="bounce">
       <p v-if="show" style="margin-top: 20px; text-align: center">
-        Hello here is some bouncy text!
+        Xin chào, đây là một đoạn text nhún nhảy!
       </p>
     </Transition>
   </div>
