@@ -1,24 +1,24 @@
-# Async Components {#async-components}
+# Component bất đồng bộ {#async-components}
 
 ## Basic Usage {#basic-usage}
 
-In large applications, we may need to divide the app into smaller chunks and only load a component from the server when it's needed. To make that possible, Vue has a [`defineAsyncComponent`](/api/general#defineasynccomponent) function:
+Trong các ứng dụng lớn, chúng ta có thể cần phải chia ứng dụng thành những phần nhỏ hơn và chỉ tải các component này từ server khi cần thiết. Để làm điều đó, Vue có một hàm [`defineAsyncComponent`](/api/general#defineasynccomponent):
 
 ```js
 import { defineAsyncComponent } from 'vue'
 
 const AsyncComp = defineAsyncComponent(() => {
   return new Promise((resolve, reject) => {
-    // ...load component from server
-    resolve(/* loaded component */)
+    // ...tải component từ server
+    resolve(/* component sau khi tải xong */)
   })
 })
-// ... use `AsyncComp` like a normal component
+// ... sử dụng `AsyncComp` như một component bình thường
 ```
 
-As you can see, `defineAsyncComponent` accepts a loader function that returns a Promise. The Promise's `resolve` callback should be called when you have retrieved your component definition from the server. You can also call `reject(reason)` to indicate the load has failed.
+Như bạn có thể thấy, `defineAsyncComponent` nhận một hàm tải và trả về một Promise. Hàm `resolve` của Promise sẽ được gọi khi bạn đã lấy được định nghĩa component từ server. Bạn cũng có thể gọi `reject(reason)` để chỉ ra rằng việc tải đã thất bại.
 
-[ES module dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) also returns a Promise, so most of the time we will use it in combination with `defineAsyncComponent`. Bundlers like Vite and webpack also support the syntax (and will use it as bundle split points), so we can use it to import Vue SFCs:
+[ES module dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) cũng trả về một Promise, vì vậy phần lớn thời gian chúng ta sẽ sử dụng nó kết hợp với `defineAsyncComponent`. Các bundler như Vite và webpack cũng hỗ trợ cú pháp này (và sẽ sử dụng nó như điểm chia nhỏ bundle), vì vậy chúng ta có thể sử dụng nó để import Vue SFCs:
 
 ```js
 import { defineAsyncComponent } from 'vue'
@@ -28,9 +28,9 @@ const AsyncComp = defineAsyncComponent(() =>
 )
 ```
 
-The resulting `AsyncComp` is a wrapper component that only calls the loader function when it is actually rendered on the page. In addition, it will pass along any props and slots to the inner component, so you can use the async wrapper to seamlessly replace the original component while achieving lazy loading.
+Kết quả của `AsyncComp` là một component bao bọc chỉ gọi hàm tải khi nó được hiển thị trên trang. Ngoài ra, nó sẽ chuyển tiếp bất kỳ props và slots nào cho component bên trong, vì vậy bạn có thể sử dụng 'bao bọc bất đồng bộ' để thay thế component gốc một cách mượt mà trong khi đạt được lazy loading.
 
-As with normal components, async components can be [registered globally](/guide/components/registration#global-registration) using `app.component()`:
+Giống như các component bình thường khác, component bất đồng bộ có thể được [đăng ký toàn cầu](/guide/components/registration#global-registration) bằng cách sử dụng `app.component()`:
 
 ```js
 app.component('MyComponent', defineAsyncComponent(() =>
@@ -40,7 +40,7 @@ app.component('MyComponent', defineAsyncComponent(() =>
 
 <div class="options-api">
 
-You can also use `defineAsyncComponent` when [registering a component locally](/guide/components/registration#local-registration):
+Bạn cũng có thể sử dụng `defineAsyncComponent` khi [đăng ký một component cục bộ](/guide/components/registration#local-registration):
 
 ```vue
 <script>
@@ -64,7 +64,7 @@ export default {
 
 <div class="composition-api">
 
-They can also be defined directly inside their parent component:
+Chúng cũng có thể được định nghĩa trực tiếp bên trong component cha:
 
 ```vue
 <script setup>
@@ -82,32 +82,32 @@ const AdminPage = defineAsyncComponent(() =>
 
 </div>
 
-## Loading and Error States {#loading-and-error-states}
+## Trạng thái Loading và Error {#loading-and-error-states}
 
-Asynchronous operations inevitably involve loading and error states - `defineAsyncComponent()` supports handling these states via advanced options:
+Các quy trình bất đồng bộ không thể tránh khỏi các trạng thái loading và error - `defineAsyncComponent()` hỗ trợ xử lý các trạng thái này thông qua các tùy chọn nâng cao:
 
 ```js
 const AsyncComp = defineAsyncComponent({
-  // the loader function
+  // hàm tải
   loader: () => import('./Foo.vue'),
 
-  // A component to use while the async component is loading
+  // Component để sử dụng trong khi component bất đồng bộ đang tải
   loadingComponent: LoadingComponent,
-  // Delay before showing the loading component. Default: 200ms.
+  // Khoảng thời gian trước khi hiển thị component loading. Mặc định: 200ms.
   delay: 200,
 
-  // A component to use if the load fails
+  // Component để sử dụng nếu việc tải thất bại
   errorComponent: ErrorComponent,
-  // The error component will be displayed if a timeout is
-  // provided and exceeded. Default: Infinity.
+  // Error component sẽ được hiển thị nếu timeout được 
+  // khai báo và thời gian chờ đã bị vượt qua. Mặc định: Infinity.
   timeout: 3000
 })
 ```
 
-If a loading component is provided, it will be displayed first while the inner component is being loaded. There is a default 200ms delay before the loading component is shown - this is because on fast networks, an instant loading state may get replaced too fast and end up looking like a flicker.
+Nếu loading component được khai báo, nó sẽ được hiển thị trước khi component bên trong được tải. Mặc định là 200ms trước khi loading component được hiển thị - việc này là bởi vì trên các đường truyền mạng nhanh, trạng thái loading có thể bị thay thế quá nhanh và sẽ trông như bị giật.
 
-If an error component is provided, it will be displayed when the Promise returned by the loader function is rejected. You can also specify a timeout to show the error component when the request is taking too long.
+Nếu error component được khai báo, nó sẽ được hiển thị khi Promise được trả về bởi hàm tải bị reject. Bạn cũng có thể chỉ định một timeout để hiển thị error component khi request mất quá nhiều thời gian.
 
-## Using with Suspense {#using-with-suspense}
+## Sử dụng với Suspense {#using-with-suspense}
 
-Async components can be used with the `<Suspense>` built-in component. The interaction between `<Suspense>` and async components is documented in the [dedicated chapter for `<Suspense>`](/guide/built-ins/suspense).
+Component bất đồng bộ có thể được sử dụng với built-in component `<Suspense>`. Tương tác giữa `<Suspense>` và component bất đồng bộ được viết trong tài liệu [chương riêng cho `<Suspense>`](/guide/built-ins/suspense).
