@@ -1,15 +1,16 @@
-# Components Basics {#components-basics}
+# Cơ bản về Component {#components-basics}
 
-Components allow us to split the UI into independent and reusable pieces, and think about each piece in isolation. It's common for an app to be organized into a tree of nested components:
+Component cho phép chúng ta chia giao diện người dùng thành các phần độc lập, và xử lý mỗi phần một cách độc lập. Nhìn chung, một ứng dụng sẽ thường được tổ chức thành một cây các component lồng nhau, với component gốc ở đỉnh của cây.
 
-![Component Tree](./images/components.png)
+![Cây Component](./images/components.png)
 
 <!-- https://www.figma.com/file/qa7WHDQRWuEZNRs7iZRZSI/components -->
 
-This is very similar to how we nest native HTML elements, but Vue implements its own component model that allow us to encapsulate custom content and logic in each component. Vue also plays nicely with native Web Components. If you are curious about the relationship between Vue Components and native Web Components, [read more here](/guide/extras/web-components).
+Việc này cũng tương tự như cách chúng ta lồng các HTML element native, nhưng Vue tự triển khai một mô hình component riêng biệt cho phép chúng ta đóng gói nội dung và logic tùy chỉnh trong mỗi component. Vue cũng hỗ trợ tốt với Web Components. Nếu bạn tò mò về mối quan hệ giữa Vue Components và Web Components, [đọc thêm ở đây](/guide/extras/web-components).
 
-## Defining a Component {#defining-a-component}
+## Định nghĩa một Component {#defining-a-component}
 
+Khi sử dụng 
 When using a build step, we typically define each Vue component in a dedicated file using the `.vue` extension - known as a [Single-File Component](/guide/scaling-up/sfc) (SFC for short):
 
 <div class="options-api">
