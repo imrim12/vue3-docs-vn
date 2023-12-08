@@ -1,21 +1,21 @@
-# Priority D Rules: Use with Caution {#priority-d-rules-use-with-caution}
+# Quy tắc ưu tiên "D": Sử dụng 1 cách cẩn thận {#priority-d-rules-use-with-caution}
 
-Some features of Vue exist to accommodate rare edge cases or smoother migrations from a legacy code base. When overused however, they can make your code more difficult to maintain or even become a source of bugs. These rules shine a light on potentially risky features, describing when and why they should be avoided.
+Một vài tính năng của Vue tồn tại để phục vụ cho các trường hợp đặc biệt hoặc để dễ dàng chuyển đổi từ một codebase cũ (Có thể từ Vue 2). Tuy nhiên, khi sử dụng quá nhiều, chúng có thể làm cho code của bạn khó bảo trì hơn hoặc thậm chí nó sẽ trở thành lỗi trong tương lai. Những quy tắc này sẽ giúp bạn nhận ra những tính năng có thể gây rủi ro, mô tả khi nào và tại sao chúng nên được tránh sử dụng.
 
-## Element selectors with `scoped` {#element-selectors-with-scoped}
+## Truy cập phần tử HTML với `scoped` {#element-selectors-with-scoped}
 
-**Element selectors should be avoided with `scoped`.**
+**Nên tránh việc truy cập (select) phần tử HTML với `scoped`**
 
-Prefer class selectors over element selectors in `scoped` styles, because large numbers of element selectors are slow.
+Nên ưu tiên việc sử dụng css class hơn là truy cập element từ `scoped` (trong `<styles scoped>`), bởi vì số lượng lớn các element sẽ làm giảm hiệu năng.
 
-::: details Detailed Explanation
-To scope styles, Vue adds a unique attribute to component elements, such as `data-v-f3f3eg9`. Then selectors are modified so that only matching elements with this attribute are selected (e.g. `button[data-v-f3f3eg9]`).
+::: details Giải thích cụ thể
+Để tạo sự độc nhất cho các style, Vue sẽ thêm một thuộc tính (attribute) duy nhất vào các phần tử của component, ví dụ như `<button data-v-f3f3eg9>`. Sau đó chúng ta thường truy cập vào các phần tử HTML bằng chính các thuộc tính đó (ví dụ như `button[data-v-f3f3eg9]`).
 
-The problem is that large numbers of element-attribute selectors (e.g. `button[data-v-f3f3eg9]`) will be considerably slower than class-attribute selectors (e.g. `.btn-close[data-v-f3f3eg9]`), so class selectors should be preferred whenever possible.
+Vấn đề là khi có một lượng lớn các phần tử HTML được truy cập bằng thuộc tính (ví dụ như `button[data-v-f3f3eg9]`) sẽ chậm hơn rất nhiều so với sử dụng class (ví dụ như `.btn-close[data-v-f3f3eg9]`), vì vậy chúng ta nên ưu tiên sử dụng class hơn khi có thể.
 :::
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không khuyên dùng</h3>
 
 ```vue-html
 <template>
@@ -32,7 +32,7 @@ button {
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Khuyên dùng</h3>
 
 ```vue-html
 <template>
