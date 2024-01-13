@@ -4,62 +4,65 @@ outline: deep
 
 # Server-Side Rendering (SSR) {#server-side-rendering-ssr}
 
-## Overview {#overview}
+## Tổng quát {#overview}
 
-### What is SSR? {#what-is-ssr}
+### SSR là gì? {#what-is-ssr}
 
+Vue.js là một framework để xây dựng các ứng dụng client-side. Theo mặc định, các thành phần Vue tạo và điều khiển DOM trong trình duyệt như đầu ra. Tuy nhiên, nó cũng có thể được sử dụng để tạo các chuỗi HTML tĩnh trên máy chủ, gửi chúng trực tiếp đến trình duyệt và cuối cùng "hydrate" các đánh dấu tĩnh thành một ứng dụng tương tác đầy đủ trên máy khách.
 Vue.js is a framework for building client-side applications. By default, Vue components produce and manipulate DOM in the browser as output. However, it is also possible to render the same components into HTML strings on the server, send them directly to the browser, and finally "hydrate" the static markup into a fully interactive app on the client.
 
+Một ứng dụng Vue SSR cũng có thể được coi là "isomorphic" hoặc "universal", trong ý nghĩa là hầu hết mã ứng dụng của bạn chạy trên cả máy chủ **và** máy khách.
 A server-rendered Vue.js app can also be considered "isomorphic" or "universal", in the sense that the majority of your app's code runs on both the server **and** the client.
 
-### Why SSR? {#why-ssr}
+### Tại sao lại sử dụng SSR? {#why-ssr}
 
-Compared to a client-side Single-Page Application (SPA), the advantage of SSR primarily lies in:
+So sánh với một ứng dụng Single-Page Application (SPA) phía máy khách, lợi thế của SSR chủ yếu nằm ở:
 
-- **Faster time-to-content**: this is more prominent on slow internet or slow devices. Server-rendered markup doesn't need to wait until all JavaScript has been downloaded and executed to be displayed, so your user will see a fully-rendered page sooner. In addition, data fetching is done on the server-side for the initial visit, which likely has a faster connection to your database than the client. This generally results in improved [Core Web Vitals](https://web.dev/vitals/) metrics, better user experience, and can be critical for applications where time-to-content is directly associated with conversion rate.
+- **Thời gian hiển thị content nhanh hơn**: đây là một lợi thế rất lớn đối với các kết nối Internet hoặc thiết bị có tốc độ chậm. Đánh dấu được tạo bởi máy chủ không cần phải chờ đến khi tất cả các mã JavaScript được tải xuống và thực thi để được hiển thị, vì vậy người dùng của bạn sẽ thấy một trang đã được hiển thị hoàn toàn sớm hơn. 
+Ngoài ra, việc lấy dữ liệu được thực hiện trên phía server cho lần truy cập đầu tiên, nơi mà kết nối đến cơ sở dữ liệu của bạn có thể nhanh hơn nhiều so với phía máy khách. Điều này thường cải thiện đáng kể các chỉ số trong [Core Web Vitals](https://web.dev/vitals/), trải nghiệm người dùng tốt hơn và có thể là quan trọng đối với các ứng dụng mà thời gian hiển thị content được liên kết trực tiếp với tỷ lệ chuyển đổi.
 
-- **Unified mental model**: you get to use the same language and the same declarative, component-oriented mental model for developing your entire app, instead of jumping back and forth between a backend templating system and a frontend framework.
+- **Mô hình tâm lý thống nhất**: bạn có thể sử dụng cùng một ngôn ngữ và cùng một mô hình tâm lý, hướng đối tượng, để phát triển toàn bộ ứng dụng của bạn, thay vì nhảy qua lại giữa một hệ thống mẫu trình bày phía máy chủ và một framework phía máy khách.
 
-- **Better SEO**: the search engine crawlers will directly see the fully rendered page.
+- **SEO tốt hơn**: các trình thu thập của công cụ tìm kiếm sẽ trực tiếp nhìn thấy trang đã được hiển thị hoàn toàn.
 
   :::tip
-  As of now, Google and Bing can index synchronous JavaScript applications just fine. Synchronous being the key word there. If your app starts with a loading spinner, then fetches content via Ajax, the crawler will not wait for you to finish. This means if you have content fetched asynchronously on pages where SEO is important, SSR might be necessary.
+  Như hiện tại, Google và Bing có thể lập chỉ mục các ứng dụng JavaScript đồng bộ. Đồng bộ là từ khóa quan trọng ở đây. Nếu ứng dụng của bạn bắt đầu với một màn hình tải, sau đó lấy nội dung thông qua Ajax, trình thu thập sẽ không chờ bạn hoàn thành. Điều này có nghĩa là nếu bạn có nội dung được lấy bất đồng bộ trên các trang mà SEO là quan trọng, SSR có thể là cần thiết.
   :::
 
-There are also some trade-offs to consider when using SSR:
+Tuy nhiên, SSR cũng có một số nhược điểm:
 
-- Development constraints. Browser-specific code can only be used inside certain lifecycle hooks; some external libraries may need special treatment to be able to run in a server-rendered app.
+- Ràng buộc phát triển. Các đoạn code chỉ chạy trên trình duyệt chỉ có thể được sử dụng trong một số lifecycle hook; một số thư viện bên ngoài có thể cần xử lý đặc biệt để có thể chạy trong một ứng dụng được render trên server.
 
-- More involved build setup and deployment requirements. Unlike a fully static SPA that can be deployed on any static file server, a server-rendered app requires an environment where a Node.js server can run.
+- Yêu cầu thiết lập và triển khai phức tạp hơn. Không giống như một SPA tĩnh hoàn toàn, có thể được triển khai trên bất kỳ server tệp tĩnh nào, một ứng dụng được render trên server yêu cầu một môi trường nơi mà server Node.js có thể chạy.
 
-- More server-side load. Rendering a full app in Node.js is going to be more CPU-intensive than just serving static files, so if you expect high traffic, be prepared for corresponding server load and wisely employ caching strategies.
+- Tải trọng phía máy chủ cao hơn. Render một ứng dụng đầy đủ trong Node.js sẽ tốn nhiều CPU hơn chỉ phục vụ các tệp tĩnh, vì vậy nếu bạn mong đợi lưu lượng truy cập cao, hãy chuẩn bị cho tải trọng máy chủ tương ứng và sử dụng các chiến lược caching một cách khôn ngoan.
 
-Before using SSR for your app, the first question you should ask is whether you actually need it. It mostly depends on how important time-to-content is for your app. For example, if you are building an internal dashboard where an extra few hundred milliseconds on initial load doesn't matter that much, SSR would be an overkill. However, in cases where time-to-content is absolutely critical, SSR can help you achieve the best possible initial load performance.
+Trước khi sử dụng SSR cho ứng dụng của bạn, câu hỏi đầu tiên bạn nên đặt cho chính mình là liệu bạn có thực sự cần nó hay không. Điều này phụ thuộc chủ yếu vào việc thời gian hiển thị content có quan trọng hay không đối với ứng dụng của bạn. Ví dụ, nếu bạn đang xây dựng một dashboard nội bộ nơi mà vài trăm mili giây bổ sung trong thời gian tải trang không quan trọng, SSR sẽ là trở thành "đao mổ trâu giết gà". Tuy nhiên, trong các trường hợp mà thời gian hiển thị content tuyệt đối quan trọng, SSR có thể giúp bạn đạt được hiệu suất tốt nhất có thể đối với thời gian hiển thị content ban đầu.
 
 ### SSR vs. SSG {#ssr-vs-ssg}
 
-**Static Site Generation (SSG)**, also referred to as pre-rendering, is another popular technique for building fast websites. If the data needed to server-render a page is the same for every user, then instead of rendering the page every time a request comes in, we can render it only once, ahead of time, during the build process. Pre-rendered pages are generated and served as static HTML files.
+**Trình tạo trang tĩnh (SSG)**, còn được gọi là pre-rendering, là một kỹ thuật phổ biến khác để xây dựng các trang web nhanh chóng. Nếu dữ liệu cần thiết để render một trang là giống nhau cho mọi người dùng, thay vì render trang mỗi khi một yêu cầu đến, chúng ta có thể render nó chỉ một lần và dùng mãi mãi, trong bước build. Các trang được render trước được tạo và phục vụ dưới dạng các tệp HTML tĩnh.
 
-SSG retains the same performance characteristics of SSR apps: it provides great time-to-content performance. At the same time, it is cheaper and easier to deploy than SSR apps because the output is static HTML and assets. The keyword here is **static**: SSG can only be applied to pages consuming static data, i.e. data that is known at build time and does not change between deploys. Every time the data changes, a new deployment is needed.
+SSG giữ nguyên các đặc điểm hiệu suất của các ứng dụng SSR: nó cung cấp hiệu suất thời gian hiển thị content tuyệt vời. Đồng thời, nó cũng rẻ hơn và dễ dàng triển khai hơn các ứng dụng SSR vì đầu ra là HTML và các tài nguyên tĩnh. Từ khóa ở đây là **tĩnh**: SSG chỉ có thể được áp dụng cho các trang tiêu thụ dữ liệu tĩnh, tức là dữ liệu được biết trước vào thời điểm xây dựng và không thay đổi giữa các lần triển khai. Mỗi khi dữ liệu thay đổi, cần phải triển khai lại.
 
-If you're only investigating SSR to improve the SEO of a handful of marketing pages (e.g. `/`, `/about`, `/contact`, etc.), then you probably want SSG instead of SSR. SSG is also great for content-based websites such as documentation sites or blogs. In fact, this website you are reading right now is statically generated using [VitePress](https://vitepress.dev/), a Vue-powered static site generator.
+Nếu bạn chỉ đang tìm hiểu về SSR để cải thiện SEO của một số trang tiếp thị (ví dụ: `/`, `/about`, `/contact`, v.v.), thì bạn có thể muốn sử dụng SSG thay vì SSR. SSG cũng rất tuyệt vời cho các trang web dựa trên nội dung như các trang tài liệu hoặc blog. Trên thực tế, trang web bạn đang đọc ngay bây giờ được tạo tĩnh bằng [VitePress](https://vitepress.dev/), một trình tạo trang tĩnh được cung cấp bởi Vue.
 
-## Basic Tutorial {#basic-tutorial}
+## Hướng dẫn cơ bản {#basic-tutorial}
 
-### Rendering an App {#rendering-an-app}
+### Render một ứng dụng {#rendering-an-app}
 
-Let's take a look at the most bare-bones example of Vue SSR in action.
+Hãy xem xét một ứng dụng cơ bản nhất của Vue SSR:
 
-1. Create a new directory and `cd` into it
-2. Run `npm init -y`
-3. Add `"type": "module"` in `package.json` so that Node.js runs in [ES modules mode](https://nodejs.org/api/esm.html#modules-ecmascript-modules).
-4. Run `npm install vue`
-5. Create an `example.js` file:
+1. Tạo một thư mục mới và `cd` vào đó
+2. Chạy `npm init -y`
+3. Thêm `"type": "module"` vào `package.json` để Node.js chạy ở [chế độ ES modules](https://nodejs.org/api/esm.html#modules-ecmascript-modules).
+4. Chạy `npm install vue`
+5. Tạo một tệp `example.js`:
 
 ```js
-// this runs in Node.js on the server.
+// cái này chạy trong Node.js trên máy chủ.
 import { createSSRApp } from 'vue'
-// Vue's server-rendering API is exposed under `vue/server-renderer`.
+// Vue SSR API được phơi bày dưới `vue/server-renderer`.
 import { renderToString } from 'vue/server-renderer'
 
 const app = createSSRApp({
@@ -72,24 +75,24 @@ renderToString(app).then((html) => {
 })
 ```
 
-Then run:
+Sau đó chạy:
 
 ```sh
 > node example.js
 ```
 
-It should print the following to the command line:
+Dòng lệnh sẽ in ra:
 
 ```
 <button>1</button>
 ```
 
-[`renderToString()`](/api/ssr#rendertostring) takes a Vue app instance and returns a Promise that resolves to the rendered HTML of the app. It is also possible to stream rendering using the [Node.js Stream API](https://nodejs.org/api/stream.html) or [Web Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API). Check out the [SSR API Reference](/api/ssr) for full details.
+[`renderToString()`](/api/ssr#rendertostring) nhận một instance Vue và trả về một Promise giải quyết thành HTML được render của ứng dụng. Cũng có thể render dưới dạng stream bằng cách sử dụng [Node.js Stream API](https://nodejs.org/api/stream.html) hoặc [Web Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API). Kiểm tra [SSR API Reference](/api/ssr) để biết chi tiết đầy đủ.
 
-We can then move the Vue SSR code into a server request handler, which wraps the application markup with the full page HTML. We will be using [`express`](https://expressjs.com/) for the next steps:
+Chúng ta có thể di dời Vue SSR code vào một request handler của máy chủ, nơi mà nó bọc markup của ứng dụng với HTML đầy đủ. Chúng ta sẽ sử dụng [`express`](https://expressjs.com/) cho các bước tiếp theo:
 
-- Run `npm install express`
-- Create the following `server.js` file:
+- Chạy `npm install express`
+- Tạo tệp `server.js` với nội dung sau:
 
 ```js
 import express from 'express'
@@ -109,7 +112,7 @@ server.get('/', (req, res) => {
     <!DOCTYPE html>
     <html>
       <head>
-        <title>Vue SSR Example</title>
+        <title>Ví dụ về Vue SSR</title>
       </head>
       <body>
         <div id="app">${html}</div>
@@ -124,40 +127,40 @@ server.listen(3000, () => {
 })
 ```
 
-Finally, run `node server.js` and visit `http://localhost:3000`. You should see the page working with the button.
+Cuối cùng, chạy `node server.js` và truy cập `http://localhost:3000`. Bạn sẽ thấy trang hoạt động với nút được tạo sẵn.
 
-[Try it on StackBlitz](https://stackblitz.com/fork/vue-ssr-example-basic?file=index.js)
+[Thử trong StackBlitz](https://stackblitz.com/fork/vue-ssr-example-basic?file=index.js)
 
-### Client Hydration {#client-hydration}
+### Hydration ở phía Client {#client-hydration}
 
-If you click the button, you'll notice the number doesn't change. The HTML is completely static on the client since we are not loading Vue in the browser.
+Nếu nhấn vào nút, bạn sẽ nhận thấy count không thay đổi. HTML sẽ ở trong trạng thái tĩnh trên máy khách vì chúng ta chưa tải Vue về trình duyệt.
 
-To make the client-side app interactive, Vue needs to perform the **hydration** step. During hydration, it creates the same Vue application that was run on the server, matches each component to the DOM nodes it should control, and attaches DOM event listeners.
+Để làm cho ứng dụng phía máy khách có thể tương tác được, Vue cần thực hiện bước **hydration**. Trong quá trình hydration, nó tạo ra cùng một ứng dụng Vue đã chạy trên máy chủ, khớp mỗi thành phần với các nút DOM mà nó nên điều khiển và gắn các trình lắng nghe sự kiện DOM.
 
-To mount an app in hydration mode, we need to use [`createSSRApp()`](/api/application#createssrapp) instead of `createApp()`:
+Để mount một ứng dụng trong chế độ hydration, chúng ta cần sử dụng [`createSSRApp()`](/api/application#createssrapp) thay vì `createApp()`:
 
 ```js{2}
-// this runs in the browser.
+// cái này chạy trong trình duyệt.
 import { createSSRApp } from 'vue'
 
 const app = createSSRApp({
-  // ...same app as on server
+  // ...cùng một ứng dụng như trên server
 })
 
-// mounting an SSR app on the client assumes
-// the HTML was pre-rendered and will perform
-// hydration instead of mounting new DOM nodes.
+// mounting một ứng dụng SSR trên máy khách
+// giả định rằng HTML đã được render trước
+// và sẽ thực hiện hydration thay vì mount các nút DOM mới.
 app.mount('#app')
 ```
 
-### Code Structure {#code-structure}
+### Cấu trúc code {#code-structure}
 
-Notice how we need to reuse the same app implementation as on the server. This is where we need to start thinking about code structure in an SSR app - how do we share the same application code between the server and the client?
+Hãy chú ý cách chúng ta cần phải tái sử dụng cùng một cài đặt ứng dụng như trên máy chủ. Đây là nơi chúng ta cần bắt đầu suy nghĩ về cấu trúc code trong một ứng dụng SSR - làm thế nào để chúng ta có thể chia sẻ cùng một code ứng dụng giữa máy chủ và máy khách?
 
-Here we will demonstrate the most bare-bones setup. First, let's split the app creation logic into a dedicated file, `app.js`:
+Tại đây chúng ta sẽ thực hiện cấu trúc code đơn giản nhất. Đầu tiên, hãy chia logic tạo ứng dụng thành một tệp riêng biệt, `app.js`:
 
 ```js
-// app.js (shared between server and client)
+// app.js (được chia sẻ giữa máy chủ và máy khách)
 import { createSSRApp } from 'vue'
 
 export function createApp() {
@@ -168,9 +171,9 @@ export function createApp() {
 }
 ```
 
-This file and its dependencies are shared between the server and the client - we call them **universal code**. There are a number of things you need to pay attention to when writing universal code, as we will [discuss below](#writing-ssr-friendly-code).
+File này và các phụ thuộc của nó được chia sẻ giữa máy chủ và máy khách - chúng ta gọi chúng là **universal code**. Có một số điều bạn cần chú ý khi viết universal code, như chúng ta sẽ [thảo luận bên dưới](#writing-ssr-friendly-code).
 
-Our client entry imports the universal code, creates the app, and performs the mount:
+Điểm đầu vào phía máy khách sẽ nhập universal code, tạo ứng dụng và thực hiện việc mount:
 
 ```js
 // client.js
@@ -179,7 +182,7 @@ import { createApp } from './app.js'
 createApp().mount('#app')
 ```
 
-And the server uses the same app creation logic in the request handler:
+Và server sẽ sử dụng universal code để tạo ứng dụng và render HTML:
 
 ```js{2,5}
 // server.js (irrelevant code omitted)
@@ -193,43 +196,47 @@ server.get('/', (req, res) => {
 })
 ```
 
-In addition, in order to load the client files in the browser, we also need to:
+Bên cạnh đó, để có thể tải các tệp trong trình duyệt trên máy khách, ta còn cần phải:
 
-1. Serve client files by adding `server.use(express.static('.'))` in `server.js`.
-2. Load the client entry by adding `<script type="module" src="/client.js"></script>` to the HTML shell.
-3. Support usage like `import * from 'vue'` in the browser by adding an [Import Map](https://github.com/WICG/import-maps) to the HTML shell.
+1. Gửi các tệp máy khách bằng cách sử dụng `express.static()` trong `server.js`:
+2. Tải đầu vào của máy khách bằng cách thêm `<script src="/client.js"></script>` vào HTML shell.
+3. Hỗ trợ việc sử dụng `import * from 'vue'` trong trình duyệt bằng cách thêm một [Import Map](https://github.com/WICG/import-maps) vào HTML shell.
 
-[Try the completed example on StackBlitz](https://stackblitz.com/fork/vue-ssr-example?file=index.js). The button is now interactive!
+[Thử ví dụ đầy đủ trên StackBlitz](https://stackblitz.com/fork/vue-ssr-example?file=index.js). Nút bây giờ đã có thể tương tác trên máy khách
 
 ## Higher Level Solutions {#higher-level-solutions}
 
-Moving from the example to a production-ready SSR app involves a lot more. We will need to:
+Chuyển đổi từ ví dụ đơn giản sang một ứng dụng SSR thực tế sẽ cần nhiều yếu tố hơn. Chúng ta sẽ cần:
+
+- Hỗ trợ Vue SFC và các yêu cầu về xây dựng khác. Trong thực tế, chúng ta sẽ cần phối hợp hai bước xây dựng cho cùng một ứng dụng: một cho máy khách và một cho máy chủ.
 
 - Support Vue SFCs and other build step requirements. In fact, we will need to coordinate two builds for the same app: one for the client, and one for the server.
 
   :::tip
-  Vue components are compiled differently when used for SSR - templates are compiled into string concatenations instead of Virtual DOM render functions for more efficient rendering performance.
+  Vue component được biên dịch khác nhau khi được sử dụng cho SSR - các template được biên dịch thành chuỗi nối thay vì các hàm render Virtual DOM để tăng hiệu suất hiển thị.
   :::
 
+- Trong server request handler, render HTML với các liên kết tài nguyên phù hợp với phía máy khách và các gợi ý tài nguyên tối ưu. Chúng ta cũng có thể cần chuyển đổi giữa chế độ SSR và SSG, hoặc thậm chí kết hợp cả hai trong cùng một ứng dụng.
 - In the server request handler, render the HTML with the correct client-side asset links and optimal resource hints. We may also need to switch between SSR and SSG mode, or even mix both in the same app.
 
+- Quản lý điều hướng, lấy dữ liệu và các kho lưu trữ state một cách đồng nhất.
 - Manage routing, data fetching, and state management stores in a universal manner.
 
-A complete implementation would be quite complex and depends on the build toolchain you have chosen to work with. Therefore, we highly recommend going with a higher-level, opinionated solution that abstracts away the complexity for you. Below we will introduce a few recommended SSR solutions in the Vue ecosystem.
+Một cài đặt đầy đủ sẽ khá phức tạp và phụ thuộc vào bộ công cụ xây dựng mà bạn đã chọn để làm việc. Do đó, chúng tôi rất khuyến khích bạn nên sử dụng một giải pháp có mức độ cao hơn, mang tính chủ quan hơn để trừu tượng hóa các chi tiết phức tạp cho bạn. Dưới đây chúng tôi sẽ giới thiệu một số giải pháp SSR được khuyến nghị trong hệ sinh thái Vue.
 
 ### Nuxt {#nuxt}
 
-[Nuxt](https://nuxt.com/) is a higher-level framework built on top of the Vue ecosystem which provides a streamlined development experience for writing universal Vue applications. Better yet, you can also use it as a static site generator! We highly recommend giving it a try.
+[Nuxt](https://nuxt.com/) là một framework cao cấp được xây dựng trên cơ sở của hệ sinh thái Vue, cung cấp một trải nghiệm phát triển được tối ưu hóa cho việc viết các ứng dụng Vue đa nền tảng. Hơn thế nữa, bạn cũng có thể sử dụng nó như một trình tạo trang tĩnh! Chúng tôi rất khuyến khích bạn nên thử nó.
 
 ### Quasar {#quasar}
 
-[Quasar](https://quasar.dev) is a complete Vue-based solution that allows you to target SPA, SSR, PWA, mobile app, desktop app, and browser extension all using one codebase. It not only handles the build setup, but also provides a full collection of Material Design compliant UI components.
+[Quasar](https://quasar.dev) là một giải pháp dựa trên Vue hoàn chỉnh cho phép bạn tạo ra SPA, SSR, PWA, ứng dụng di động, ứng dụng desktop và tiện ích trình duyệt chỉ bằng một codebase. Nó không chỉ xử lý thiết lập xây dựng, mà còn cung cấp một bộ sưu tập đầy đủ các thành phần UI tuân thủ Material Design.
 
 ### Vite SSR {#vite-ssr}
 
-Vite provides built-in [support for Vue server-side rendering](https://vitejs.dev/guide/ssr.html), but it is intentionally low-level. If you wish to go directly with Vite, check out [vite-plugin-ssr](https://vite-plugin-ssr.com/), a community plugin that abstracts away many challenging details for you.
+Vite cung cấp các [hỗ trợ tích hợp sẵn cho Vue server-side rendering](https://vitejs.dev/guide/ssr.html), nhưng nó được thiết kế với mức độ low-level. Nếu bạn muốn tiếp tục với Vite, hãy xem [vite-plugin-ssr](https://vite-plugin-ssr.com/), một plugin cộng đồng trừu tượng hóa nhiều chi tiết phức tạp cho bạn.
 
-You can also find an example Vue + Vite SSR project using manual setup [here](https://github.com/vitejs/vite-plugin-vue/tree/main/playground/ssr-vue), which can serve as a base to build upon. Note this is only recommended if you are experienced with SSR / build tools and really want to have complete control over the higher-level architecture.
+Bạn cũng có thể tìm thấy một ví dụ về dự án Vue + Vite SSR sử dụng thiết lập thủ công [ở đây](https://github.com/vitejs/vite-plugin-vue/tree/main/playground/ssr-vue), nó có thể được sử dụng như một cơ sở để xây dựng. Lưu ý rằng điều này chỉ được khuyến khích nếu bạn có kinh nghiệm với SSR / các công cụ xây dựng và thực sự muốn có sự kiểm soát hoàn toàn về kiến trúc cấp cao hơn.
 
 ## Writing SSR-friendly Code {#writing-ssr-friendly-code}
 
