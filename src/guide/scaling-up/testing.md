@@ -82,7 +82,7 @@ Có hai trường hợp mà bạn CÓ thể viết unit test cho các tính năn
 
 ### Composables {#composables}
 
-Một category của các hàm đặc biệt cho các ứng dụng Vue là [Composables](/guide/reusability/composables), có thể yêu cầu xử lý đặc biệt trong quá trình kiểm thử. 
+Một danh mục các hàm đặc biệt cho các ứng dụng Vue là [Composables](/guide/reusability/composables), có thể yêu cầu xử lý đặc biệt trong quá trình kiểm thử. 
 Xem [Kiểm thử Composables](#testing-composables) bên dưới để biết thêm chi tiết.
 
 ### Unit Testing Components {#unit-testing-components}
@@ -277,7 +277,6 @@ Khi kiểm thử end-to-end (E2E) được chạy trong các pipeline liên tụ
 - [Nightwatch](https://nightwatchjs.org/) là một giải pháp kiểm thử E2E dựa trên [Selenium WebDriver](https://www.npmjs.com/package/selenium-webdriver). Đây là thư viện kiểm thử hỗ trợ nhiều trình duyệt nhất.
 
 - [WebdriverIO](https://webdriver.io/) là một framework tự động cho việc kiểm thử web và mobile dựa trên giao thức WebDriver.
-is a test automation framework for web and mobile testing based on the WebDriver protocol.
 
 ## Cách thực hiện {#recipes}
 

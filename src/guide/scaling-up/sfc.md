@@ -66,13 +66,13 @@ Mặc dù SFCs yêu cầu một bước xây dựng, nhưng lại có nhiều l�
 - [Cú pháp linh hoạt hơn khi làm việc với Composition API.](/api/sfc-script-setup)
 - Tối ưu hóa thời gian biên dịch bằng cách phân tích chéo các template và script
 - [Hỗ trợ IDE](/guide/scaling-up/tooling#ide-support) với tự động hoàn thành và kiểm tra kiểu cho các biểu thức template
-- Hỗ trợ Hot-Module Replacement (HMR)
+- Hỗ trợ thay mô-đun tại chỗ (Hot-Module Replacement - HMR)
 
 SFC là một đặc điểm xác định của Vue như một framework, và là phương pháp được khuyến khích để sử dụng Vue trong các kịch bản sau:
 
-- Single-Page Applications (SPA)
-- Static Site Generation (SSG)
-- Any non-trivial frontend where a build step can be justified for better development experience (DX).
+- Ứng dụng đơn trang (Single-Page Applications - SPA)
+- Ứng dụng tạo trang tĩnh (Static Site Generation - SSG)
+- Bất kỳ ứng dụng frontend phức tạp nào cần bước build để tối ưu trải nghiệm phát triển (DX). 
 
 Nói như vậy, chúng tôi nhận thức rằng có các kịch bản mà SFC có thể cảm thấy quá mức. Đây là lý do tại sao Vue vẫn có thể được sử dụng thông qua JavaScript thuần mà không cần bước xây dựng. Nếu bạn chỉ đang tìm cách tăng cường HTML tĩnh với các tương tác nhẹ, bạn cũng có thể kiểm tra [petite-vue](https://github.com/vuejs/petite-vue), một tập hợp con 6 kB của Vue được tối ưu hóa cho việc tăng cường tiến bộ.
 
@@ -89,6 +89,7 @@ export default {
   }
 }
 ```
+
 Thẻ tag `<style>` bên trong SFC thường được chèn như là các thẻ `<style>` native trong quá trình phát triển để hỗ trợ hot update. Đối với production, chúng có thể được trích xuất và hợp nhất thành một tệp CSS duy nhất.
 
 Bạn có thể chơi với SFC và khám phá cách chúng được biên dịch trong [Vue SFC Playground](https://play.vuejs.org/).

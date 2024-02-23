@@ -9,10 +9,8 @@ outline: deep
 ### SSR là gì? {#what-is-ssr}
 
 Vue.js là một framework để xây dựng các ứng dụng client-side. Theo mặc định, các thành phần Vue tạo và điều khiển DOM trong trình duyệt như đầu ra. Tuy nhiên, nó cũng có thể được sử dụng để tạo các chuỗi HTML tĩnh trên máy chủ, gửi chúng trực tiếp đến trình duyệt và cuối cùng "hydrate" các đánh dấu tĩnh thành một ứng dụng tương tác đầy đủ trên máy khách.
-Vue.js is a framework for building client-side applications. By default, Vue components produce and manipulate DOM in the browser as output. However, it is also possible to render the same components into HTML strings on the server, send them directly to the browser, and finally "hydrate" the static markup into a fully interactive app on the client.
 
 Một ứng dụng Vue SSR cũng có thể được coi là "isomorphic" hoặc "universal", trong ý nghĩa là hầu hết mã ứng dụng của bạn chạy trên cả máy chủ **và** máy khách.
-A server-rendered Vue.js app can also be considered "isomorphic" or "universal", in the sense that the majority of your app's code runs on both the server **and** the client.
 
 ### Tại sao lại sử dụng SSR? {#why-ssr}
 

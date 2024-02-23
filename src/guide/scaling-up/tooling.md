@@ -53,7 +53,7 @@ Nếu bạn đang tìm kiếm một giải pháp nhẹ hơn cho việc sử dụ
 
 ## Hỗ trợ về IDE {#ide-support}
 
-- Cấu hình IDE được khuyến khích là [VSCode](https://code.visualstudio.com/) + tiện ích/plugin [Vue Language Features (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.volar). Tiện ích này cung cấp các tính năng như syntax highlighting, hỗ trợ TypeScript, và intellisense cho các biểu thức template và các props của component.
+- Cấu hình IDE được khuyến khích là [VSCode](https://code.visualstudio.com/) + tiện ích/plugin [Vue Language Features (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.volar). Tiện ích này cung cấp các tính năng như đánh dấu cú pháp (syntax highlighting), hỗ trợ TypeScript, và intellisense cho các biểu thức template và các props của component.
 
   :::tip
   Volar thay thế cho [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur), tiện ích VSCode chính thức trước đây của chúng tôi cho Vue 2. Nếu bạn đã cài đặt Vetur, hãy chắc chắn tắt nó trong các project Vue 3.
