@@ -6,20 +6,20 @@ const { x, y } = useMouse()
 </script>
 
 :::tip
-This section assumes basic knowledge of Composition API. If you have been learning Vue with Options API only, you can set the API Preference to Composition API (using the toggle at the top of the left sidebar) and re-read the [Reactivity Fundamentals](/guide/essentials/reactivity-fundamentals) and [Lifecycle Hooks](/guide/essentials/lifecycle) chapters.
+Phần này giả định bạn đã có kiến thức cơ bản về Composition API. Nếu bạn chỉ học Vue với Options API, bạn có thể đặt API Preference thành Composition API (sử dụng toggle ở đầu của thanh bên trái) và đọc lại các chương [Reactivity Fundamentals](/guide/essentials/reactivity-fundamentals) và [Lifecycle Hooks](/guide/essentials/lifecycle).
 :::
 
-## What is a "Composable"? {#what-is-a-composable}
+## "Composable" là cái gì? {#what-is-a-composable}
 
-In the context of Vue applications, a "composable" is a function that leverages Vue's Composition API to encapsulate and reuse **stateful logic**.
+Trong ngữ cảnh của ứng dụng Vue, một "composable" là một hàm sử dụng Composition API của Vue để đóng gói và tái sử dụng **logic có trạng thái**.
 
-When building frontend applications, we often need to reuse logic for common tasks. For example, we may need to format dates in many places, so we extract a reusable function for that. This formatter function encapsulates **stateless logic**: it takes some input and immediately returns expected output. There are many libraries out there for reusing stateless logic - for example [lodash](https://lodash.com/) and [date-fns](https://date-fns.org/), which you may have heard of.
+Khi xây dựng các ứng dụng frontend, chúng ta thường cần tái sử dụng logic cho các nhiệm vụ phổ biến. Ví dụ, chúng ta có thể cần định dạng ngày tháng ở nhiều nơi, vì vậy chúng ta trích xuất một hàm tái sử dụng cho điều đó. Hàm định dạng này bao gồm **logic không có trạng thái**: nó nhận một số đầu vào và ngay lập tức trả về một đầu ra theo mong muốn. Có nhiều thư viện để tái sử dụng logic không có trạng thái - ví dụ như [lodash](https://lodash.com/) và [date-fns](https://date-fns.org/), mà bạn có thể đã nghe qua.
 
-By contrast, stateful logic involves managing state that changes over time. A simple example would be tracking the current position of the mouse on a page. In real-world scenarios, it could also be more complex logic such as touch gestures or connection status to a database.
+Ngược lại, logic có trạng thái liên quan đến việc quản lý trạng thái thay đổi theo thời gian. Một ví dụ đơn giản có thể là theo dõi vị trí hiện tại của chuột trên trang. Trong các kịch bản thực tế, nó cũng có thể là logic phức tạp hơn như cử chỉ chạm hoặc trạng thái kết nối đến cơ sở dữ liệu.
 
-## Mouse Tracker Example {#mouse-tracker-example}
+## Ví dụ về Truy dấu con trỏ chuột {#mouse-tracker-example}
 
-If we were to implement the mouse tracking functionality using the Composition API directly inside a component, it would look like this:
+Nếu chúng ta triển khai chức năng truy dấu chuột bằng Composition API trực tiếp bên trong một component, nó sẽ trông như thế này:
 
 ```vue
 <script setup>
@@ -37,38 +37,38 @@ onMounted(() => window.addEventListener('mousemove', update))
 onUnmounted(() => window.removeEventListener('mousemove', update))
 </script>
 
-<template>Mouse position is at: {{ x }}, {{ y }}</template>
+<template>Vị trí hiện tại của con trỏ: {{ x }}, {{ y }}</template>
 ```
 
-But what if we want to reuse the same logic in multiple components? We can extract the logic into an external file, as a composable function:
+Nhưng nếu chúng ta muốn tái sử dụng cùng một logic trong nhiều component? Chúng ta có thể trích xuất logic vào một tệp bên ngoài, như một hàm có thể tái sử dụng:
 
 ```js
 // mouse.js
 import { ref, onMounted, onUnmounted } from 'vue'
 
-// by convention, composable function names start with "use"
+// theo quy chuẩn, tên hàm composable bắt đầu bằng "use"
 export function useMouse() {
-  // state encapsulated and managed by the composable
+  // state được đóng gói và quản lý bởi composable
   const x = ref(0)
   const y = ref(0)
 
-  // a composable can update its managed state over time.
+  // một composable có thể cập nhật các state mà nó quản lý theo thời gian.
   function update(event) {
     x.value = event.pageX
     y.value = event.pageY
   }
 
-  // a composable can also hook into its owner component's
-  // lifecycle to setup and teardown side effects.
+  // một composable cũng có thể kết nối với vòng đời của component chủ 
+  // để thiết lập và hủy các hiệu ứng phụ.
   onMounted(() => window.addEventListener('mousemove', update))
   onUnmounted(() => window.removeEventListener('mousemove', update))
 
-  // expose managed state as return value
+  // trả về các state được quản lý để sử dụng trong component
   return { x, y }
 }
 ```
 
-And this is how it can be used in components:
+Và đây là cách nó có thể được sử dụng trong các component:
 
 ```vue
 <script setup>
@@ -77,34 +77,34 @@ import { useMouse } from './mouse.js'
 const { x, y } = useMouse()
 </script>
 
-<template>Mouse position is at: {{ x }}, {{ y }}</template>
+<template>Vị trí hiện tại của con trỏ: {{ x }}, {{ y }}</template>
 ```
 
 <div class="demo">
-  Mouse position is at: {{ x }}, {{ y }}
+  Vị trí hiện tại của con trỏ: {{ x }}, {{ y }}
 </div>
 
-[Try it in the Playground](https://play.vuejs.org/#eNqNkj1rwzAQhv/KocUOGKVzSAIdurVjoQUvJj4XlfgkJNmxMfrvPcmJkkKHLrbu69H7SlrEszFyHFDsxN6drDIeHPrBHGtSvdHWwwKDwzfNHwjQWd1DIbd9jOW3K2qq6aTJxb6pgpl7Dnmg3NS0365YBnLgsTfnxiNHACvUaKe80gTKQeN3sDAIQqjignEhIvKYqMRta1acFVrsKtDEQPLYxuU7cV8Msmg2mdTilIa6gU5p27tYWKKq1c3ENphaPrGFW25+yMXsHWFaFlfiiOSvFIBJjs15QJ5JeWmaL/xYS/Mfpc9YYrPxl52ULOpwhIuiVl9k07Yvsf9VOY+EtizSWfR6xKK6itgkvQ/+fyNs6v4XJXIsPwVL+WprCiL8AEUxw5s=)
+[Thử trong Playground](https://play.vuejs.org/#eNqNkj1rwzAQhv/KocUOGKVzSAIdurVjoQUvJj4XlfgkJNmxMfrvPcmJkkKHLrbu69H7SlrEszFyHFDsxN6drDIeHPrBHGtSvdHWwwKDwzfNHwjQWd1DIbd9jOW3K2qq6aTJxb6pgpl7Dnmg3NS0365YBnLgsTfnxiNHACvUaKe80gTKQeN3sDAIQqjignEhIvKYqMRta1acFVrsKtDEQPLYxuU7cV8Msmg2mdTilIa6gU5p27tYWKKq1c3ENphaPrGFW25+yMXsHWFaFlfiiOSvFIBJjs15QJ5JeWmaL/xYS/Mfpc9YYrPxl52ULOpwhIuiVl9k07Yvsf9VOY+EtizSWfR6xKK6itgkvQ/+fyNs6v4XJXIsPwVL+WprCiL8AEUxw5s=)
 
-As we can see, the core logic remains identical - all we had to do was move it into an external function and return the state that should be exposed. Just like inside a component, you can use the full range of [Composition API functions](/api/#composition-api) in composables. The same `useMouse()` functionality can now be used in any component.
+Như chúng ta có thể thấy, phần logic cốt lõi vẫn được giữ nguyên - tất cả những gì chúng ta cần là di chuyển nó vào một hàm bên ngoài và trả về state mà nên được tiếp cận. Giống như trong một component, bạn có thể sử dụng toàn bộ loạt các [Composition API functions](/api/#composition-api) trong composables. Cùng một hàm `useMouse()` có thể được sử dụng trong bất kỳ component nào.
 
-The cooler part about composables though, is that you can also nest them: one composable function can call one or more other composable functions. This enables us to compose complex logic using small, isolated units, similar to how we compose an entire application using components. In fact, this is why we decided to call the collection of APIs that make this pattern possible Composition API.
+Phần tuyệt vời hơn về composable đó chính là bạn cũng có thể lồng chúng vào nhau: một hàm composable có thể gọi một hoặc nhiều hàm composable khác. Điều này cho phép chúng ta kết hợp logic phức tạp bằng cách sử dụng các đơn vị nhỏ, cô lập, tương tự như cách chúng ta kết hợp toàn bộ ứng dụng bằng các component. Trong thực tế, đây là lý do tại sao chúng tôi quyết định gọi tập hợp các API là Composition API.
 
-For example, we can extract the logic of adding and removing a DOM event listener into its own composable:
+Ví dụ, chúng ta có thể trích xuất logic của việc thực hiện và xóa một sự kiện DOM thành một composable riêng:
 
 ```js
 // event.js
 import { onMounted, onUnmounted } from 'vue'
 
 export function useEventListener(target, event, callback) {
-  // if you want, you can also make this
-  // support selector strings as target
+  // nếu bạn muốn, bạn cũng có thể làm cho nó 
+  // hỗ trợ chuỗi chọn như mục tiêu
   onMounted(() => target.addEventListener(event, callback))
   onUnmounted(() => target.removeEventListener(event, callback))
 }
 ```
 
-And now our `useMouse()` composable can be simplified to:
+Và bây giờ composable `useMouse()` của chúng ta có thể được đơn giản hóa thành:
 
 ```js{3,9-12}
 // mouse.js
@@ -125,12 +125,12 @@ export function useMouse() {
 ```
 
 :::tip
-Each component instance calling `useMouse()` will create its own copies of `x` and `y` state so they won't interfere with one another. If you want to manage shared state between components, read the [State Management](/guide/scaling-up/state-management) chapter.
+Mỗi component instance gọi `useMouse()` sẽ tạo ra bản sao riêng của state `x` và `y` nên chúng sẽ không can thiệp vào nhau. Nếu bạn muốn quản lý state chia sẻ giữa các component, hãy đọc chương [State Management](/guide/scaling-up/state-management).
 :::
 
-## Async State Example {#async-state-example}
+## Ví dụ về State bất đồng bộ State {#async-state-example}
 
-The `useMouse()` composable doesn't take any arguments, so let's take a look at another example that makes use of one. When doing async data fetching, we often need to handle different states: loading, success, and error:
+`useMouse()` composable không nhận bất kỳ đối số nào, vì vậy hãy xem xét một ví dụ khác mà sử dụng một đối số. Khi thực hiện việc lấy dữ liệu bất đồng bộ, chúng ta thường cần xử lý các trạng thái khác nhau: đang tải, thành công và lỗi:
 
 ```vue
 <script setup>
@@ -146,16 +146,16 @@ fetch('...')
 </script>
 
 <template>
-  <div v-if="error">Oops! Error encountered: {{ error.message }}</div>
+  <div v-if="error">Ối! Gặp phải lỗi rồi: {{ error.message }}</div>
   <div v-else-if="data">
-    Data loaded:
+    Data đã tải xong:
     <pre>{{ data }}</pre>
   </div>
-  <div v-else>Loading...</div>
+  <div v-else>Đang tải...</div>
 </template>
 ```
 
-It would be tedious to have to repeat this pattern in every component that needs to fetch data. Let's extract it into a composable:
+Việc lặp lại mẫu này trong mỗi component cần lấy dữ liệu sẽ trở nên khá kỳ cục. Hãy trích xuất nó thành một composable:
 
 ```js
 // fetch.js
@@ -174,7 +174,7 @@ export function useFetch(url) {
 }
 ```
 
-Now in our component we can just do:
+Bây giờ trong component, chúng ta chỉ cần:
 
 ```vue
 <script setup>
@@ -184,29 +184,29 @@ const { data, error } = useFetch('...')
 </script>
 ```
 
-### Accepting Reactive State {#accepting-reactive-state}
+### Chấp nhận các Reactive State {#accepting-reactive-state}
 
-`useFetch()` takes a static URL string as input - so it performs the fetch only once and is then done. What if we want it to re-fetch whenever the URL changes? In order to achieve this, we need to pass reactive state into the composable function, and let the composable create watchers that perform actions using the passed state.
+`useFetch()` chỉ nhận một chuỗi URL tĩnh làm đầu vào - vì vậy nó thực hiện việc lấy dữ liệu chỉ một lần và sau đó là xong. Nhưng nếu chúng ta muốn nó lấy lại mỗi khi URL thay đổi? Để làm được điều này, chúng ta cần truyền reactive state vào hàm composable, và để composable tạo ra các watcher thực hiện hành động sử dụng state đã truyền vào.
 
-For example, `useFetch()` should be able to accept a ref:
+Ví dụ, `useFetch()` nên có thể chấp nhận một ref:
 
 ```js
 const url = ref('/initial-url')
 
 const { data, error } = useFetch(url)
 
-// this should trigger a re-fetch
+// việc này nên kích hoạt lại fetch
 url.value = '/new-url'
 ```
 
-Or, accept a getter function:
+Hoặc, chấp nhận một hàm getter:
 
 ```js
-// re-fetch when props.id changes
+// fetch lại khi props.id thay đổi
 const { data, error } = useFetch(() => `/posts/${props.id}`)
 ```
 
-We can refactor our existing implementation with the [`watchEffect()`](/api/reactivity-core.html#watcheffect) and [`toValue()`](/api/reactivity-utilities.html#tovalue) APIs:
+Chúng ta có thể tái cấu trúc triển khai hiện tại của chúng ta với các API [`watchEffect()`](/api/reactivity-core.html#watcheffect) và [`toValue()`](/api/reactivity-utilities.html#tovalue):
 
 ```js{8,13}
 // fetch.js
@@ -224,7 +224,7 @@ export function useFetch(url) {
 	}
 
   watchEffect(() => {
-    // reset state before fetching..
+    // thiết lập lại state trước khi fetching..
     fetchData(url)
   })
 
@@ -232,87 +232,89 @@ export function useFetch(url) {
 }
 ```
 
-`toValue()` is an API added in 3.3. It is designed to normalize refs or getters into values. If the argument is a ref, it returns the ref's value; if the argument is a function, it will call the function and return its return value. Otherwise, it returns the argument as-is. It works similarly to [`unref()`](/api/reactivity-utilities.html#unref), but with special treatment for functions.
+`toValue()` là một API được thêm vào từ phiên bản 3.3. Nó được thiết kế để chuẩn hóa refs hoặc getters thành giá trị. Nếu đối số là một ref, nó sẽ trả về giá trị của ref; nếu đối số là một hàm, nó sẽ gọi hàm và trả về giá trị trả về của nó. Nếu không, nó sẽ trả về đối số như một giá trị. Nó hoạt động tương tự như [`unref()`](/api/reactivity-utilities.html#unref), nhưng với xử lý đặc biệt cho hàm.
 
-Notice that `toValue(url)` is called **inside** the `watchEffect` callback. This ensures that any reactive dependencies accessed during the `toValue()` normalization are tracked by the watcher.
+Chú ý rằng `toValue(url)` được gọi **bên trong** callback của `watchEffect`. Điều này đảm bảo rằng bất kỳ phụ thuộc có thể được truy cập trong quá trình chuẩn hóa `toValue()` đều được theo dõi bởi watcher.
 
+Phiên bản hiện tại của `useFetch()` bây giờ chấp nhận chuỗi URL tĩnh, refs và getters, làm cho nó linh hoạt hơn nhiều. Watch effect sẽ chạy ngay lập tức, và sẽ theo dõi bất kỳ phụ thuộc nào được truy cập trong `toValue(url)`. Nếu không có phụ thuộc nào được theo dõi (ví dụ: url đã là chuỗi), hiệu ứng chỉ chạy một lần; nếu không, nó sẽ chạy lại mỗi khi một phụ thuộc được theo dõi thay đổi.
 This version of `useFetch()` now accepts static URL strings, refs, and getters, making it much more flexible. The watch effect will run immediately, and will track any dependencies accessed during `toValue(url)`. If no dependencies are tracked (e.g. url is already a string), the effect runs only once; otherwise, it will re-run whenever a tracked dependency changes.
 
-Here's [the updated version of `useFetch()`](https://play.vuejs.org/#eNptVMFu2zAM/RXOFztYZncodgmSYAPWnTZsKLadfFFsulHrSIZEJwuC/PtIyXaTtkALxxT5yPf45FPypevyfY/JIln6yumOwCP13bo0etdZR3ACh80cKrvresIaztA4u4OUi9KLpN7jN6RqO53nxRjKHz1nlqayxhNslMc/roUVpFuizi+K4tFb07Wqwq1ta3Q5HTtd2RpzblqQra0vGCCW65oreaIs/ZjOxmAf8MYRs2wGq/XU6D3X5HvV9sj5Y8UJakVqDuicdXMGJHfk0VcTj4wxOX9ZRFVYD34h3PGchPwG8N2qGjobZlpIYLnpiayB/YfGulWZaNAGPpUJfK5aXT1JRIbXZbI+nUDD+bwsYklAL2lZ6z1X64ZTw2CcKcAM3a1/2s6/gzsJAzKL3hA6rBfAWCE536H36gEDriwwFA4zTSMEpox7L8+L/pxacPv4K86Brcc4jGjFNV/5AS3TlrbLzqHwkLPYkt/fxFiLUto85Hk+ni+LScpknlwYhX147buD4oO7psGK5kD2r+zxhQdLg/9CSdObijSzvVoinGSeuPYwbPSP6VtZ8HgSJHx5JP8XA2TKH00F0V4BFaAouISvDHhiNrBB3j1CI90D5ZglfaMHuYXAx3Dc2+v4JbRt9wi0xWDymCpTbJ01tvftEbwFTakHcqp64guqPKgJoMYOTc1+OcLmeMUlEBzZM3ZUdjVqPPj/eRq5IAPngKwc6UZXWrXcpFVH4GmVqXkt0boiHwGog9IEpHdo+6GphBmgN6L1DA66beUC9s4EnhwdeOomMlMSkwsytLac5g7aR11ibkDZSLUABRk+aD8QoMiS1WSCcaKwISEZ2MqXIaBfLSpmchUb05pRsTNUIiNkOFjr9SZxyJTHOXx1YGR49eGRDP4rzRt6lmay86Re7DcgGTzAL74GrEOWDUaRL9kjb/fSoWzO3wPAlXNB9M1+KNrmcXF8uoab/PaCljQLwCN5oS93+jpFWmYyT/g8Zel9NEJ4S2fPpYMsc7i9uQlREeecnP8DWEwr0Q==), with an artificial delay and randomized error for demo purposes.
+Đây là [phiên bản cập nhật của `useFetch()`](https://play.vuejs.org/#eNptVMFu2zAM/RXOFztYZncodgmSYAPWnTZsKLadfFFsulHrSIZEJwuC/PtIyXaTtkALxxT5yPf45FPypevyfY/JIln6yumOwCP13bo0etdZR3ACh80cKrvresIaztA4u4OUi9KLpN7jN6RqO53nxRjKHz1nlqayxhNslMc/roUVpFuizi+K4tFb07Wqwq1ta3Q5HTtd2RpzblqQra0vGCCW65oreaIs/ZjOxmAf8MYRs2wGq/XU6D3X5HvV9sj5Y8UJakVqDuicdXMGJHfk0VcTj4wxOX9ZRFVYD34h3PGchPwG8N2qGjobZlpIYLnpiayB/YfGulWZaNAGPpUJfK5aXT1JRIbXZbI+nUDD+bwsYklAL2lZ6z1X64ZTw2CcKcAM3a1/2s6/gzsJAzKL3hA6rBfAWCE536H36gEDriwwFA4zTSMEpox7L8+L/pxacPv4K86Brcc4jGjFNV/5AS3TlrbLzqHwkLPYkt/fxFiLUto85Hk+ni+LScpknlwYhX147buD4oO7psGK5kD2r+zxhQdLg/9CSdObijSzvVoinGSeuPYwbPSP6VtZ8HgSJHx5JP8XA2TKH00F0V4BFaAouISvDHhiNrBB3j1CI90D5ZglfaMHuYXAx3Dc2+v4JbRt9wi0xWDymCpTbJ01tvftEbwFTakHcqp), với một độ trễ nhân tạo và lỗi ngẫu nhiên để minh họa.
 
-## Conventions and Best Practices {#conventions-and-best-practices}
+## Những quy ước và cách vận dụng  {#conventions-and-best-practices}
 
-### Naming {#naming}
+### Đặt tên {#naming}
 
-It is a convention to name composable functions with camelCase names that start with "use".
+Theo như quy ước, hàm composable nên bắt đầu bằng "use" và sử dụng kiểu camelCase. Ví dụ: `useMouse`, `useFetch`, `useEventListener`.
 
 ### Input Arguments {#input-arguments}
 
-A composable can accept ref or getter arguments even if it doesn't rely on them for reactivity. If you are writing a composable that may be used by other developers, it's a good idea to handle the case of input arguments being refs or getters instead of raw values. The [`toValue()`](/api/reactivity-utilities#tovalue) utility function will come in handy for this purpose:
+Một composable có thể chấp nhận ref hoặc getter làm đối số đầu vào ngay cả khi nó không phụ thuộc vào chúng để tạo ra reactivity. Nếu bạn đang viết một composable có thể được sử dụng bởi các nhà phát triển khác, lý tưởng nhất là xử lý trường hợp đối số đầu vào là ref hoặc getter thay vì giá trị thô (raw). Hàm tiện ích [`toValue()`](/api/reactivity-utilities#tovalue) sẽ hữu ích cho mục đích này:
 
 ```js
 import { toValue } from 'vue'
 
 function useFeature(maybeRefOrGetter) {
-  // If maybeRefOrGetter is a ref or a getter,
-  // its normalized value will be returned.
-  // Otherwise, it is returned as-is.
+  // Nếu maybeRefOrGetter là ref hoặc getter,
+  // giá trị chuẩn hóa của nó sẽ được trả về.
+  // Nếu không, nó sẽ trả về chính nó.
   const value = toValue(maybeRefOrGetter)
 }
 ```
 
-If your composable creates reactive effects when the input is a ref or a getter, make sure to either explicitly watch the ref / getter with `watch()`, or call `toValue()` inside a `watchEffect()` so that it is properly tracked.
+Nếu composable của bạn tạo ra hiệu ứng reactive khi đầu vào là một ref hoặc getter, hãy chắc chắn rằng bạn đã theo dõi ref / getter một cách rõ ràng với `watch()`, hoặc gọi `toValue()` bên trong `watchEffect()` để nó được theo dõi đúng cách.
 
-The [useFetch() implementation discussed earlier](#accepting-reactive-state) provides a concrete example of a composable that accepts refs, getters and plain values as input argument.
+Hàm [useFetch() đã được thảo luận trước đó](#async-state-example) cung cấp một ví dụ cụ thể về cách mà một composable có thể chấp nhận refs, getters và giá trị thô như đối số đầu vào.
 
-### Return Values {#return-values}
+### Giá trị trả về {#return-values}
 
-You have probably noticed that we have been exclusively using `ref()` instead of `reactive()` in composables. The recommended convention is for composables to always return a plain, non-reactive object containing multiple refs. This allows it to be destructured in components while retaining reactivity:
+Bạn có thể đã nhận thấy rằng chúng ta đã sử dụng `ref()` thay vì `reactive()` một cách độc quyền trong composables. Quy ước được khuyến nghị là composables luôn trả về một đối tượng đơn giản, không reactive chứa nhiều refs. Điều này cho phép nó được phân rã (destructure) trong các component trong khi vẫn giữ được tính reactive:
 
 ```js
-// x and y are refs
+// x và y là refs
 const { x, y } = useMouse()
 ```
 
-Returning a reactive object from a composable will cause such destructures to lose the reactivity connection to the state inside the composable, while the refs will retain that connection.
+Việc trả về một đối tượng reactive từ một composable sẽ khiến phép phân rã (destructure) mất mất kết nối với trạng thái bên trong composable, trong khi refs sẽ giữ được kết nối đó.
 
-If you prefer to use returned state from composables as object properties, you can wrap the returned object with `reactive()` so that the refs are unwrapped. For example:
+Nếu bạn muốn sử dụng state được trả về từ composables như là các thuộc tính của một đối tượng, bạn có thể bọc đối tượng trả về với `reactive()` để refs được giải gỡ. Ví dụ:
 
 ```js
 const mouse = reactive(useMouse())
 // mouse.x is linked to original ref
+// mouse.x được liên kết với ref gốc
 console.log(mouse.x)
 ```
 
 ```vue-html
-Mouse position is at: {{ mouse.x }}, {{ mouse.y }}
+Vị trí của con trỏ là: {{ mouse.x }}, {{ mouse.y }}
 ```
 
-### Side Effects {#side-effects}
+### Tác động phụ {#side-effects}
 
-It is OK to perform side effects (e.g. adding DOM event listeners or fetching data) in composables, but pay attention to the following rules:
+Việc thực hiện tác động phụ (ví dụ: thêm DOM event listener hoặc lấy dữ liệu) trong composables là OK, nhưng hãy chú ý đến các quy tắc sau:
 
-- If you are working on an application that uses [Server-Side Rendering](/guide/scaling-up/ssr) (SSR), make sure to perform DOM-specific side effects in post-mount lifecycle hooks, e.g. `onMounted()`. These hooks are only called in the browser, so you can be sure that code inside them has access to the DOM.
+- Nếu bạn đang làm việc trên một ứng dụng sử dụng [Server-Side Rendering](/guide/scaling-up/ssr) (SSR), hãy chắc chắn thực hiện các tác động phụ cụ thể cho DOM trong các lifecycle hooks sau khi mount, ví dụ `onMounted()`. Những hooks này chỉ được gọi trong trình duyệt, vì vậy bạn có thể chắc chắn rằng mã bên trong chúng có quyền truy cập vào DOM.
 
-- Remember to clean up side effects in `onUnmounted()`. For example, if a composable sets up a DOM event listener, it should remove that listener in `onUnmounted()` as we have seen in the `useMouse()` example. It can be a good idea to use a composable that automatically does this for you, like the `useEventListener()` example.
+- Hãy nhớ làm sạch tác động phụ trong `onUnmounted()`. Ví dụ, nếu một composable thiết lập một DOM event listener, nó nên xóa listener đó trong `onUnmounted()` như chúng ta đã thấy trong ví dụ `useMouse()`. Bạn cũng có thể sử dụng một composable tự động làm điều này cho bạn, như ví dụ `useEventListener()`.
 
-### Usage Restrictions {#usage-restrictions}
+### Các hạn chế khi sử dụng {#usage-restrictions}
 
-Composables should only be called in `<script setup>` or the `setup()` hook. They should also be called **synchronously** in these contexts. In some cases, you can also call them in lifecycle hooks like `onMounted()`.
+Composables chỉ nên được gọi trong `<script setup>` hoặc `setup()` hook. Chúng cũng chỉ nên được gọi **đồng bộ** trong các ngữ cảnh này. Trong một số trường hợp, bạn cũng có thể gọi chúng trong các lifecycle hooks như `onMounted()`.
 
-These restrictions are important because these are the contexts where Vue is able to determine the current active component instance. Access to an active component instance is necessary so that:
+Những hạn chế này rất quan trọng vì đây là các ngữ cảnh mà Vue có thể xác định được instance component hiện tại. Việc truy cập vào instance component hiện tại là cần thiết để:
 
-1. Lifecycle hooks can be registered to it.
+1. Lifecycle hooks có thể được đăng ký cho component.
 
-2. Computed properties and watchers can be linked to it, so that they can be disposed when the instance is unmounted to prevent memory leaks.
+2. Các thuộc tính computed và watcher có thể được liên kết với component, để chúng có thể được hủy khi instance bị unmounted để ngăn chặn rò rỉ bộ nhớ.
 
 :::tip
-`<script setup>` is the only place where you can call composables **after** using `await`. The compiler automatically restores the active instance context for you after the async operation.
+`<script setup>` là nơi duy nhất mà bạn có thể gọi composables **sau** khi sử dụng `await`. Trình biên dịch sẽ tự động khôi phục ngữ cảnh instance hoạt động cho bạn sau khi hoạt động bất đồng bộ kết thúc.
 :::
 
-## Extracting Composables for Code Organization {#extracting-composables-for-code-organization}
+## Trích xuất Composables để Tổ chức mã {#extracting-composables-for-code-organization}
 
-Composables can be extracted not only for reuse, but also for code organization. As the complexity of your components grow, you may end up with components that are too large to navigate and reason about. Composition API gives you the full flexibility to organize your component code into smaller functions based on logical concerns:
+Composables không chỉ có thể được trích xuất để tái sử dụng, mà còn để tổ chức mã. Khi sự phức tạp của các component tăng lên, bạn có thể kết thúc với các component quá lớn để điều hướng và suy luận. Composition API cho phép bạn tổ chức mã component thành các hàm nhỏ dựa trên các vấn đề logic:
 
 ```vue
 <script setup>
@@ -326,11 +328,11 @@ const { qux } = useFeatureC(baz)
 </script>
 ```
 
-To some extent, you can think of these extracted composables as component-scoped services that can talk to one another.
+Thậm chí, bạn cũng có thể nghĩ rằng những composable này như là là các "service" cho component của bạn và có thể giao tiếp với nhau.
 
-## Using Composables in Options API {#using-composables-in-options-api}
+## Sử dung Composables trong Options API {#using-composables-in-options-api}
 
-If you are using Options API, composables must be called inside `setup()`, and the returned bindings must be returned from `setup()` so that they are exposed to `this` and the template:
+Nếu bạn đang sử dụng Options API, composables phải được gọi bên trong `setup()`, và các bindings trả về phải được trả về từ `setup()` để chúng được tiết lộ cho `this` và template:
 
 ```js
 import { useMouse } from './mouse.js'
@@ -343,42 +345,42 @@ export default {
     return { x, y, data, error }
   },
   mounted() {
-    // setup() exposed properties can be accessed on `this`
+    // các thuộc tính được trả về từ setup() có thể được truy cập trên `this`
     console.log(this.x)
   }
-  // ...other options
+  // ...những option khác
 }
 ```
 
-## Comparisons with Other Techniques {#comparisons-with-other-techniques}
+## So sánh với các kỹ thuật khác {#comparisons-with-other-techniques}
 
-### vs. Mixins {#vs-mixins}
+### Đối với Mixins {#vs-mixins}
 
-Users coming from Vue 2 may be familiar with the [mixins](/api/options-composition#mixins) option, which also allows us to extract component logic into reusable units. There are three primary drawbacks to mixins:
+Những người dùng từ Vue 2 có thể quen với tùy chọn [mixins](/api/options-composition#mixins), mà cũng cho phép chúng ta trích xuất logic component thành các đơn vị có thể tái sử dụng. Có ba điểm chính mà mixins không phù hợp:
 
-1. **Unclear source of properties**: when using many mixins, it becomes unclear which instance property is injected by which mixin, making it difficult to trace the implementation and understand the component's behavior. This is also why we recommend using the refs + destructure pattern for composables: it makes the property source clear in consuming components.
+1. **Nguồn không rõ ràng của các thuộc tính**: khi sử dụng nhiều mixins, việc thuộc tính của instance nào được inject bởi mixin nào trở nên không rõ ràng, khiến cho nó khó để có thể truy dấu việc triển khai và hiểu được hành vi của component. Đây cũng là lý do tại sao chúng tôi khuyến nghị sử dụng pattern refs + destructure cho composables: nó làm cho nguồn của thuộc tính rõ ràng trong các component sử dụng mixin.
 
-2. **Namespace collisions**: multiple mixins from different authors can potentially register the same property keys, causing namespace collisions. With composables, you can rename the destructured variables if there are conflicting keys from different composables.
+2. **Xung đột namespace**: nhiều mixins từ các tác giả khác nhau có thể đăng ký các key thuộc tính giống nhau, gây ra xung đột namespace. Với composables, bạn có thể đổi tên các biến destructured nếu có key xung đột từ các composable khác nhau.
 
-3. **Implicit cross-mixin communication**: multiple mixins that need to interact with one another have to rely on shared property keys, making them implicitly coupled. With composables, values returned from one composable can be passed into another as arguments, just like normal functions.
+3. **Giao tiếp cross-mixin ngầm**: nhiều mixins cần tương tác với nhau phải dựa vào các key thuộc tính chung, khiến chúng ngầm liên kết với nhau. Với composables, giá trị trả về từ một composable có thể được truyền vào một composable khác như là đối số, giống như các hàm thông thường.
 
-For the above reasons, we no longer recommend using mixins in Vue 3. The feature is kept only for migration and familiarity reasons.
+Đối với những lý do trên, chúng tôi không còn khuyến nghị sử dụng mixins trong Vue 3. Tính năng này chỉ được giữ lại cho mục đích chuyển đổi và đã quen thuộc.
 
-### vs. Renderless Components {#vs-renderless-components}
+### Đối với Renderless Components {#vs-renderless-components}
 
-In the component slots chapter, we discussed the [Renderless Component](/guide/components/slots#renderless-components) pattern based on scoped slots. We even implemented the same mouse tracking demo using renderless components.
+Trong chương [component slots](/guide/components/slots), chúng ta đã thảo luận về pattern [Renderless Component](/guide/components/slots#renderless-components) dựa trên scoped slots. Chúng ta đã thậm chí triển khai lại cùng một ví dụ truy dấu chuột sử dụng renderless components.
 
-The main advantage of composables over renderless components is that composables do not incur the extra component instance overhead. When used across an entire application, the amount of extra component instances created by the renderless component pattern can become a noticeable performance overhead.
+Lợi ích chính của composables so với renderless components là composables không làm tăng chi phí vận hành của instance component. Khi sử dụng trên toàn bộ ứng dụng, số lượng instance component được tạo ra bởi pattern renderless component có thể trở thành một chi phí hiệu năng đáng kể.
 
-The recommendation is to use composables when reusing pure logic, and use components when reusing both logic and visual layout.
+Điều được khuyến nghị là sử dụng composables khi sử dụng logic thuần, và sử dụng component khi tái sử dụng cả logic và layout.
 
-### vs. React Hooks {#vs-react-hooks}
+### Đối với React Hooks {#vs-react-hooks}
 
-If you have experience with React, you may notice that this looks very similar to custom React hooks. Composition API was in part inspired by React hooks, and Vue composables are indeed similar to React hooks in terms of logic composition capabilities. However, Vue composables are based on Vue's fine-grained reactivity system, which is fundamentally different from React hooks' execution model. This is discussed in more detail in the [Composition API FAQ](/guide/extras/composition-api-faq#comparison-with-react-hooks).
+Nếu bạn có kinh nghiệm với React, bạn có thể nhận ra rằng composables rất giống với custom React hooks. Composition API được lấy cảm hứng từ React hooks, và Vue composables thực sự tương tự với React hooks trong khả năng kết hợp logic. Tuy nhiên, Vue composables dựa trên hệ thống reactivity tinh tế của Vue, mà cơ bản khác biệt so với mô hình thực thi của React hooks. Điều này được thảo luận chi tiết hơn trong [Composition API FAQ](/guide/extras/composition-api-faq#comparison-with-react-hooks).
 
-## Further Reading {#further-reading}
+## Đọc thêm {#further-reading}
 
-- [Reactivity In Depth](/guide/extras/reactivity-in-depth): for a low-level understanding of how Vue's reactivity system works.
-- [State Management](/guide/scaling-up/state-management): for patterns of managing state shared by multiple components.
-- [Testing Composables](/guide/scaling-up/testing#testing-composables): tips on unit testing composables.
-- [VueUse](https://vueuse.org/): an ever-growing collection of Vue composables. The source code is also a great learning resource.
+- [Chuyên sâu về Reactivity](/guide/extras/reactivity-in-depth): dành cho những người muốn hiểu rõ hơn về cách hệ thống reactivity của Vue hoạt động ở low-level.
+- [Quản lý State](/guide/scaling-up/state-management): một hướng dẫn chi tiết về cách quản lý state trong ứng dụng lớn.
+- [Kiểm thử Composables](/guide/scaling-up/testing#testing-composables): các gợi ý cho việc kiểm thử composables.
+- [VueUse](https://vueuse.org/): một thư viện chứa một bộ sưu tập các Vue composables. Mã nguồn của thư viện này cũng là một nguồn học tốt.

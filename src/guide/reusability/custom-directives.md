@@ -1,4 +1,4 @@
-# Custom Directives {#custom-directives}
+# Directives tuỳ chỉnh {#custom-directives}
 
 <script setup>
 const vFocus = {
@@ -8,19 +8,19 @@ const vFocus = {
 }
 </script>
 
-## Introduction {#introduction}
+## Giới thiệu {#introduction}
 
-In addition to the default set of directives shipped in core (like `v-model` or `v-show`), Vue also allows you to register your own custom directives.
+Ngoài các hướng dẫn mặc định được thiết lập trong core (như `v-model` hoặc `v-show`), Vue cũng cho phép bạn đăng ký các hướng dẫn tuỳ chỉnh của riêng bạn.
 
-We have introduced two forms of code reuse in Vue: [components](/guide/essentials/component-basics) and [composables](./composables). Components are the main building blocks, while composables are focused on reusing stateful logic. Custom directives, on the other hand, are mainly intended for reusing logic that involves low-level DOM access on plain elements.
+Chúng ta đã giới thiệu hai hình thức tái sử dụng mã trong Vue: [components](/guide/essentials/component-basics) và [composables](./composables). Components là các khối xây dựng chính, trong khi composables tập trung vào việc tái sử dụng logic có trạng thái. Ngược lại, các hướng dẫn tuỳ chỉnh chủ yếu được sử dụng để tái sử dụng logic liên quan đến truy cập DOM cấp thấp trên các phần tử thông thường.
 
-A custom directive is defined as an object containing lifecycle hooks similar to those of a component. The hooks receive the element the directive is bound to. Here is an example of a directive that focuses an input when the element is inserted into the DOM by Vue:
+Một directive tuỳ chỉnh được định nghĩa như một đối tượng chứa các lifecycle hooks tương tự như của một component. Các hooks nhận vào phần tử mà directive được ràng buộc. Dưới đây là một ví dụ về một directive tập trung vào việc focus vào một input khi phần tử được chèn vào DOM bởi Vue:
 
 <div class="composition-api">
 
 ```vue
 <script setup>
-// enables v-focus in templates
+// kích hoạt v-focus trong template
 const vFocus = {
   mounted: (el) => el.focus()
 }
@@ -42,7 +42,7 @@ const focus = {
 
 export default {
   directives: {
-    // enables v-focus in template
+    // kích hoạt v-focus trong template
     focus
   }
 }
@@ -55,16 +55,17 @@ export default {
 </div>
 
 <div class="demo">
-  <input v-focus placeholder="This should be focused" />
+  <input v-focus placeholder="Phần tử này nên được focus khi render" />
 </div>
 
+Giả định rằng bạn chưa nhấn vào bất kỳ chỗ nào khác trong trang, input ở trên sẽ được tự động focus. Directive này hữu ích hơn so với thuộc tính `autofocus` vì nó hoạt động không chỉ khi trang được load - nó còn hoạt động khi phần tử được chèn vào DOM bởi Vue.
 Assuming you haven't clicked elsewhere on the page, the input above should be auto-focused. This directive is more useful than the `autofocus` attribute because it works not just on page load - it also works when the element is dynamically inserted by Vue.
 
 <div class="composition-api">
 
-In `<script setup>`, any camelCase variable that starts with the `v` prefix can be used as a custom directive. In the example above, `vFocus` can be used in the template as `v-focus`.
+Trong `<script setup>`, bất kỳ biến camelCase nào bắt đầu bằng tiền tố `v` có thể được sử dụng như một directive tuỳ chỉnh. Trong ví dụ trên, `vFocus` có thể được sử dụng trong template như `v-focus`.
 
-If not using `<script setup>`, custom directives can be registered using the `directives` option:
+Nếu không sử dụng `<script setup>`, directive tuỳ chỉnh có thể được đăng ký bằng cách sử dụng tùy chọn `directives`:
 
 ```js
 export default {
@@ -72,7 +73,7 @@ export default {
     /*...*/
   },
   directives: {
-    // enables v-focus in template
+    // kích hoạt v-focus trong template
     focus: {
       /* ... */
     }
@@ -84,103 +85,103 @@ export default {
 
 <div class="options-api">
 
-Similar to components, custom directives must be registered so that they can be used in templates. In the example above, we are using local registration via the `directives` option.
+Tương tự với components, directive tuỳ chỉnh phải được đăng ký để có thể sử dụng trong template. Trong ví dụ trên, chúng ta sử dụng đăng ký cục bộ thông qua tùy chọn `directives`.
 
 </div>
 
-It is also common to globally register custom directives at the app level:
+Việc đăng ký directive tuỳ chỉnh cũng có thể được thực hiện toàn cục tại cấp ứng dụng:
 
 ```js
 const app = createApp({})
 
-// make v-focus usable in all components
+// khiến cho v-focus có thể sử dụng trong tất cả các component
 app.directive('focus', {
   /* ... */
 })
 ```
 
 :::tip
-Custom directives should only be used when the desired functionality can only be achieved via direct DOM manipulation. Prefer declarative templating using built-in directives such as `v-bind` when possible because they are more efficient and server-rendering friendly.
+Directive tuỳ chỉnh chỉ nên được sử dụng khi chức năng mong muốn chỉ có thể đạt được thông qua việc trực tiếp thao tác DOM. Ưu tiên sử dụng template khai báo thông qua các directive mặc định như `v-bind` khi có thể vì chúng hiệu quả hơn và thân thiện với server-rendering.
 :::
 
 ## Directive Hooks {#directive-hooks}
 
-A directive definition object can provide several hook functions (all optional):
+Một đối tượng định nghĩa directive có thể cung cấp một số hàm hook (tất cả đều là tùy chọn):
 
 ```js
 const myDirective = {
-  // called before bound element's attributes
-  // or event listeners are applied
+  // được gọi trước khi các thuộc tính của phần tử được ràng buộc
+  // hoặc các event listener được áp dụng.
   created(el, binding, vnode, prevVnode) {
-    // see below for details on arguments
+    // xem bên dưới để biết chi tiết về các đối số
   },
-  // called right before the element is inserted into the DOM.
+  // được gọi ngay trước khi phần tử được chèn vào DOM.
   beforeMount(el, binding, vnode, prevVnode) {},
-  // called when the bound element's parent component
-  // and all its children are mounted.
+  // được gọi sau khi phần tử cha và 
+  // và tất cả các phần tử con của nó được chèn vào DOM.
   mounted(el, binding, vnode, prevVnode) {},
-  // called before the parent component is updated
+  // được gọi trước khi component cha được cập nhật
   beforeUpdate(el, binding, vnode, prevVnode) {},
-  // called after the parent component and
-  // all of its children have updated
+  // được gọi sau khi component cha và
+  // tất cả các phần tử con của nó được cập nhật
   updated(el, binding, vnode, prevVnode) {},
-  // called before the parent component is unmounted
+  // được gọi trước khi component cha được gỡ bỏ
   beforeUnmount(el, binding, vnode, prevVnode) {},
-  // called when the parent component is unmounted
+  // được gọi sau khi component cha đã gỡ bỏ
   unmounted(el, binding, vnode, prevVnode) {}
 }
 ```
 
-### Hook Arguments {#hook-arguments}
+### Đối số của Hook {#hook-arguments}
 
-Directive hooks are passed these arguments:
+Tất cả các hook của directive đều nhận vào các đối số sau:
 
-- `el`: the element the directive is bound to. This can be used to directly manipulate the DOM.
+- `el`: phần tử mà directive được ràng buộc. Điều này có thể được sử dụng để trực tiếp thao tác DOM.
 
-- `binding`: an object containing the following properties.
+- `binding`: một đối tượng chứa các thuộc tính sau.
 
-  - `value`: The value passed to the directive. For example in `v-my-directive="1 + 1"`, the value would be `2`.
-  - `oldValue`: The previous value, only available in `beforeUpdate` and `updated`. It is available whether or not the value has changed.
-  - `arg`: The argument passed to the directive, if any. For example in `v-my-directive:foo`, the arg would be `"foo"`.
-  - `modifiers`: An object containing modifiers, if any. For example in `v-my-directive.foo.bar`, the modifiers object would be `{ foo: true, bar: true }`.
-  - `instance`: The instance of the component where the directive is used.
-  - `dir`: the directive definition object.
+  - `value`: Giá trị được truyền vào directive. Ví dụ trong `v-my-directive="1 + 1"`, giá trị sẽ là `2`.
+  - `oldValue`: Giá trị trước đó, chỉ có sẵn trong `beforeUpdate` và `updated`. Nó có sẵn dù giá trị có thay đổi hay không.
+  - `arg`: Đối số được truyền vào directive, nếu có. Ví dụ trong `v-my-directive:foo`, đối số sẽ là `"foo"`.
+  - `modifiers`: Một đối tượng chứa các modifier, nếu có. Ví dụ trong `v-my-directive.foo.bar`, đối tượng modifier sẽ là `{ foo: true, bar: true }`.
+  - `instance`: Thể hiện của component mà directive được sử dụng.
+  - `dir`: đối tượng định nghĩa directive.
 
-- `vnode`: the underlying VNode representing the bound element.
-- `prevNode`: the VNode representing the bound element from the previous render. Only available in the `beforeUpdate` and `updated` hooks.
+- `vnode`: VNode cơ bản đại diện cho phần tử được ràng buộc.
+- `prevVnode`: VNode đại diện cho phần tử được ràng buộc từ lần render trước. Chỉ có sẵn trong các hook `beforeUpdate` và `updated`.
 
-As an example, consider the following directive usage:
+Lấy ví dụ, hãy xem xét việc sử dụng directive sau:
 
 ```vue-html
 <div v-example:foo.bar="baz">
 ```
 
-The `binding` argument would be an object in the shape of:
+Đối số `binding` sẽ là một đối tượng có dạng:
 
 ```js
 {
   arg: 'foo',
   modifiers: { bar: true },
-  value: /* value of `baz` */,
-  oldValue: /* value of `baz` from previous update */
+  value: /* giá trị của `baz` */,
+  oldValue: /* giá trị của `baz` từ lần cập nhật trước */
 }
 ```
 
-Similar to built-in directives, custom directive arguments can be dynamic. For example:
+Tương tự như các directive mặc định, các đối số của directive tuỳ chỉnh có thể là biểu thức JavaScript hợp lệ. Ví dụ:
 
 ```vue-html
 <div v-example:[arg]="value"></div>
 ```
 
-Here the directive argument will be reactively updated based on `arg` property in our component state.
+Ở đây, đối số của directive sẽ được cập nhật một cách linh hoạt dựa trên thuộc tính `arg` trong trạng thái của component của chúng ta.
 
-:::tip Note
-Apart from `el`, you should treat these arguments as read-only and never modify them. If you need to share information across hooks, it is recommended to do so through element's [dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset).
+:::tip Lưu ý
+Ngoại trừ `el`, bạn nên coi các đối số này là chỉ đọc và không bao giờ thay đổi chúng. Nếu bạn cần chia sẻ thông tin qua các hook, nên sử dụng [dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset) của phần tử.
 :::
 
-## Function Shorthand {#function-shorthand}
+## Cú pháp rút gọn{#function-shorthand}
 
-It's common for a custom directive to have the same behavior for `mounted` and `updated`, with no need for the other hooks. In such cases we can define the directive as a function:
+Đối với các directive tuỳ chỉnh, việc có chung hành vi cho `mounted` và `updated` rất là bình thường mà không cần các hook khác. Trong những trường hợp như vậy, chúng ta có thể định nghĩa directive dưới dạng một hàm:
 
 ```vue-html
 <div v-color="color"></div>
@@ -188,40 +189,40 @@ It's common for a custom directive to have the same behavior for `mounted` and `
 
 ```js
 app.directive('color', (el, binding) => {
-  // this will be called for both `mounted` and `updated`
+  // directive này sẽ được gọi cho cả `mounted` và `updated`
   el.style.color = binding.value
 })
 ```
 
 ## Object Literals {#object-literals}
 
-If your directive needs multiple values, you can also pass in a JavaScript object literal. Remember, directives can take any valid JavaScript expression.
+Nếu directive của bạn cần nhiều giá trị khác nhau, bạn cũng có thể truyền vào một object literal JavaScript. Hãy nhớ rằng directive có thể nhận bất kỳ biểu thức JavaScript hợp lệ nào.
 
 ```vue-html
-<div v-demo="{ color: 'white', text: 'hello!' }"></div>
+<div v-demo="{ color: 'white', text: 'xin chào!' }"></div>
 ```
 
 ```js
 app.directive('demo', (el, binding) => {
   console.log(binding.value.color) // => "white"
-  console.log(binding.value.text) // => "hello!"
+  console.log(binding.value.text) // => "xin chào!"
 })
 ```
 
-## Usage on Components {#usage-on-components}
+## Sử dụng trong Component {#usage-on-components}
 
-When used on components, custom directives will always apply to a component's root node, similar to [Fallthrough Attributes](/guide/components/attrs).
+Khi sử dụng trên components, directive tuỳ chỉnh sẽ luôn được áp dụng cho phần tử gốc của component, tương tự như [Fallthrough Attributes](/guide/components/attrs).
 
 ```vue-html
 <MyComponent v-demo="test" />
 ```
 
 ```vue-html
-<!-- template of MyComponent -->
+<!-- template của MyComponent -->
 
-<div> <!-- v-demo directive will be applied here -->
+<div> <!-- v-demo directive sẽ được áp dụng tại đây -->
   <span>My component content</span>
 </div>
 ```
 
-Note that components can potentially have more than one root node. When applied to a multi-root component, a directive will be ignored and a warning will be thrown. Unlike attributes, directives can't be passed to a different element with `v-bind="$attrs"`. In general, it is **not** recommended to use custom directives on components.
+Lưu ý rằng components có thể có nhiều hơn một phần tử gốc. Khi áp dụng cho một component có nhiều phần tử gốc, directive sẽ bị bỏ qua và một cảnh báo sẽ được ném ra. Khác với thuộc tính, directive không thể được truyền vào một phần tử khác với `v-bind="$attrs"`. Nói chung, **không** nên sử dụng directive tuỳ chỉnh trên components.
