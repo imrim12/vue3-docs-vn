@@ -2,166 +2,166 @@
 
 ## Try It Online {#try-it-online}
 
-You don't need to install anything on your machine to try out Vue SFCs - there are online playgrounds that allow you to do so right in the browser:
+Bạn không cần phải cài đặt bất cứ thứ gì trên máy tính của bạn để thử Vue SFC - có những sân chơi trực tuyến cho phép bạn làm điều đó ngay trong trình duyệt:
 
-- [Vue SFC Playground](https://play.vuejs.org)
-  - Always deployed from latest commit
-  - Designed for inspecting component compilation results
+- [Sân chơi Vue SFC](https://play.vuejs.org)
+  - Luôn luôn triển khai từ commit mới nhất
+  - Được thiết kế để kiểm tra kết quả biên dịch thành phần
 - [Vue + Vite on StackBlitz](https://vite.new/vue)
-  - IDE-like environment running actual Vite dev server in the browser
-  - Closest to local setup
+  - Môi trường IDE giống như thực sự chạy Vite dev server trong trình duyệt
+  - Gần giống với cài đặt cục bộ nhất
 
-It is also recommended to use these online playgrounds to provide reproductions when reporting bugs.
+Việc sử dụng các sân chơi trực tuyến này cũng được khuyến khích khi báo cáo lỗi.
 
 ## Project Scaffolding {#project-scaffolding}
 
 ### Vite {#vite}
 
-[Vite](https://vitejs.dev/) is a lightweight and fast build tool with first-class Vue SFC support. It is created by Evan You, who is also the author of Vue!
+[Vite](https://vitejs.dev/) là một công cụ build nhẹ và nhanh với hỗ trợ Vue SFC tân tiến nhất. Nó được tạo ra bởi Evan You, là tác giả của Vue!
 
-To get started with Vite + Vue, simply run:
+Để bắt đầu với Vite + Vue, chỉ cần chạy chạy:
 
 <div class="language-sh"><pre><code><span class="line"><span style="color:var(--vt-c-green);">$</span> <span style="color:#A6ACCD;">npm create vue@latest</span></span></code></pre></div>
 
-This command will install and execute [create-vue](https://github.com/vuejs/create-vue), the official Vue project scaffolding tool.
+Câu lệnh này sẽ cài đặt và thực thi [create-vue](https://github.com/vuejs/create-vue), công cụ tạo project chính thức của Vue.
 
-- To learn more about Vite, check out the [Vite docs](https://vitejs.dev).
-- To configure Vue-specific behavior in a Vite project, for example passing options to the Vue compiler, check out the docs for [@vitejs/plugin-vue](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#readme).
+- Để tìm hiểu thêm về Vite, hãy xem [Vite docs](https://vitejs.dev).
+- Để cấu hình các hành vi cụ thể của Vue trong một project Vite, ví dụ như truyền các tùy chọn cho trình biên dịch Vue, hãy xem tài liệu cho [@vitejs/plugin-vue](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#readme).
 
-Both online playgrounds mentioned above also support downloading files as a Vite project.
+Cả hai sân chơi trực tuyến được đề cập ở trên cũng hỗ trợ tải xuống các file dưới dạng một project Vite.
 
 ### Vue CLI {#vue-cli}
 
-[Vue CLI](https://cli.vuejs.org/) is the official webpack-based toolchain for Vue. It is now in maintenance mode and we recommend starting new projects with Vite unless you rely on specific webpack-only features. Vite will provide superior developer experience in most cases.
+[Vue CLI](https://cli.vuejs.org/) là công cụ tạo project chính thức của Vue. Hiện tại nó đang ở chế độ bảo trì và chúng tôi khuyến khích bạn sử dụng Vite cho các project mới. Vite sẽ cung cấp trải nghiệm phát triển tốt hơn trong hầu hết các trường hợp.
 
-For information on migrating from Vue CLI to Vite:
+Để biết thêm thông tin về cách migrate từ Vue CLI sang Vite:
 
-- [Vue CLI -> Vite Migration Guide from VueSchool.io](https://vueschool.io/articles/vuejs-tutorials/how-to-migrate-from-vue-cli-to-vite/)
-- [Tools / Plugins that help with auto migration](https://github.com/vitejs/awesome-vite#vue-cli)
+- [Vue CLI -> Hướng dẫn Vite Migration từ VueSchool.io](https://vueschool.io/articles/vuejs-tutorials/how-to-migrate-from-vue-cli-to-vite/)
+- [Công cụ / Plugin hỗ trợ tự động migration](https://github.com/vitejs/awesome-vite#vue-cli)
 
-### Note on In-Browser Template Compilation {#note-on-in-browser-template-compilation}
+### Lưu ý về việc biên dịch Template trực tiếp trong trình duyệt {#note-on-in-browser-template-compilation}
 
-When using Vue without a build step, component templates are written either directly in the page's HTML or as inlined JavaScript strings. In such cases, Vue needs to ship the template compiler to the browser in order to perform on-the-fly template compilation. On the other hand, the compiler would be unnecessary if we pre-compile the templates with a build step. To reduce client bundle size, Vue provides [different "builds"](https://unpkg.com/browse/vue@3/dist/) optimized for different use cases.
+Khi sử dụng Vue mà không thông qua bước build, các component template được viết trực tiếp trong HTML của trang hoặc như là các chuỗi JavaScript được viết inline. Đối với những trường hợp như vậy, Vue cần phải gửi trình biên dịch template đến trình duyệt để thực hiện biên dịch template ngay lập tức. Trong trường hợp ngược lại, trình biên dịch sẽ không cần thiết nếu chúng ta biên dịch các template trước với bước build. Để giảm kích thước của bundle trên client, Vue cung cấp [những "builds" khác nhau](https://unpkg.com/browse/vue@3/dist/) được tối ưu hóa cho các trường hợp sử dụng khác nhau.
 
-- Build files that start with `vue.runtime.*` are **runtime-only builds**: they do not include the compiler. When using these builds, all templates must be pre-compiled via a build step.
+- Những build file bắt đầu với `vue.runtime.*` là những **bản buils chỉ dành cho runtime**: chúng không bao gồm trình biên dịch. Khi sử dụng những build này, tất cả các template phải được biên dịch sẵn từ trước thông qua bước build.
 
-- Build files that do not include `.runtime` are **full builds**: they include the compiler and support compiling templates directly in the browser. However, they will increase the payload by ~14kb.
+- Những build file không bao gồm `.runtime` là những **bản build đầy đủ**: chúng bao gồm trình biên dịch và hỗ trợ biên dịch template trực tiếp trong trình duyệt. Tuy nhiên, chúng sẽ làm tăng kích thước của bundle lên khoảng 14kb.
 
-Our default tooling setups use the runtime-only build since all templates in SFCs are pre-compiled. If, for some reason, you need in-browser template compilation even with a build step, you can do so by configuring the build tool to alias `vue` to `vue/dist/vue.esm-bundler.js` instead.
+Các cài đặt mặc định của chúng tôi sử dụng bản build chỉ dành cho runtime vì tất cả các template trong SFC đều được biên dịch sẵn từ trước. Nếu, vì một lý do nào đó, bạn cần biên dịch template trực tiếp trong trình duyệt ngay cả khi có bước build, bạn có thể làm như vậy bằng cách cấu hình công cụ build để alias `vue` thành `vue/dist/vue.esm-bundler.js` thay vì `vue/dist/vue.runtime.esm-bundler.js`.
 
-If you are looking for a lighter-weight alternative for no-build-step usage, check out [petite-vue](https://github.com/vuejs/petite-vue).
+Nếu bạn đang tìm kiếm một giải pháp nhẹ hơn cho việc sử dụng Vue mà không thông qua bước build, hãy xem [petite-vue](https://github.com/vuejs/petite-vue).
 
-## IDE Support {#ide-support}
+## Hỗ trợ về IDE {#ide-support}
 
-- The recommended IDE setup is [VSCode](https://code.visualstudio.com/) + the [Vue Language Features (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) extension. The extension provides syntax highlighting, TypeScript support, and intellisense for template expressions and component props.
+- Cấu hình IDE được khuyến khích là [VSCode](https://code.visualstudio.com/) + tiện ích/plugin [Vue Language Features (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.volar). Tiện ích này cung cấp các tính năng như đánh dấu cú pháp (syntax highlighting), hỗ trợ TypeScript, và intellisense cho các biểu thức template và các props của component.
 
   :::tip
-  Volar replaces [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur), our previous official VSCode extension for Vue 2. If you have Vetur currently installed, make sure to disable it in Vue 3 projects.
+  Volar thay thế cho [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur), tiện ích VSCode chính thức trước đây của chúng tôi cho Vue 2. Nếu bạn đã cài đặt Vetur, hãy chắc chắn tắt nó trong các project Vue 3.
   :::
 
-- [WebStorm](https://www.jetbrains.com/webstorm/) also provides great built-in support for Vue SFCs.
+- [WebStorm](https://www.jetbrains.com/webstorm/) cũng cung cấp những hỗ trợ tuyệt vời cho Vue SFCs.
 
-- Other IDEs that support the [Language Service Protocol](https://microsoft.github.io/language-server-protocol/) (LSP) can also leverage Volar's core functionalities via LSP:
+- Những IDE khác có hỗ trợ cho [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) (LSP) cũng có thể tận dụng những tính năng cốt lõi của Volar thông qua LSP:
 
-  - Sublime Text support via [LSP-Volar](https://github.com/sublimelsp/LSP-volar).
+  - Hỗ trợ Sublime Text thông qua [LSP-Volar](https://github.com/sublimelsp/LSP-volar).
 
-  - vim / Neovim support via [coc-volar](https://github.com/yaegassy/coc-volar).
+  - Hỗ trợ vim / Neovim thông qua [coc-volar](https://github.com/yaegassy/coc-volar).
 
-  - emacs support via [lsp-mode](https://emacs-lsp.github.io/lsp-mode/page/lsp-volar/)
+  - Hỗ trợ emacs thông qua [lsp-mode](https://emacs-lsp.github.io/lsp-mode/page/lsp-volar/).
 
-## Browser Devtools {#browser-devtools}
+## Devtools trong trình duyệt{#browser-devtools}
 
-<VueSchoolLink href="https://vueschool.io/lessons/using-vue-dev-tools-with-vuejs-3" title="Free Vue.js Devtools Lesson"/>
+<VueSchoolLink href="https://vueschool.io/lessons/using-vue-dev-tools-with-vuejs-3" title="Free Vue.js Devtools Lesson"/>Standalone
 
-The Vue browser devtools extension allows you to explore a Vue app's component tree, inspect the state of individual components, track state management events, and profile performance.
+Vue Devtools là một extension cho trình duyệt cho phép bạn khám phá cây component của một ứng dụng Vue, kiểm tra trạng thái của các component riêng lẻ, theo dõi các sự kiện quản lý trạng thái, và đo hiệu năng.
 
 ![devtools screenshot](https://raw.githubusercontent.com/vuejs/devtools/main/media/screenshot-shadow.png)
 
 - [Documentation](https://devtools.vuejs.org/)
-- [Chrome Extension](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-- [Firefox Addon](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-- [Edge Extension](https://microsoftedge.microsoft.com/addons/detail/vuejs-devtools/olofadcdnkkjdfgjcmjaadnlehnnihnl)
-- [Standalone Electron app](https://devtools.vuejs.org/guide/installation.html#standalone)
+- [Tiện ích trên Chrome](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
+- [Tiện ích trên Firefox](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
+- [Tiện ích trên Edge](https://microsoftedge.microsoft.com/addons/detail/vuejs-devtools/olofadcdnkkjdfgjcmjaadnlehnnihnl)
+- [Ứng dụng độc lập cho Electron](https://devtools.vuejs.org/guide/installation.html#standalone)
 
 ## TypeScript {#typescript}
 
-Main article: [Using Vue with TypeScript](/guide/typescript/overview).
+Bài viết chính: [Sử dụng Vue với TypeScript](/guide/typescript/overview).
 
-- [Volar](https://github.com/johnsoncodehk/volar) provides type checking for SFCs using `<script lang="ts">` blocks, including template expressions and cross-component props validation.
+- [Volar](https://github.com/johnsoncodehk/volar) cung cấp kiểm tra kiểu cho SFCs sử dụng các khối `<script lang="ts">`, bao gồm cả các biểu thức template và kiểm tra props giữa các component.
 
-- Use [`vue-tsc`](https://github.com/vuejs/language-tools/tree/master/packages/vue-tsc) for performing the same type checking from the command line, or for generating `d.ts` files for SFCs.
+- Sử dụng [`vue-tsc`](https://github.com/vuejs/language-tools/tree/master/packages/vue-tsc) để thực hiện kiểm tra kiểu tương tự từ dòng lệnh, hoặc để tạo ra các file `d.ts` cho SFCs.
 
-## Testing {#testing}
+## Kiểm thử {#testing}
 
-Main article: [Testing Guide](/guide/scaling-up/testing).
+Bài viết chính: [Hướng dẫn Kiểm thử](/guide/scaling-up/testing).
 
-- [Cypress](https://www.cypress.io/) is recommended for E2E tests. It can also be used for component testing for Vue SFCs via the [Cypress Component Test Runner](https://docs.cypress.io/guides/component-testing/introduction).
+- [Cypress](https://www.cypress.io/) được khuyến khích cho các kiểm thử E2E. Nó cũng có thể được sử dụng cho các kiểm thử component cho Vue SFCs thông qua [Cypress Component Test Runner](https://docs.cypress.io/guides/component-testing/introduction).
 
-- [Vitest](https://vitest.dev/) is a test runner created by Vue / Vite team members that focuses on speed. It is specifically designed for Vite-based applications to provide the same instant feedback loop for unit / component testing.
+- [Vitest](https://vitest.dev/) là một trình chạy kiểm thử được tạo ra bởi các thành viên của Vue / Vite, tập trung vào tốc độ. Nó được thiết kế đặc biệt cho các ứng dụng dựa trên Vite để cung cấp vòng lặp phản hồi tức thì tương tự cho việc kiểm thử unit / component.
 
-- [Jest](https://jestjs.io/) can be made to work with Vite via [vite-jest](https://github.com/sodatea/vite-jest). However, this is only recommended if you have existing Jest-based test suites that you need to migrate over to a Vite-based setup, as Vitest provides similar functionalities with a much more efficient integration.
+- [Jest](https://jestjs.io/) có thể hoạt động với Vite thông qua [vite-jest](https://github.com/sodatea/vite-jest). Tuy nhiên, điều này chỉ được khuyến khích nếu bạn có các bộ kiểm thử dựa trên Jest hiện có mà bạn cần phải chuyển sang một cài đặt dựa trên Vite, vì Vitest cung cấp các chức năng tương tự với một tích hợp hiệu quả hơn nhiều.
 
-## Linting {#linting}
+## Kiểm tra cú pháp {#linting}
 
-The Vue team maintains [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue), an [ESLint](https://eslint.org/) plugin that supports SFC-specific linting rules.
+Đội ngũ Vue duy trì [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue), một plugin [ESLint](https://eslint.org/) hỗ trợ các quy tắc kiểm tra cú pháp cụ thể cho SFC.
 
-Users previously using Vue CLI may be used to having linters configured via webpack loaders. However when using a Vite-based build setup, our general recommendation is:
+Những người dùng trước đây sử dụng Vue CLI có thể đã quen thuộc với việc cấu hình các linter thông qua webpack loaders. Tuy nhiên, khi sử dụng Vite, khuyến nghị chung của chúng tôi là:
 
-1. `npm install -D eslint eslint-plugin-vue`, then follow `eslint-plugin-vue`'s [configuration guide](https://eslint.vuejs.org/user-guide/#usage).
+1. `npm install -D eslint eslint-plugin-vue`, sau đó làm theo [hướng dẫn cấu hình](https://eslint.vuejs.org/user-guide/#usage)`eslint-plugin-vue`.
 
-2. Setup ESLint IDE extensions, for example [ESLint for VSCode](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), so you get linter feedback right in your editor during development. This also avoids unnecessary linting cost when starting the dev server.
+2. Cấu hình tiện ích/plugin ESLint trong IDE, ví dụ như [ESLint cho VSCode](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), để bạn có được phản hồi linter ngay trong trình soạn thảo trong quá trình phát triển. Điều này cũng tránh chi phí lint không cần thiết khi bắt đầu máy chủ dev.
 
-3. Run ESLint as part of the production build command, so you get full linter feedback before shipping to production.
+3. Chạy ESLint như một phần của lệnh build production, để bạn có được phản hồi linter đầy đủ trước khi gửi lên production.
 
-4. (Optional) Setup tools like [lint-staged](https://github.com/okonet/lint-staged) to automatically lint modified files on git commit.
+4. (Tùy chọn) Cấu hình các công cụ như [lint-staged](https://github.com/okonet/lint-staged) để tự động lint các file đã sửa đổi trên git commit.
 
-## Formatting {#formatting}
+## Định dạng {#formatting}
 
-- The [Volar](https://github.com/johnsoncodehk/volar) VSCode extension provides formatting for Vue SFCs out of the box.
+- Tiện ích [Volar](https://github.com/johnsoncodehk/volar) trên VSCode cung cấp định dạng cho Vue SFCs ngay khi bạn viết mã.
 
-- Alternatively, [Prettier](https://prettier.io/) provides built-in Vue SFC formatting support.
+- Một phương án thay thế khác đó là [Prettier](https://prettier.io/) - một công cụ định dạng mã tự hỗ trợ Vue SFCs.
 
-## SFC Custom Block Integrations {#sfc-custom-block-integrations}
+## Tích hợp khối SFC tuỳ chỉnh {#sfc-custom-block-integrations}
 
-Custom blocks are compiled into imports to the same Vue file with different request queries. It is up to the underlying build tool to handle these import requests.
+Các khối tuỳ chỉnh được biên dịch thành các import trong cùng một file Vue SFC với những câu truy vấn khác nhau. Tùy thuộc vào công cụ build cụ thể, các import này sẽ được xử lý khác nhau:
 
-- If using Vite, a custom Vite plugin should be used to transform matched custom blocks into executable JavaScript. [Example](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#example-for-transforming-custom-blocks)
+- Nếu bạn đang sử dụng Vite, một plugin Vite tuỳ chỉnh nên được sử dụng để biến đổi các khối tuỳ chỉnh khớp thành JavaScript có thể thực thi. [Ví dụ](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#example-for-transforming-custom-blocks)
 
-- If using Vue CLI or plain webpack, a webpack loader should be configured to transform the matched blocks. [Example](https://vue-loader.vuejs.org/guide/custom-blocks.html)
+- Nếu bạn đang sử dụng Vue CLI hoặc webpack thuần, một webpack loader nên được cấu hình để biến đổi các khối tuỳ chỉnh khớp. [Ví dụ](https://vue-loader.vuejs.org/guide/custom-blocks.html)
 
-## Lower-Level Packages {#lower-level-packages}
+## Các package cấp thấp {#lower-level-packages}
 
 ### `@vue/compiler-sfc` {#vue-compiler-sfc}
 
 - [Docs](https://github.com/vuejs/core/tree/main/packages/compiler-sfc)
 
-This package is part of the Vue core monorepo and is always published with the same version as the main `vue` package. It is included as a dependency of the main `vue` package and proxied under `vue/compiler-sfc` so you don't need to install it individually.
+Package này là một phần của Vue core monorepo và luôn được xuất bản với cùng một phiên bản như package chính `vue`. Nó được bao gồm như là một dependency của package chính `vue` và được proxy dưới `vue/compiler-sfc` để bạn không cần phải cài đặt nó một cách riêng lẻ.
 
-The package itself provides lower-level utilities for processing Vue SFCs and is only meant for tooling authors that need to support Vue SFCs in custom tools.
+Bản thân package này cung cấp các tiện ích cấp thấp cho việc xử lý Vue SFCs và chỉ dành cho các tác giả công cụ cần hỗ trợ Vue SFCs trong các công cụ tùy chỉnh.
 
 :::tip
-Always prefer using this package via the `vue/compiler-sfc` deep import since this ensures its version is in sync with the Vue runtime.
+Luôn luôn ưu tiên sử dụng package này thông qua `vue/compiler-sfc` deep import vì điều này đảm bảo phiên bản của nó được đồng bộ với runtime Vue.
 :::
 
 ### `@vitejs/plugin-vue` {#vitejs-plugin-vue}
 
 - [Docs](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue)
 
-Official plugin that provides Vue SFC support in Vite.
+Plugin chính thức cung cấp hỗ trợ Vue SFC cho Vite.
 
 ### `vue-loader` {#vue-loader}
 
 - [Docs](https://vue-loader.vuejs.org/)
 
-The official loader that provides Vue SFC support in webpack. If you are using Vue CLI, also see [docs on modifying `vue-loader` options in Vue CLI](https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-loader).
+Loader chính thức cung cấp hỗ trợ Vue SFC cho webpack. Nếu bạn đang sử dụng Vue CLI, hãy xem [tài liệu về việc sửa đổi các tùy chọn `vue-loader` trong Vue CLI](https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-loader).
 
-## Other Online Playgrounds {#other-online-playgrounds}
+## Những sân chơi Online khác {#other-online-playgrounds}
 
-- [VueUse Playground](https://play.vueuse.org)
-- [Vue + Vite on Repl.it](https://replit.com/@templates/VueJS-with-Vite)
-- [Vue on CodeSandbox](https://codesandbox.io/s/vue-3)
-- [Vue on Codepen](https://codepen.io/pen/editor/vue)
-- [Vue on Components.studio](https://components.studio/create/vue3)
-- [Vue on WebComponents.dev](https://webcomponents.dev/create/cevue)
+- [Sân chơi VueUse](https://play.vueuse.org)
+- [Vue + Vite trên Repl.it](https://replit.com/@templates/VueJS-with-Vite)
+- [Vue trên CodeSandbox](https://codesandbox.io/s/vue-3)
+- [Vue trên Codepen](https://codepen.io/pen/editor/vue)
+- [Vue trên Components.studio](https://components.studio/create/vue3)
+- [Vue trên WebComponents.dev](https://webcomponents.dev/create/cevue)
 
 <!-- TODO ## Backend Framework Integrations -->
