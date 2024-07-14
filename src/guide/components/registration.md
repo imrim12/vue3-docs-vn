@@ -1,14 +1,14 @@
-# Component Registration {#component-registration}
+# Đăng ký Component {#component-registration}
 
-> This page assumes you've already read the [Components Basics](/guide/essentials/component-basics). Read that first if you are new to components.
+> Trang này giả định bạn đã đọc qua [Cơ bản về Component](/guide/essentials/component-basics). Hãy đọc trước nếu bạn mới bắt đầu với component.
 
 <VueSchoolLink href="https://vueschool.io/lessons/vue-3-global-vs-local-vue-components" title="Free Vue.js Component Registration Lesson"/>
 
-A Vue component needs to be "registered" so that Vue knows where to locate its implementation when it is encountered in a template. There are two ways to register components: global and local.
+Một component Vue cần được "đăng ký" để Vue biết nơi tìm thấy cài đặt của nó khi nó được gặp trong một template. Có hai cách để đăng ký component: toàn cục và cục bộ.
 
-## Global Registration {#global-registration}
+## Đăng ký component toàn cục {#global-registration}
 
-We can make components available globally in the current [Vue application](/guide/essentials/application) using the `app.component()` method:
+Chúng ta có thể làm cho component khả dụng trong toàn bộ ứng dụng Vue hiện tại bằng cách sử dụng phương thức `app.component()`:
 
 ```js
 import { createApp } from 'vue'
@@ -16,16 +16,16 @@ import { createApp } from 'vue'
 const app = createApp({})
 
 app.component(
-  // the registered name
+  // tên của component được đăng ký
   'MyComponent',
-  // the implementation
+  // cấu hình component
   {
     /* ... */
   }
 )
 ```
 
-If using SFCs, you will be registering the imported `.vue` files:
+Nếu sử dụng SFC, bạn sẽ đăng ký các file `.vue` được import:
 
 ```js
 import MyComponent from './App.vue'
@@ -33,7 +33,7 @@ import MyComponent from './App.vue'
 app.component('MyComponent', MyComponent)
 ```
 
-The `app.component()` method can be chained:
+Phương thức `app.component()` có thể được gọi nhiều lần:
 
 ```js
 app
@@ -42,30 +42,30 @@ app
   .component('ComponentC', ComponentC)
 ```
 
-Globally registered components can be used in the template of any component within this application:
+Component đăng ký toàn cục có thể được sử dụng trong template của bất kỳ component nào trong ứng dụng này:
 
 ```vue-html
-<!-- this will work in any component inside the app -->
+<!-- những component này sẽ hoạt động trong bất kỳ component nào trong app -->
 <ComponentA/>
 <ComponentB/>
 <ComponentC/>
 ```
 
-This even applies to all subcomponents, meaning all three of these components will also be available _inside each other_.
+Điều này cũng áp dụng cho tất cả các subcomponent, có nghĩa là tất cả ba component này cũng sẽ có sẵn _bên trong nhau_.
 
-## Local Registration {#local-registration}
+## Đăng ký component cục bộ {#local-registration}
 
-While convenient, global registration has a few drawbacks:
+Mặc dù đăng ký toàn cục là tiện lợi, nó có một số nhược điểm:
 
-1. Global registration prevents build systems from removing unused components (a.k.a "tree-shaking"). If you globally register a component but end up not using it anywhere in your app, it will still be included in the final bundle.
+1. Việc đăng ký toàn cục ngăn hệ thống build loại bỏ các component không được sử dụng (còn được gọi là "tree-shaking"). Nếu bạn đăng ký một component toàn cầu nhưng cuối cùng không sử dụng nó ở bất kỳ đâu trong ứng dụng của bạn, nó vẫn sẽ được thêm vào trong bundle cuối cùng.
 
-2. Global registration makes dependency relationships less explicit in large applications. It makes it difficult to locate a child component's implementation from a parent component using it. This can affect long-term maintainability similar to using too many global variables.
+2. Việc đăng ký toàn cục làm cho mối quan hệ phụ thuộc ít rõ ràng hơn trong các ứng dụng lớn. Nó làm cho việc tìm vị trí triển khai của một component con từ một component cha sử dụng nó trở nên khó khăn hơn. Điều này có thể ảnh hưởng đến khả năng bảo trì lâu dài tương tự như việc sử dụng quá nhiều biến toàn cục.
 
-Local registration scopes the availability of the registered components to the current component only. It makes the dependency relationship more explicit, and is more tree-shaking friendly.
+Đăng ký cục bộ giới hạn sự khả dụng của các component đã đăng ký cho component hiện tại. Nó làm cho mối quan hệ phụ thuộc rõ ràng hơn và thân thiện với tree-shaking.
 
 <div class="composition-api">
 
-When using SFC with `<script setup>`, imported components can be locally used without registration:
+Khi sử dụng SFC với `<script setup>`, component được import có thể được sử dụng một cách cục bộ mà không cần đăng ký:
 
 ```vue
 <script setup>
@@ -77,7 +77,7 @@ import ComponentA from './ComponentA.vue'
 </template>
 ```
 
-In non-`<script setup>`, you will need to use the `components` option:
+Nếu không sử dụng `<script setup>`, bạn sẽ cần sử dụng tùy chọn `components`:
 
 ```js
 import ComponentA from './ComponentA.js'
@@ -95,7 +95,7 @@ export default {
 </div>
 <div class="options-api">
 
-Local registration is done using the `components` option:
+Việc đăng ký cục bộ được thực hiện bằng cách cung cấp một `components` object trong các tùy chọn của component:
 
 ```vue
 <script>
@@ -115,7 +115,7 @@ export default {
 
 </div>
 
-For each property in the `components` object, the key will be the registered name of the component, while the value will contain the implementation of the component. The above example is using the ES2015 property shorthand and is equivalent to:
+Đối với mỗi thuộc tính trong object `components`, key sẽ là tên đã đăng ký của component, trong khi value sẽ chứa cài đặt của component. Ví dụ trên đang sử dụng ES2015 property shorthand và tương đương với:
 
 ```js
 export default {
@@ -126,16 +126,16 @@ export default {
 }
 ```
 
-Note that **locally registered components are _not_ also available in descendant components**. In this case, `ComponentA` will be made available to the current component only, not any of its child or descendant components.
+Lưu ý rằng **các component cục bộ _không_ khả dụng cho các component con của chúng**. Trong ví dụ trên, `ComponentA` sẽ chỉ có sẵn cho component hiện tại, không phải cho bất kỳ component con hoặc component cháu nào.
 
-## Component Name Casing {#component-name-casing}
+## Cách đặt tên Component {#component-name-casing}
 
-Throughout the guide, we are using PascalCase names when registering components. This is because:
+Trong suốt hướng dẫn này, chúng tôi đang sử dụng cách đặt tên PascalCase khi đăng ký component. Điều này bởi vì:
 
-1. PascalCase names are valid JavaScript identifiers. This makes it easier to import and register components in JavaScript. It also helps IDEs with auto-completion.
+1. PascalCase là các JavaScript identifier hợp lệ. Điều này làm cho việc import và đăng ký component trong JavaScript dễ dàng hơn. Nó cũng giúp cho IDE sử dụng auto-completion.
 
-2. `<PascalCase />` makes it more obvious that this is a Vue component instead of a native HTML element in templates. It also differentiates Vue components from custom elements (web components).
+2. `<PascalCase />` sẽ khiến cho nó dễ dàng hơn để phân biệt component Vue với các phần tử HTML native trong template. Nó cũng phân biệt component Vue với các phần tử tùy chỉnh (web components).
 
-This is the recommended style when working with SFC or string templates. However, as discussed in [in-DOM Template Parsing Caveats](/guide/essentials/component-basics#in-dom-template-parsing-caveats), PascalCase tags are not usable in DOM templates.
+Việc này cũng có nghĩa là chúng tôi khuyến khích sử dụng PascalCase khi đặt tên component trong template. Tuy nhiên, như đã thảo luận trong [Những lưu ý khi parsing template trong DOM](/guide/essentials/component-basics#in-dom-template-parsing-caveats), các thẻ PascalCase không thể sử dụng trong DOM template.
 
-Luckily, Vue supports resolving kebab-case tags to components registered using PascalCase. This means a component registered as `MyComponent` can be referenced in the template via both `<MyComponent>` and `<my-component>`. This allows us to use the same JavaScript component registration code regardless of template source.
+May mắn là, Vue có hỗ trợ xử lý các thẻ kebab-case thành component đã đăng ký bằng PascalCase. Điều này có nghĩa là một component được đăng ký là `MyComponent` có thể được tham chiếu trong template thông qua cả `<MyComponent>` và `<my-component>`. Điều này cho phép chúng tôi sử dụng cùng một mã đăng ký component JavaScript bất kể nguồn template.
