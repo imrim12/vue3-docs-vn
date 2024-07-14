@@ -1,12 +1,12 @@
-# TypeScript with Composition API {#typescript-with-composition-api}
+# TypeScript với Composition API {#typescript-with-composition-api}
 
-> This page assumes you've already read the overview on [Using Vue with TypeScript](./overview).
+> Bài này giả định bạn đã đọc qua [Tổng quan về TypeScript](./overview).
 
-## Typing Component Props {#typing-component-props}
+## Ép kiểu cho Component Prop {#typing-component-props}
 
-### Using `<script setup>` {#using-script-setup}
+### Sử dụng `<script setup>` {#using-script-setup}
 
-When using `<script setup>`, the `defineProps()` macro supports inferring the props types based on its argument:
+Khi sử dụng `<script setup>`, macro `defineProps()` hỗ trợ suy luận kiểu của props dựa trên đối số của nó:
 
 ```vue
 <script setup lang="ts">
@@ -20,9 +20,9 @@ props.bar // number | undefined
 </script>
 ```
 
-This is called "runtime declaration", because the argument passed to `defineProps()` will be used as the runtime `props` option.
+Việc này được gọi là "khai báo runtime", vì đối số được truyền vào `defineProps()` sẽ được sử dụng như là tùy chọn runtime `props`.
 
-However, it is usually more straightforward to define props with pure types via a generic type argument:
+Tuy nhiên, thường thì việc định nghĩa props với các kiểu thuần túy thông qua đối số kiểu generic sẽ dễ dàng hơn:
 
 ```vue
 <script setup lang="ts">
@@ -33,11 +33,11 @@ const props = defineProps<{
 </script>
 ```
 
-This is called "type-based declaration". The compiler will try to do its best to infer the equivalent runtime options based on the type argument. In this case, our second example compiles into the exact same runtime options as the first example.
+Việc này được gọi là "khai báo kiểu", trình biên dịch sẽ cố gắng suy luận các tùy chọn runtime tương đương dựa trên đối số kiểu. Trong trường hợp này, ví dụ thứ hai sẽ được biên dịch thành các tùy chọn runtime tương đương với ví dụ thứ nhất.
 
-You can use either type-based declaration OR runtime declaration, but you cannot use both at the same time.
+Bạn có thể sử dụng cả hai loại khai báo kiểu hoặc runtime, nhưng không thể sử dụng cả hai cùng một lúc.
 
-We can also move the props types into a separate interface:
+Chúng ta cũng có thể di chuyển các kiểu props vào một interface riêng:
 
 ```vue
 <script setup lang="ts">
@@ -50,15 +50,15 @@ const props = defineProps<Props>()
 </script>
 ```
 
-#### Syntax Limitations {#syntax-limitations}
+#### Những giới hạn về cú pháp {#syntax-limitations}
 
-In version 3.2 and below, the generic type parameter for `defineProps()` were limited to a type literal or a reference to a local interface.
+Trong phiên bản 3.2 và thấp hơn, tham số kiểu generic cho `defineProps()` bị giới hạn trong một kiểu chữ hoặc một tham chiếu đến một interface cục bộ.
 
-This limitation has been resolved in 3.3. The latest version of Vue supports referencing imported and a limited set of complex types in the type parameter position. However, because the type to runtime conversion is still AST-based, some complex types that require actual type analysis, e.g. conditional types, are not supported. You can use conditional types for the type of a single prop, but not the entire props object.
+Giới hạn này đã được giải quyết trong phiên bản 3.3. Phiên bản mới nhất của Vue hỗ trợ tham chiếu đến các kiểu đã được import và một tập hợp hạn chế các kiểu phức tạp trong vị trí tham số kiểu. Tuy nhiên, vì việc chuyển đổi kiểu thành runtime vẫn dựa trên AST, một số kiểu phức tạp yêu cầu phân tích kiểu thực tế, ví dụ như các kiểu điều kiện, không được hỗ trợ. Bạn có thể sử dụng các kiểu điều kiện cho kiểu của một props đơn, nhưng không phải cho toàn bộ đối tượng props.
 
-### Props Default Values {#props-default-values}
+### Giá trị mặc định cho Props {#props-default-values}
 
-When using type-based declaration, we lose the ability to declare default values for the props. This can be resolved by the `withDefaults` compiler macro:
+Khi sử dụng khai báo kiểu, chúng ta mất đi khả năng khai báo giá trị mặc định cho props. Điều này có thể được giải quyết bằng macro `withDefaults`:
 
 ```ts
 export interface Props {
@@ -67,16 +67,16 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  msg: 'hello',
-  labels: () => ['one', 'two']
+  msg: 'xin chào',
+  labels: () => ['một', 'hai']
 })
 ```
 
-This will be compiled to equivalent runtime props `default` options. In addition, the `withDefaults` helper provides type checks for the default values, and ensures the returned `props` type has the optional flags removed for properties that do have default values declared.
+Đoạn mã trên sẽ được biên dịch thành các tùy chọn runtime tương đương. Ngoài ra, macro `withDefaults` còn cung cấp kiểm tra kiểu cho các giá trị mặc định, và đảm bảo kiểu của đối tượng `props` trả về sẽ không có các cờ tùy chọn cho các thuộc tính có giá trị mặc định được khai báo.
 
-### Without `<script setup>` {#without-script-setup}
+### Không sử dụng `<script setup>` {#without-script-setup}
 
-If not using `<script setup>`, it is necessary to use `defineComponent()` to enable props type inference. The type of the props object passed to `setup()` is inferred from the `props` option.
+Nếu bạn không sử dụng `<script setup>`, thì cần phải sử dụng `defineComponent()` để kích hoạt việc suy luận kiểu cho props. Kiểu của đối tượng props được truyền vào `setup()` được suy luận từ tùy chọn `props`.
 
 ```ts
 import { defineComponent } from 'vue'
@@ -86,14 +86,15 @@ export default defineComponent({
     message: String
   },
   setup(props) {
-    props.message // <-- type: string
+    props.message // <-- kiểu dữ liệu: string
   }
 })
 ```
 
-### Complex prop types {#complex-prop-types}
+### Props với kiểu phức tạp {#complex-prop-types}
 
-With type-based declaration, a prop can use a complex type much like any other type:
+Với khai báo kiểu, một props có thể sử dụng kiểu phức tạp giống như bất kỳ kiểu nào khác:
+
 
 ```vue
 <script setup lang="ts">
@@ -109,7 +110,7 @@ const props = defineProps<{
 </script>
 ```
 
-For runtime declaration, we can use the `PropType` utility type:
+Đối với khai báo runtime, chúng ta có thể sử dụng tiện ích `PropType`:
 
 ```ts
 import type { PropType } from 'vue'
@@ -119,7 +120,7 @@ const props = defineProps({
 })
 ```
 
-This works in much the same way if we're specifying the `props` option directly:
+Tiện ích này hoạt động theo cách tương tự nếu chúng ta đang chỉ định tùy chọn `props` trực tiếp:
 
 ```ts
 import { defineComponent } from 'vue'
@@ -132,11 +133,11 @@ export default defineComponent({
 })
 ```
 
-The `props` option is more commonly used with the Options API, so you'll find more detailed examples in the guide to [TypeScript with Options API](/guide/typescript/options-api#typing-component-props). The techniques shown in those examples also apply to runtime declarations using `defineProps()`.
+Tuỳ chọn `props` thường được sử dụng với Options API, vì vậy bạn sẽ tìm thấy các ví dụ chi tiết hơn trong hướng dẫn về [TypeScript với Options API](/guide/typescript/options-api#typing-component-props). Các kỹ thuật được hiển thị trong các ví dụ đó cũng áp dụng cho các khai báo runtime sử dụng `defineProps()`.
 
-## Typing Component Emits {#typing-component-emits}
+## Ép kiểu cho Emit {#typing-component-emits}
 
-In `<script setup>`, the `emit` function can also be typed using either runtime declaration OR type declaration:
+Trong `<script setup>`, hàm `emit` cũng có thể được ép kiểu bằng cách sử dụng cả khai báo runtime HOẶC khai báo kiểu:
 
 ```vue
 <script setup lang="ts">
@@ -149,7 +150,7 @@ const emit = defineEmits<{
   (e: 'update', value: string): void
 }>()
 
-// 3.3+: alternative, more succinct syntax
+// 3.3+: cú pháp thay thế, ngắn gọn hơn
 const emit = defineEmits<{
   change: [id: number]
   update: [value: string]
@@ -157,14 +158,14 @@ const emit = defineEmits<{
 </script>
 ```
 
-The type argument can be one of the following:
+Kiểu đối số có thể là một trong các kiểu sau:
 
-1. A callable function type, but written as a type literal with [Call Signatures](https://www.typescriptlang.org/docs/handbook/2/functions.html#call-signatures). It will be used as the type of the returned `emit` function.
-2. A type literal where the keys are the event names, and values are array / tuple types representing the additional accepted parameters for the event. The example above is using named tuples so each argument can have an explicit name.
+1. Một kiểu hàm có thể gọi, nhưng được viết dưới dạng một kiểu chữ với [Call Signatures](https://www.typescriptlang.org/docs/handbook/2/functions.html#call-signatures). Nó sẽ được sử dụng như là kiểu của hàm `emit` trả về.
+2. Một kiểu chữ trong đó các khóa là tên của các sự kiện, và các giá trị là các kiểu mảng / tuple đại diện cho các tham số được chấp nhận bổ sung cho sự kiện. Ví dụ trên đang sử dụng các tuple được đặt tên để mỗi đối số có thể có một tên rõ ràng.
 
-As we can see, the type declaration gives us much finer-grained control over the type constraints of emitted events.
+Như chúng ta có thể thấy, khai báo kiểu cho phép chúng ta kiểm soát ổn định được những ràng buộc kiểu của các sự kiện được phát ra.
 
-When not using `<script setup>`, `defineComponent()` is able to infer the allowed events for the `emit` function exposed on the setup context:
+Khi không sử dụng `<script setup>`, `defineComponent()` có thể suy luận các sự kiện được phép cho hàm `emit` được phát ra trên ngữ cảnh setup:
 
 ```ts
 import { defineComponent } from 'vue'
@@ -177,21 +178,21 @@ export default defineComponent({
 })
 ```
 
-## Typing `ref()` {#typing-ref}
+## Ép kiểu `ref()` {#typing-ref}
 
-Refs infer the type from the initial value:
+Refs được suy luận kiểu từ giá trị ban đầu:
 
 ```ts
 import { ref } from 'vue'
 
-// inferred type: Ref<number>
+// kiểu được suy luận: Ref<number>
 const year = ref(2020)
 
-// => TS Error: Type 'string' is not assignable to type 'number'.
+// => TS Error: Kiểu 'string' không thể được gán cho kiểu 'number'.
 year.value = '2020'
 ```
 
-Sometimes we may need to specify complex types for a ref's inner value. We can do that by using the `Ref` type:
+Đôi khi chúng ta có thể cần chỉ định các kiểu phức tạp cho giá trị bên trong của một ref. Chúng ta có thể làm điều đó bằng cách sử dụng kiểu `Ref`:
 
 ```ts
 import { ref } from 'vue'
@@ -202,7 +203,7 @@ const year: Ref<string | number> = ref('2020')
 year.value = 2020 // ok!
 ```
 
-Or, by passing a generic argument when calling `ref()` to override the default inference:
+Hoặc, bằng cách truyền đối số generic khi gọi `ref()` để ghi đè lên suy luận mặc định:
 
 ```ts
 // resulting type: Ref<string | number>
@@ -211,16 +212,16 @@ const year = ref<string | number>('2020')
 year.value = 2020 // ok!
 ```
 
-If you specify a generic type argument but omit the initial value, the resulting type will be a union type that includes `undefined`:
+Nếu bạn chỉ định một đối số generic nhưng bỏ qua giá trị ban đầu, kiểu kết quả sẽ là một kiểu liên hợp bao gồm `undefined`:
 
 ```ts
 // inferred type: Ref<number | undefined>
 const n = ref<number>()
 ```
 
-## Typing `reactive()` {#typing-reactive}
+## Ép kiểu `reactive()` {#typing-reactive}
 
-`reactive()` also implicitly infers the type from its argument:
+`reactive()` cũng suy luận kiểu từ đối số của nó:
 
 ```ts
 import { reactive } from 'vue'
@@ -229,7 +230,7 @@ import { reactive } from 'vue'
 const book = reactive({ title: 'Vue 3 Guide' })
 ```
 
-To explicitly type a `reactive` property, we can use interfaces:
+Để chỉ định kiểu `reactive` một cách rõ ràng, chúng ta có thể sử dụng các interface:
 
 ```ts
 import { reactive } from 'vue'
@@ -243,12 +244,12 @@ const book: Book = reactive({ title: 'Vue 3 Guide' })
 ```
 
 :::tip
-It's not recommended to use the generic argument of `reactive()` because the returned type, which handles nested ref unwrapping, is different from the generic argument type.
+Không nên sử dụng đối số generic của `reactive()` vì kiểu trả về, xử lý việc giải nén ref lồng nhau, khác với kiểu đối số generic.
 :::
 
-## Typing `computed()` {#typing-computed}
+## Ép kiểu `computed()` {#typing-computed}
 
-`computed()` infers its type based on the getter's return value:
+`computed()` suy luận kiểu của nó dựa trên giá trị trả về của getter:
 
 ```ts
 import { ref, computed } from 'vue'
@@ -258,26 +259,26 @@ const count = ref(0)
 // inferred type: ComputedRef<number>
 const double = computed(() => count.value * 2)
 
-// => TS Error: Property 'split' does not exist on type 'number'
+// => TS Error: Thuộc tính 'split' không tồn tại với kiểu 'number'
 const result = double.value.split('')
 ```
 
-You can also specify an explicit type via a generic argument:
+Bạn cũng có thể chỉ định kiểu trả về một cách rõ ràng thông qua đối số generic:
 
 ```ts
 const double = computed<number>(() => {
-  // type error if this doesn't return a number
+  // lỗi kiểu dữ liệu nếu computed không trả về một số
 })
 ```
 
-## Typing Event Handlers {#typing-event-handlers}
+## Ép kiểu Event Handlers {#typing-event-handlers}
 
-When dealing with native DOM events, it might be useful to type the argument we pass to the handler correctly. Let's take a look at this example:
+Khi làm việc với các sự kiện DOM thuần, có thể hữu ích khi ép kiểu đối số chúng ta truyền vào bộ xử lý. Hãy xem xét ví dụ sau:
 
 ```vue
 <script setup lang="ts">
 function handleChange(event) {
-  // `event` implicitly has `any` type
+  // `event` ngầm định có kiểu `any`
   console.log(event.target.value)
 }
 </script>
@@ -287,7 +288,7 @@ function handleChange(event) {
 </template>
 ```
 
-Without type annotation, the `event` argument will implicitly have a type of `any`. This will also result in a TS error if `"strict": true` or `"noImplicitAny": true` are used in `tsconfig.json`. It is therefore recommended to explicitly annotate the argument of event handlers. In addition, you may need to use type assertions when accessing the properties of `event`:
+Khi không có chú thích kiểu, đối số `event` sẽ ngầm định có kiểu `any`. Điều này cũng sẽ dẫn đến lỗi TS nếu `"strict": true` hoặc `"noImplicitAny": true` được sử dụng trong `tsconfig.json`. Do đó, nên khai báo rõ ràng đối số của các bộ xử lý sự kiện. Ngoài ra, bạn có thể cần sử dụng các khai báo kiểu khi truy cập các thuộc tính của `event`:
 
 ```ts
 function handleChange(event: Event) {
@@ -295,9 +296,9 @@ function handleChange(event: Event) {
 }
 ```
 
-## Typing Provide / Inject {#typing-provide-inject}
+## Ép kiểu Provide / Inject {#typing-provide-inject}
 
-Provide and inject are usually performed in separate components. To properly type injected values, Vue provides an `InjectionKey` interface, which is a generic type that extends `Symbol`. It can be used to sync the type of the injected value between the provider and the consumer:
+Provide và inject thường được thực hiện trong các component riêng biệt. Để ép kiểu đúng giá trị được inject, Vue cung cấp một interface `InjectionKey`, đây là một kiểu generic mở rộng từ `Symbol`. Nó có thể được sử dụng để đồng bộ kiểu của giá trị được inject giữa provider và consumer:
 
 ```ts
 import { provide, inject } from 'vue'
@@ -305,36 +306,36 @@ import type { InjectionKey } from 'vue'
 
 const key = Symbol() as InjectionKey<string>
 
-provide(key, 'foo') // providing non-string value will result in error
+provide(key, 'foo')  // khai báo giá trị không phải là string sẽ dẫn đến lỗi
 
-const foo = inject(key) // type of foo: string | undefined
+const foo = inject(key) // kiểu dữ liệu của foo: string | undefined
 ```
 
-It's recommended to place the injection key in a separate file so that it can be imported in multiple components.
+Việc đặt khoá inject trong một file riêng biệt được khuyến khích để có thể import vào nhiều component.
 
-When using string injection keys, the type of the injected value will be `unknown`, and needs to be explicitly declared via a generic type argument:
+Khi sử dụng khoá inject, giá trị được inject sẽ luôn có kiểu `unknown`, và cần được khai báo rõ ràng thông qua đối số generic:
 
 ```ts
-const foo = inject<string>('foo') // type: string | undefined
+const foo = inject<string>('foo') // kiểu dữ liệu: string | undefined
 ```
 
-Notice the injected value can still be `undefined`, because there is no guarantee that a provider will provide this value at runtime.
+Hãy chú ý rằng giá trị được inject vẫn có thể là `undefined`, vì không có bất kỳ cung cấp nào đảm bảo rằng giá trị này sẽ được cung cấp tại thời điểm runtime.
 
-The `undefined` type can be removed by providing a default value:
+Kiểu `undefined` có thể được loại bỏ bằng cách cung cấp một giá trị mặc định:
 
 ```ts
-const foo = inject<string>('foo', 'bar') // type: string
+const foo = inject<string>('foo', 'bar') // kiểu dữ liệu: string
 ```
 
-If you are sure that the value is always provided, you can also force cast the value:
+Nếu bạn chắc chắn rằng giá trị sẽ luôn được khai báo, bạn cũng có thể ép kiểu giá trị:
 
 ```ts
 const foo = inject('foo') as string
 ```
 
-## Typing Template Refs {#typing-template-refs}
+## Ép kiểu Template Refs {#typing-template-refs}
 
-Template refs should be created with an explicit generic type argument and an initial value of `null`:
+Template refs nên được tạo ra với một đối số generic rõ ràng và một giá trị ban đầu là `null`:
 
 ```vue
 <script setup lang="ts">
@@ -352,13 +353,13 @@ onMounted(() => {
 </template>
 ```
 
-To get the right DOM interface you can check pages like [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#technical_summary).
+Để lấy được DOM interface đúng, bạn có thể kiểm tra các trang như [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#technical_summary).
 
-Note that for strict type safety, it is necessary to use optional chaining or type guards when accessing `el.value`. This is because the initial ref value is `null` until the component is mounted, and it can also be set to `null` if the referenced element is unmounted by `v-if`.
+Lưu ý rằng để đảm bảo an toàn kiểu, cần phải sử dụng optional chaining hoặc type guards khi truy cập `el.value`. Điều này bởi vì giá trị ref ban đầu là `null` cho đến khi component được mount, và nó cũng có thể được đặt thành `null` nếu phần tử được tham chiếu bị unmount bởi `v-if`.
 
-## Typing Component Template Refs {#typing-component-template-refs}
+## Ép kiểu Component Template Refs {#typing-component-template-refs}
 
-Sometimes you might need to annotate a template ref for a child component in order to call its public method. For example, we have a `MyModal` child component with a method that opens the modal:
+Đôi khi bạn có thể cần chú thích kiểu cho một template ref của một component con để gọi phương thức public của nó. Ví dụ, chúng ta có một component con `MyModal` với một phương thức dùng để mở modal:
 
 ```vue
 <!-- MyModal.vue -->
@@ -374,7 +375,7 @@ defineExpose({
 </script>
 ```
 
-In order to get the instance type of `MyModal`, we need to first get its type via `typeof`, then use TypeScript's built-in `InstanceType` utility to extract its instance type:
+Để có thể lấy kiểu của instance của `MyModal`, đầu tiên chúng ta cần phải lấy kiểu dữ liệu của nó thông qua `typeof`, sau đó sử dụng tiện ích `InstanceType` được tích hợp sẵn của TypeScript để trích xuất kiểu instance của nó:
 
 ```vue{5}
 <!-- App.vue -->
@@ -389,9 +390,9 @@ const openModal = () => {
 </script>
 ```
 
-Note if you want to use this technique in TypeScript files instead of Vue SFCs, you need to enable Volar's [Takeover Mode](./overview#volar-takeover-mode).
+Lưu ý rằng nếu bạn muốn sử dụng kỹ thuật này với các file TypeScript thay vì Vue SFC, bạn cần phải bật [Takeover Mode](./overview#volar-takeover-mode) của Volar.
 
-In cases where the exact type of the component isn't available or isn't important, `ComponentPublicInstance` can be used instead. This will only include properties that are shared by all components, such as `$el`:
+Trong trường hợp kiểu dữ liệu của component con không có sẵn, hoặc không quan trọng, `ComponentPublicInstance` có thể được sử dụng thay thế. Nó chỉ bao gồm các thuộc tính được chia sẻ bởi tất cả các component, chẳng hạn như `$el`:
 
 ```ts
 import { ref } from 'vue'

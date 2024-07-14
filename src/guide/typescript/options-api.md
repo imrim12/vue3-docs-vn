@@ -1,20 +1,20 @@
-# TypeScript with Options API {#typescript-with-options-api}
+# TypeScript với Options API {#typescript-with-options-api}
 
-> This page assumes you've already read the overview on [Using Vue with TypeScript](./overview).
+> Trang này giả định rằng bạn đã đọc qua phần [Sử dụng Vue với TypeScript](./overview).
 
 :::tip
-While Vue does support TypeScript usage with Options API, it is recommended to use Vue with TypeScript via Composition API as it offers simpler, more efficient and more robust type inference.
+Mặc dù Vue hỗ trợ việc sử dụng TypeScript với Options API, nhưng nó khuyến khích sử dụng Vue với TypeScript thông qua Composition API vì nó cung cấp khả năng suy luận kiểu đơn giản, hiệu quả và mạnh mẽ hơn.
 :::
 
-## Typing Component Props {#typing-component-props}
+## Ép kiểu cho Props của Component {#typing-component-props}
 
-Type inference for props in Options API requires wrapping the component with `defineComponent()`. With it, Vue is able to infer the types for the props based on the `props` option, taking additional options such as `required: true` and `default` into account:
+Kết xuất kiểu dữ liệu cho props trong Options API yêu cầu bọc component với `defineComponent()`. Với nó, Vue có thể suy luận kiểu cho props dựa trên tùy chọn `props`, sử dụng các tùy chọn bổ sung như `required: true` và `default`:
 
 ```ts
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  // type inference enabled
+  // cho phép kết xuất kiểu
   props: {
     name: String,
     id: [Number, String],
@@ -22,17 +22,17 @@ export default defineComponent({
     metadata: null
   },
   mounted() {
-    this.name // type: string | undefined
-    this.id // type: number | string | undefined
-    this.msg // type: string
-    this.metadata // type: any
+    this.name // kiểu dữ liệu: string | undefined
+    this.id // kiểu dữ liệu: number | string | undefined
+    this.msg // kiểu dữ liệu: string
+    this.metadata // kiểu dữ liệu: any
   }
 })
 ```
 
-However, the runtime `props` options only support using constructor functions as a prop's type - there is no way to specify complex types such as objects with nested properties or function call signatures.
+Tuy nhiên, tùy chọn `props` trong runtime chỉ hỗ trợ sử dụng các hàm khởi tạo như kiểu của props - không có cách nào để chỉ định các kiểu phức tạp như các đối tượng với các thuộc tính lồng nhau hoặc khởi tạo hàm.
 
-To annotate complex props types, we can use the `PropType` utility type:
+Để ép kiểu các props phức tạp, chúng ta có thể sử dụng tiện ích `PropType`:
 
 ```ts
 import { defineComponent } from 'vue'
@@ -47,27 +47,27 @@ interface Book {
 export default defineComponent({
   props: {
     book: {
-      // provide more specific type to `Object`
+      // cung cấp kiểu cụ thể hơn cho `Object`
       type: Object as PropType<Book>,
       required: true
     },
-    // can also annotate functions
+    // hoặc sử dụng một hàm khởi tạo
     callback: Function as PropType<(id: number) => void>
   },
   mounted() {
     this.book.title // string
     this.book.year // number
 
-    // TS Error: argument of type 'string' is not
-    // assignable to parameter of type 'number'
+    // TS Error: đối số của kiểu 'string' không thể 
+    // gán cho tham số của kiểu 'number'
     this.callback?.('123')
   }
 })
 ```
 
-### Caveats {#caveats}
+### Lưu ý {#caveats}
 
-If your TypeScript version is less than `4.7`, you have to be careful when using function values for `validator` and `default` prop options - make sure to use arrow functions:
+Nếu phiên bản TypeScript của bạn nhỏ hơn `4.7`, bạn phải cẩn thận khi sử dụng giá trị hàm cho các tùy chọn `validator` và `default` - hãy chắc chắn sử dụng các arrow function:
 
 ```ts
 import { defineComponent } from 'vue'
@@ -82,7 +82,7 @@ export default defineComponent({
   props: {
     bookA: {
       type: Object as PropType<Book>,
-      // Make sure to use arrow functions if your TypeScript version is less than 4.7
+      // Chắc chắn rằng bạn sử dụng arrow function nếu phiên bản TypeScript của bạn nhỏ hơn 4.7
       default: () => ({
         title: 'Arrow Function Expression'
       }),
@@ -92,11 +92,11 @@ export default defineComponent({
 })
 ```
 
-This prevents TypeScript from having to infer the type of `this` inside these functions, which, unfortunately, can cause the type inference to fail. It was a previous [design limitation](https://github.com/microsoft/TypeScript/issues/38845), and now has been improved in [TypeScript 4.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#improved-function-inference-in-objects-and-methods).
+Việc này ngăn TypeScript phải suy luận kiểu của `this` bên trong các hàm này, điều này, tiếc thay, có thể gây ra lỗi suy luận kiểu. Đây là một [hạn chế thiết kế](https://github.com/microsoft/TypeScript/issues/38845), và hiện đã được cải thiện trong [TypeScript 4.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#improved-function-inference-in-objects-and-methods).
 
-## Typing Component Emits {#typing-component-emits}
+## Ép kiểu Component Emits {#typing-component-emits}
 
-We can declare the expected payload type for an emitted event using the object syntax of the `emits` option. Also, all non-declared emitted events will throw a type error when called:
+Chúng ta có thể khai báo kiểu dữ liệu mong đợi cho một sự kiện được phát ra bằng cách sử dụng cú pháp đối tượng của tùy chọn `emits`. Ngoài ra, tất cả các sự kiện được phát ra không được khai báo sẽ ném ra một lỗi kiểu khi được gọi:
 
 ```ts
 import { defineComponent } from 'vue'
@@ -104,25 +104,25 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   emits: {
     addBook(payload: { bookName: string }) {
-      // perform runtime validation
+      // thực hiện validation tại runtime
       return payload.bookName.length > 0
     }
   },
   methods: {
     onSubmit() {
       this.$emit('addBook', {
-        bookName: 123 // Type error!
+        bookName: 123 // Lỗi kiểu dữ liệu!
       })
 
-      this.$emit('non-declared-event') // Type error!
+      this.$emit('non-declared-event') // Lỗi kiểu dữ liệu!
     }
   }
 })
 ```
 
-## Typing Computed Properties {#typing-computed-properties}
+## Ép kiểu thuộc tính Computed {#typing-computed-properties}
 
-A computed property infers its type based on its return value:
+Một thuộc tính computed sẽ suy luận kiểu dữ liệu của nó dựa trên giá trị trả về:
 
 ```ts
 import { defineComponent } from 'vue'
@@ -139,12 +139,12 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.greeting // type: string
+    this.greeting // kiểu dữ liệu: string
   }
 })
 ```
 
-In some cases, you may want to explicitly annotate the type of a computed property to ensure its implementation is correct:
+Trong một số trường hợp, bạn có thể muốn chú thích rõ ràng kiểu của một thuộc tính computed để đảm bảo việc thực hiện của nó là chính xác:
 
 ```ts
 import { defineComponent } from 'vue'
@@ -156,12 +156,12 @@ export default defineComponent({
     }
   },
   computed: {
-    // explicitly annotate return type
+    // khai báo rõ ràng kiểu dữ liệu trả về
     greeting(): string {
       return this.message + '!'
     },
 
-    // annotating a writable computed property
+    // khai báo rõ ràng kiểu dữ liệu trả về và kiểu dữ liệu của giá trị gán
     greetingUppercased: {
       get(): string {
         return this.greeting.toUpperCase()
@@ -174,11 +174,11 @@ export default defineComponent({
 })
 ```
 
-Explicit annotations may also be required in some edge cases where TypeScript fails to infer the type of a computed property due to circular inference loops.
+Khai báo kiểu dữ liệu rõ ràng cũng có thể được yêu cầu trong một số trường hợp đặc biệt mà TypeScript không thể suy luận kiểu dữ liệu của thuộc tính computed do vòng lặp suy luận đệ quy.
 
-## Typing Event Handlers {#typing-event-handlers}
+## Ép kiểu Event Handlers {#typing-event-handlers}
 
-When dealing with native DOM events, it might be useful to type the argument we pass to the handler correctly. Let's take a look at this example:
+Khi xử lý các sự kiện DOM thuần,việc ép kiểu cho đối số có thể hữu ích khi chúng ta truyền vào trình xử lý. Hãy xem xét ví dụ này:
 
 ```vue
 <script lang="ts">
@@ -187,7 +187,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   methods: {
     handleChange(event) {
-      // `event` implicitly has `any` type
+      // `event` ngầm định có kiểu `any`
       console.log(event.target.value)
     }
   }
@@ -199,7 +199,7 @@ export default defineComponent({
 </template>
 ```
 
-Without type annotation, the `event` argument will implicitly have a type of `any`. This will also result in a TS error if `"strict": true` or `"noImplicitAny": true` are used in `tsconfig.json`. It is therefore recommended to explicitly annotate the argument of event handlers. In addition, you may need to use type assertions when accessing the properties of `event`:
+Khi không có chú thích kiểu, đối số `event` sẽ ngầm định có kiểu `any`. Điều này cũng sẽ dẫn đến lỗi TS nếu `"strict": true` hoặc `"noImplicitAny": true` được sử dụng trong `tsconfig.json`. Do đó, nên khai báo rõ ràng đối số của bộ xử lý sự kiện. Ngoài ra, bạn có thể cần sử dụng các khai báo kiểu khi truy cập các thuộc tính của `event`:
 
 ```ts
 import { defineComponent } from 'vue'
@@ -213,9 +213,9 @@ export default defineComponent({
 })
 ```
 
-## Augmenting Global Properties {#augmenting-global-properties}
+## Bổ sung các thuộc tính toàn cục {#augmenting-global-properties}
 
-Some plugins install globally available properties to all component instances via [`app.config.globalProperties`](/api/application#app-config-globalproperties). For example, we may install `this.$http` for data-fetching or `this.$translate` for internationalization. To make this play well with TypeScript, Vue exposes a `ComponentCustomProperties` interface designed to be augmented via [TypeScript module augmentation](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation):
+Một số plugin cài đặt các thuộc tính có sẵn toàn cục cho tất cả các trường hợp component thông qua [`app.config.globalProperties`](/api/application#app-config-globalproperties). Ví dụ, chúng ta có thể cài đặt `this.$http` để lấy dữ liệu hoặc `this.$translate` để đa ngôn ngữ. Để làm cho việc này hoạt động tốt với TypeScript, Vue cung cấp một giao diện `ComponentCustomProperties` được thiết kế để được bổ sung thông qua [TypeScript module augmentation](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation):
 
 ```ts
 import axios from 'axios'
@@ -228,18 +228,18 @@ declare module 'vue' {
 }
 ```
 
-See also:
+Xem thêm:
 
 - [TypeScript unit tests for component type extensions](https://github.com/vuejs/core/blob/main/packages/dts-test/componentTypeExtensions.test-d.tsx)
 
-### Type Augmentation Placement {#type-augmentation-placement}
+### Ép kiểu cho các Thay thế bổ sung {#type-augmentation-placement}
 
-We can put this type augmentation in a `.ts` file, or in a project-wide `*.d.ts` file. Either way, make sure it is included in `tsconfig.json`. For library / plugin authors, this file should be specified in the `types` property in `package.json`.
+Chúng ta có thể đặt kiểu bổ sung này trong một tệp `.ts`, hoặc trong một tệp `*.d.ts` toàn cục. Dù cách nào đi nữa, hãy chắc chắn nó được bao gồm trong `tsconfig.json`. Đối với các tác giả thư viện / plugin, tệp này nên được chỉ định trong thuộc tính `types` trong `package.json`.
 
-In order to take advantage of module augmentation, you will need to ensure the augmentation is placed in a [TypeScript module](https://www.typescriptlang.org/docs/handbook/modules.html). That is to say, the file needs to contain at least one top-level `import` or `export`, even if it is just `export {}`. If the augmentation is placed outside of a module, it will overwrite the original types rather than augmenting them!
+Để có thể tận dụng các bổ sung module, bạn cần đảm bảo rằng bổ sung được đặt trong một [TypeScript module](https://www.typescriptlang.org/docs/handbook/modules.html). Nói cách khác, tệp cần chứa ít nhất một `import` hoặc `export` cấp cao nhất, ngay cả khi nó chỉ là `export {}`. Nếu bổ sung được đặt bên ngoài module, nó sẽ ghi đè lên các kiểu gốc thay vì bổ sung chúng!
 
 ```ts
-// Does not work, overwrites the original types.
+// Không hoạt động, ghi đè lên các kiểu gốc.
 declare module 'vue' {
   interface ComponentCustomProperties {
     $translate: (key: string) => string
@@ -248,7 +248,7 @@ declare module 'vue' {
 ```
 
 ```ts
-// Works correctly
+// Hoạt động bình thường
 export {}
 
 declare module 'vue' {
@@ -258,9 +258,9 @@ declare module 'vue' {
 }
 ```
 
-## Augmenting Custom Options {#augmenting-custom-options}
+## Các tuỳ chỉnh bổ sung {#augmenting-custom-options}
 
-Some plugins, for example `vue-router`, provide support for custom component options such as `beforeRouteEnter`:
+Một số plugin, ví dụ như `vue-router`, cung cấp hỗ trợ cho các tùy chọn component tùy chỉnh như `beforeRouteEnter`:
 
 ```ts
 import { defineComponent } from 'vue'
@@ -272,7 +272,7 @@ export default defineComponent({
 })
 ```
 
-Without proper type augmentation, the arguments of this hook will implicitly have `any` type. We can augment the `ComponentCustomOptions` interface to support these custom options:
+Nếu không có bổ sung kiểu, các đối số của hook này sẽ ngầm định có kiểu `any`. Chúng ta có thể bổ sung `ComponentCustomOptions` để hỗ trợ các tùy chọn tùy chỉnh này:
 
 ```ts
 import { Route } from 'vue-router'
@@ -284,10 +284,10 @@ declare module 'vue' {
 }
 ```
 
-Now the `beforeRouteEnter` option will be properly typed. Note this is just an example - well-typed libraries like `vue-router` should automatically perform these augmentations in their own type definitions.
+Bây giờ tuỳ chọn `beforeRouteEnter` sẽ được ép kiểu đúng. Chú ý rằng đây là một ví dụ - các thư viện được định kiểu tốt như `vue-router` sẽ tự động thực hiện các bổ sung này trong các định nghĩa kiểu của riêng chúng.
 
-The placement of this augmentation is subject the [same restrictions](#type-augmentation-placement) as global property augmentations.
+Việc thay thế những bổ sung này phải tuân theo [các hạn chế](#type-augmentation-placement) tương tự như bổ sung cho các thuộc tính toàn cục.
 
-See also:
+Xem thêm:
 
 - [TypeScript unit tests for component type extensions](https://github.com/vuejs/core/blob/main/packages/dts-test/componentTypeExtensions.test-d.tsx)
