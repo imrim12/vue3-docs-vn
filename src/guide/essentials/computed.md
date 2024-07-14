@@ -1,4 +1,4 @@
-# Computed Properties {#computed-properties}
+# Thuộc tính Computed {#computed-properties}
 
 <div class="options-api">
   <VueSchoolLink href="https://vueschool.io/lessons/computed-properties-in-vue-3" title="Free Vue.js Computed Properties Lesson"/>
@@ -8,9 +8,9 @@
   <VueSchoolLink href="https://vueschool.io/lessons/vue-fundamentals-capi-computed-properties-in-vue-with-the-composition-api" title="Free Vue.js Computed Properties Lesson"/>
 </div>
 
-## Basic Example {#basic-example}
+## Ví dụ cơ bản {#basic-example}
 
-In-template expressions are very convenient, but they are meant for simple operations. Putting too much logic in your templates can make them bloated and hard to maintain. For example, if we have an object with a nested array:
+Biểu thức trong template rất tiện lợi, nhưng chúng được thiết kế cho các hoạt động đơn giản. Đặt quá nhiều logic trong template có thể làm cho chúng trở nên rối rắm và khó bảo trì. Ví dụ, nếu chúng ta có một object với một mảng lồng nhau:
 
 <div class="options-api">
 
@@ -21,9 +21,9 @@ export default {
       author: {
         name: 'John Doe',
         books: [
-          'Vue 2 - Advanced Guide',
-          'Vue 3 - Basic Guide',
-          'Vue 4 - The Mystery'
+          'Vue 2 - Hướng dẫn nâng cao',
+          'Vue 3 - Hướng dẫn cơ bản',
+          'Vue 4 - Bí mật, bật mí'
         ]
       }
     }
@@ -38,25 +38,25 @@ export default {
 const author = reactive({
   name: 'John Doe',
   books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
+    'Vue 2 - Hướng dẫn nâng cao',
+    'Vue 3 - Hướng dẫn cơ bản',
+    'Vue 4 - Bí mật, bật mí'
   ]
 })
 ```
 
 </div>
 
-And we want to display different messages depending on if `author` already has some books or not:
+Và chúng ta muốn hiển thị các thông báo khác nhau tùy thuộc vào `author` đã có sách hay chưa:
 
 ```vue-html
-<p>Has published books:</p>
-<span>{{ author.books.length > 0 ? 'Yes' : 'No' }}</span>
+<p>Đã phát hành sách hay chưa:</p>
+<span>{{ author.books.length > 0 ? 'Rồi' : 'Chưa' }}</span>
 ```
 
-At this point, the template is getting a bit cluttered. We have to look at it for a second before realizing that it performs a calculation depending on `author.books`. More importantly, we probably don't want to repeat ourselves if we need to include this calculation in the template more than once.
+Cho đến lúc này, template đã trở nên hơi rối rắm một chút. Chúng ta phải nhìn vào nó một lúc trước khi nhận ra rằng nó thực hiện một phép tính tùy thuộc vào `author.books`. Quan trọng hơn, chúng ta có thể không muốn lặp lại chính mình nếu chúng ta cần bao gồm phép tính này trong template nhiều hơn một lần.
 
-That's why for complex logic that includes reactive data, it is recommended to use a **computed property**. Here's the same example, refactored:
+Đó là lí do tại sao với logic phức tạp bao gồm reactive data, chúng ta nên sử dụng một **computed property**. Dưới đây là ví dụ tương tự, được tái cấu trúc:
 
 <div class="options-api">
 
@@ -67,9 +67,9 @@ export default {
       author: {
         name: 'John Doe',
         books: [
-          'Vue 2 - Advanced Guide',
-          'Vue 3 - Basic Guide',
-          'Vue 4 - The Mystery'
+          'Vue 2 - Hướng dẫn nâng cao',
+          'Vue 3 - Hướng dẫn cơ bản',
+          'Vue 4 - Bí mật, bật mí'
         ]
       }
     }
@@ -78,26 +78,26 @@ export default {
     // a computed getter
     publishedBooksMessage() {
       // `this` points to the component instance
-      return this.author.books.length > 0 ? 'Yes' : 'No'
+      return this.author.books.length > 0 ? 'Rồi' : 'Chưa'
     }
   }
 }
 ```
 
 ```vue-html
-<p>Has published books:</p>
+<p>Đã phát hành sách hay chưa:</p>
 <span>{{ publishedBooksMessage }}</span>
 ```
 
-[Try it in the Playground](https://play.vuejs.org/#eNqFkN1KxDAQhV/l0JsqaFfUq1IquwiKsF6JINaLbDNui20S8rO4lL676c82eCFCIDOZMzkzXxetlUoOjqI0ykypa2XzQtC3ktqC0ydzjUVXCIAzy87OpxjQZJ0WpwxgzlZSp+EBEKylFPGTrATuJcUXobST8sukeA8vQPzqCNe4xJofmCiJ48HV/FfbLLrxog0zdfmn4tYrXirC9mgs6WMcBB+nsJ+C8erHH0rZKmeJL0sot2tqUxHfDONuyRi2p4BggWCr2iQTgGTcLGlI7G2FHFe4Q/xGJoYn8SznQSbTQviTrRboPrHUqoZZ8hmQqfyRmTDFTC1bqalsFBN5183o/3NG33uvoWUwXYyi/gdTEpwK)
+[Thử trong Playground](https://play.vuejs.org/#eNqFkN1KxDAQhV/l0JsqaFfUq1IquwiKsF6JINaLbDNui20S8rO4lL676c82eCFCIDOZMzkzXxetlUoOjqI0ykypa2XzQtC3ktqC0ydzjUVXCIAzy87OpxjQZJ0WpwxgzlZSp+EBEKylFPGTrATuJcUXobST8sukeA8vQPzqCNe4xJofmCiJ48HV/FfbLLrxog0zdfmn4tYrXirC9mgs6WMcBB+nsJ+C8erHH0rZKmeJL0sot2tqUxHfDONuyRi2p4BggWCr2iQTgGTcLGlI7G2FHFe4Q/xGJoYn8SznQSbTQviTrRboPrHUqoZZ8hmQqfyRmTDFTC1bqalsFBN5183o/3NG33uvoWUwXYyi/gdTEpwK)
 
-Here we have declared a computed property `publishedBooksMessage`.
+Tại đây chúng ta đã khai báo một thuộc tính computed `publishedBooksMessage`.
 
-Try to change the value of the `books` array in the application `data` and you will see how `publishedBooksMessage` is changing accordingly.
+Hãy thử thay đổi giá trị của mảng `books` trong `data` của ứng dụng và bạn sẽ thấy cách mà `publishedBooksMessage` thay đổi tương ứng.
 
-You can data-bind to computed properties in templates just like a normal property. Vue is aware that `this.publishedBooksMessage` depends on `this.author.books`, so it will update any bindings that depend on `this.publishedBooksMessage` when `this.author.books` changes.
+Bạn có thể ràng buộc data với các thuộc tính computed trong template giống như một thuộc tính bình thường. Vue sẽ nhận thấy rằng `this.publishedBooksMessage` phụ thuộc vào `this.author.books`, vì vậy nó sẽ cập nhật bất kỳ ràng buộc nào phụ thuộc vào `this.publishedBooksMessage` khi `this.author.books` thay đổi.
 
-See also: [Typing Computed Properties](/guide/typescript/options-api#typing-computed-properties) <sup class="vt-badge ts" />
+Xem thêm: [Ép kiểu cho thuộc tính Computed](/guide/typescript/options-api#typing-computed-properties) <sup class="vt-badge ts" />
 
 </div>
 
@@ -110,37 +110,37 @@ import { reactive, computed } from 'vue'
 const author = reactive({
   name: 'John Doe',
   books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
+    'Vue 2 - Hướng dẫn nâng cao',
+    'Vue 3 - Hướng dẫn cơ bản',
+    'Vue 4 - Bí mật, bật mí'
   ]
 })
 
 // a computed ref
 const publishedBooksMessage = computed(() => {
-  return author.books.length > 0 ? 'Yes' : 'No'
+  return author.books.length > 0 ? 'Rồi' : 'Chưa'
 })
 </script>
 
 <template>
-  <p>Has published books:</p>
+  <p>Đã phát hành sách hay chưa:</p>
   <span>{{ publishedBooksMessage }}</span>
 </template>
 ```
 
-[Try it in the Playground](https://play.vuejs.org/#eNp1kE9Lw0AQxb/KI5dtoTainkoaaREUoZ5EEONhm0ybYLO77J9CCfnuzta0vdjbzr6Zeb95XbIwZroPlMySzJW2MR6OfDB5oZrWaOvRwZIsfbOnCUrdmuCpQo+N1S0ET4pCFarUynnI4GttMT9PjLpCAUq2NIN41bXCkyYxiZ9rrX/cDF/xDYiPQLjDDRbVXqqSHZ5DUw2tg3zP8lK6pvxHe2DtvSasDs6TPTAT8F2ofhzh0hTygm5pc+I1Yb1rXE3VMsKsyDm5JcY/9Y5GY8xzHI+wnIpVw4nTI/10R2rra+S4xSPEJzkBvvNNs310ztK/RDlLLjy1Zic9cQVkJn+R7gIwxJGlMXiWnZEq77orhH3Pq2NH9DjvTfpfSBSbmA==)
+[Thử trong Playground](https://play.vuejs.org/#eNp1kE9Lw0AQxb/KI5dtoTainkoaaREUoZ5EEONhm0ybYLO77J9CCfnuzta0vdjbzr6Zeb95XbIwZroPlMySzJW2MR6OfDB5oZrWaOvRwZIsfbOnCUrdmuCpQo+N1S0ET4pCFarUynnI4GttMT9PjLpCAUq2NIN41bXCkyYxiZ9rrX/cDF/xDYiPQLjDDRbVXqqSHZ5DUw2tg3zP8lK6pvxHe2DtvSasDs6TPTAT8F2ofhzh0hTygm5pc+I1Yb1rXE3VMsKsyDm5JcY/9Y5GY8xzHI+wnIpVw4nTI/10R2rra+S4xSPEJzkBvvNNs310ztK/RDlLLjy1Zic9cQVkJn+R7gIwxJGlMXiWnZEq77orhH3Pq2NH9DjvTfpfSBSbmA==)
 
-Here we have declared a computed property `publishedBooksMessage`. The `computed()` function expects to be passed a getter function, and the returned value is a **computed ref**. Similar to normal refs, you can access the computed result as `publishedBooksMessage.value`. Computed refs are also auto-unwrapped in templates so you can reference them without `.value` in template expressions.
+Tại đây chúng ta đã khai báo một thuộc tính computed `publishedBooksMessage`. Hàm `computed()` mong đợi được truyền một hàm getter, và giá trị trả về là một **computed ref**. Tương tự như refs bình thường, bạn có thể truy cập vào kết quả computed như `publishedBooksMessage.value`. Computed refs cũng được tự động unwrap trong template để bạn có thể tham chiếu đến chúng mà không cần `.value` trong biểu thức template.
 
-A computed property automatically tracks its reactive dependencies. Vue is aware that the computation of `publishedBooksMessage` depends on `author.books`, so it will update any bindings that depend on `publishedBooksMessage` when `author.books` changes.
+Một thuộc tính computed tự động theo dõi các reactive phụ thuộc của nó. Vue nhận thấy rằng việc tính toán `publishedBooksMessage` phụ thuộc vào `author.books`, vì vậy nó sẽ cập nhật bất kỳ ràng buộc nào phụ thuộc vào `publishedBooksMessage` khi `author.books` thay đổi.
 
-See also: [Typing Computed](/guide/typescript/composition-api#typing-computed) <sup class="vt-badge ts" />
+Xem thêm: [Ép kiểu cho thuộc tính Computed](/guide/typescript/options-api#typing-computed-properties) <sup class="vt-badge ts" />
 
 </div>
 
-## Computed Caching vs. Methods {#computed-caching-vs-methods}
+## So sánh Caching của Computed với Methods {#computed-caching-vs-methods}
 
-You may have noticed we can achieve the same result by invoking a method in the expression:
+Bạn có thể thấy chúng ta có thể đạt được cùng một kết quả bằng cách gọi một method trong biểu thức:
 
 ```vue-html
 <p>{{ calculateBooksMessage() }}</p>
@@ -149,10 +149,10 @@ You may have noticed we can achieve the same result by invoking a method in the 
 <div class="options-api">
 
 ```js
-// in component
+// trong component
 methods: {
   calculateBooksMessage() {
-    return this.author.books.length > 0 ? 'Yes' : 'No'
+    return this.author.books.length > 0 ? 'Rồi' : 'Chưa'
   }
 }
 ```
@@ -162,17 +162,17 @@ methods: {
 <div class="composition-api">
 
 ```js
-// in component
+// trong component
 function calculateBooksMessage() {
-  return author.books.length > 0 ? 'Yes' : 'No'
+  return author.books.length > 0 ? 'Rồi' : 'Chưa'
 }
 ```
 
 </div>
 
-Instead of a computed property, we can define the same function as a method. For the end result, the two approaches are indeed exactly the same. However, the difference is that **computed properties are cached based on their reactive dependencies.** A computed property will only re-evaluate when some of its reactive dependencies have changed. This means as long as `author.books` has not changed, multiple access to `publishedBooksMessage` will immediately return the previously computed result without having to run the getter function again.
+Thay vì một thuộc tính computed, chúng ta có thể định nghĩa cùng một hàm như một method. Đối với kết quả cuối cùng, hai cách tiếp cận này đều giống nhau. Tuy nhiên, khác biệt là **computed property được lưu trữ dựa trên các phụ thuộc reactive của nó**. Một computed property chỉ được tính toán lại khi một số phụ thuộc reactive của nó đã thay đổi. Điều này có nghĩa là miễn là `author.books` không thay đổi, nhiều lần truy cập vào `publishedBooksMessage` sẽ ngay lập tức trả về kết quả đã được tính toán trước đó mà không cần chạy hàm getter lại.
 
-This also means the following computed property will never update, because `Date.now()` is not a reactive dependency:
+Điều này cũng có nghĩa là thuộc tính computed sau sẽ không bao giờ cập nhật, vì `Date.now()` không phải là một phụ thuộc reactive:
 
 <div class="options-api">
 
@@ -194,13 +194,13 @@ const now = computed(() => Date.now())
 
 </div>
 
-In comparison, a method invocation will **always** run the function whenever a re-render happens.
+Trong khi đó, một method sẽ luôn luôn chạy hàm getter mỗi khi một re-render xảy ra.
 
-Why do we need caching? Imagine we have an expensive computed property `list`, which requires looping through a huge array and doing a lot of computations. Then we may have other computed properties that in turn depend on `list`. Without caching, we would be executing `list`’s getter many more times than necessary! In cases where you do not want caching, use a method call instead.
+Tại sao chúng ta cần caching? Hãy tưởng tượng chúng ta có một thuộc tính computed đắt giá `list`, yêu cầu lặp qua một mảng lớn và thực hiện nhiều tính toán. Sau đó chúng ta có thể có các thuộc tính computed khác phụ thuộc vào `list`. Nếu không có caching, chúng ta sẽ thực thi getter của `list` nhiều lần hơn cần thiết! Trong các trường hợp mà bạn không muốn caching, hãy sử dụng một method thay thế.
 
-## Writable Computed {#writable-computed}
+## Computed có thể ghi {#computed-setter}
 
-Computed properties are by default getter-only. If you attempt to assign a new value to a computed property, you will receive a runtime warning. In the rare cases where you need a "writable" computed property, you can create one by providing both a getter and a setter:
+Thuộc tính computed mặc định chỉ có thể đọc. Nếu bạn cố gắng gán một giá trị mới cho một thuộc tính computed, bạn sẽ nhận được một cảnh báo tại thời điểm chạy. Trong những trường hợp hiếm khi bạn cần một thuộc tính computed "có thể ghi", bạn có thể tạo một thuộc tính computed bằng cách cung cấp cả getter và setter:
 
 <div class="options-api">
 
@@ -220,7 +220,7 @@ export default {
       },
       // setter
       set(newValue) {
-        // Note: we are using destructuring assignment syntax here.
+        // Note: chúng ta đang sử dụng cú pháp destructuring assignment ở đây.
         [this.firstName, this.lastName] = newValue.split(' ')
       }
     }
@@ -228,7 +228,7 @@ export default {
 }
 ```
 
-Now when you run `this.fullName = 'John Doe'`, the setter will be invoked and `this.firstName` and `this.lastName` will be updated accordingly.
+Bây giờ khi bạn chạy `this.fullName = 'John Doe'`, setter sẽ được gọi và `this.firstName` và `this.lastName` sẽ được cập nhật tương ứng.
 
 </div>
 
@@ -248,23 +248,23 @@ const fullName = computed({
   },
   // setter
   set(newValue) {
-    // Note: we are using destructuring assignment syntax here.
+    // Note: chúng ta đang sử dụng cú pháp destructuring assignment ở đây.
     [firstName.value, lastName.value] = newValue.split(' ')
   }
 })
 </script>
 ```
 
-Now when you run `fullName.value = 'John Doe'`, the setter will be invoked and `firstName` and `lastName` will be updated accordingly.
+Bây giờ khi bạn chạy `fullName.value = 'John Doe'`, setter sẽ được gọi và `firstName` và `lastName` sẽ được cập nhật tương ứng.
 
 </div>
 
-## Best Practices {#best-practices}
+## Phương pháp sử dụng tốt nhất {#best-practices}
 
-### Getters should be side-effect free {#getters-should-be-side-effect-free}
+### Getter nên không có side effect {#getters-should-be-side-effect-free}
 
-It is important to remember that computed getter functions should only perform pure computation and be free of side effects. For example, **don't make async requests or mutate the DOM inside a computed getter!** Think of a computed property as declaratively describing how to derive a value based on other values - its only responsibility should be computing and returning that value. Later in the guide we will discuss how we can perform side effects in reaction to state changes with [watchers](./watchers).
+Một điều quan trọng mà bạn cần phải nhớ đó là getter của computed property chỉ nên thực hiện các tính toán và không gây ra bất kỳ side effect nào. Ví dụ, **đừng thực hiện các yêu cầu async hoặc thay đổi DOM trong getter của computed property!** Hãy nghĩ về một computed property như là một cách mô tả khai báo làm thế nào để tạo ra một giá trị dựa trên các giá trị khác - trách nhiệm duy nhất của nó là tính toán và trả về giá trị đó. Sau này trong hướng dẫn, chúng ta sẽ thảo luận về cách thực hiện các side effect khi có sự thay đổi state với [watchers](./watchers).
 
-### Avoid mutating computed value {#avoid-mutating-computed-value}
+### Tránh việc thay đổi thuộc tính computed {#avoid-mutating-a-computed-property}
 
-The returned value from a computed property is derived state. Think of it as a temporary snapshot - every time the source state changes, a new snapshot is created. It does not make sense to mutate a snapshot, so a computed return value should be treated as read-only and never be mutated - instead, update the source state it depends on to trigger new computations.
+Giá trị trả về từ một thuộc tính computed là một giá trị dẫn xuất. Hãy nghĩ về nó như là một bản lưu tạm thời - mỗi khi state nguồn thay đổi, một bản lưu mới được tạo ra. Nó không có ý nghĩa khi thay đổi một bản lưu tạm thời, vì vậy một giá trị trả về từ thuộc tính computed nên được coi là chỉ đọc và không bao giờ được thay đổi - thay vào đó, hãy cập nhật state nguồn mà nó phụ thuộc để kích hoạt các tính toán mới.

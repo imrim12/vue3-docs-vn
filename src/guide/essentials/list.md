@@ -1,4 +1,4 @@
-# List Rendering {#list-rendering}
+# Render các danh sách {#list-rendering}
 
 <div class="options-api">
   <VueSchoolLink href="https://vueschool.io/lessons/list-rendering-in-vue-3" title="Free Vue.js List Rendering Lesson"/>
@@ -10,7 +10,7 @@
 
 ## `v-for` {#v-for}
 
-We can use the `v-for` directive to render a list of items based on an array. The `v-for` directive requires a special syntax in the form of `item in items`, where `items` is the source data array and `item` is an **alias** for the array element being iterated on:
+Chúng ta có thể sử dụng directive `v-for` để render một danh sách các item dựa trên một mảng. Directive `v-for` yêu cầu một cú pháp đặc biệt theo dạng `item in items`, trong đó `items` là mảng dữ liệu nguồn và `item` là **alias** cho phần tử mảng đang được lặp:
 
 <div class="composition-api">
 
@@ -38,12 +38,12 @@ data() {
 </li>
 ```
 
-Inside the `v-for` scope, template expressions have access to all parent scope properties. In addition, `v-for` also supports an optional second alias for the index of the current item:
+Bên trong scope của `v-for`, các biểu thức template có thể truy cập tất cả các thuộc tính của scope cha. Ngoài ra, `v-for` cũng hỗ trợ một alias thứ hai tùy chọn cho index của item hiện tại:
 
 <div class="composition-api">
 
 ```js
-const parentMessage = ref('Parent')
+const parentMessage = ref('Message Cha')
 const items = ref([{ message: 'Foo' }, { message: 'Bar' }])
 ```
 
@@ -53,7 +53,7 @@ const items = ref([{ message: 'Foo' }, { message: 'Bar' }])
 ```js
 data() {
   return {
-    parentMessage: 'Parent',
+    parentMessage: 'Message Cha',
     items: [{ message: 'Foo' }, { message: 'Bar' }]
   }
 }
@@ -68,7 +68,7 @@ data() {
 ```
 
 <script setup>
-const parentMessage = 'Parent'
+const parentMessage = 'Message Cha'
 const items = [{ message: 'Foo' }, { message: 'Bar' }]
 </script>
 <div class="demo">
@@ -79,31 +79,31 @@ const items = [{ message: 'Foo' }, { message: 'Bar' }]
 
 <div class="composition-api">
 
-[Try it in the Playground](https://play.vuejs.org/#eNpdTsuqwjAQ/ZVDNlFQu5d64bpwJ7g3LopOJdAmIRlFCPl3p60PcDWcM+eV1X8Iq/uN1FrV6RxtYCTiW/gzzvbBR0ZGpBYFbfQ9tEi1ccadvUuM0ERyvKeUmithMyhn+jCSev4WWaY+vZ7HjH5Sr6F33muUhTR8uW0ThTuJua6mPbJEgGSErmEaENedxX3Z+rgxajbEL2DdhR5zOVOdUSIEDOf8M7IULCHsaPgiMa1eK4QcS6rOSkhdfapVeQLQEWnH)
+[Thử trong Playground](https://play.vuejs.org/#eNpdTsuqwjAQ/ZVDNlFQu5d64bpwJ7g3LopOJdAmIRlFCPl3p60PcDWcM+eV1X8Iq/uN1FrV6RxtYCTiW/gzzvbBR0ZGpBYFbfQ9tEi1ccadvUuM0ERyvKeUmithMyhn+jCSev4WWaY+vZ7HjH5Sr6F33muUhTR8uW0ThTuJua6mPbJEgGSErmEaENedxX3Z+rgxajbEL2DdhR5zOVOdUSIEDOf8M7IULCHsaPgiMa1eK4QcS6rOSkhdfapVeQLQEWnH)
 
 </div>
 <div class="options-api">
 
-[Try it in the Playground](https://play.vuejs.org/#eNpVTssKwjAQ/JUllyr0cS9V0IM3wbvxEOxWAm0a0m0phPy7m1aqhpDsDLMz48XJ2nwaUZSiGp5OWzpKg7PtHUGNjRpbAi8NQK1I7fbrLMkhjc5EJAn4WOXQ0BWHQb2whOS24CSN6qjXhN1Qwt1Dt2kufZ9ASOGXOyvH3GMNCdGdH75VsZVjwGa2VYQRUdVqmLKmdwcpdjEnBW1qnPf8wZIrBQujoff/RSEEyIDZZeGLeCn/dGJyCSlazSZVsUWL8AYme21i)
+[Thử trong Playground](https://play.vuejs.org/#eNpVTssKwjAQ/JUllyr0cS9V0IM3wbvxEOxWAm0a0m0phPy7m1aqhpDsDLMz48XJ2nwaUZSiGp5OWzpKg7PtHUGNjRpbAi8NQK1I7fbrLMkhjc5EJAn4WOXQ0BWHQb2whOS24CSN6qjXhN1Qwt1Dt2kufZ9ASOGXOyvH3GMNCdGdH75VsZVjwGa2VYQRUdVqmLKmdwcpdjEnBW1qnPf8wZIrBQujoff/RSEEyIDZZeGLeCn/dGJyCSlazSZVsUWL8AYme21i)
 
 </div>
 
-The variable scoping of `v-for` is similar to the following JavaScript:
+Biến phạm vi của `v-for` tương tự như đoạn JavaScript sau:
 
 ```js
-const parentMessage = 'Parent'
+const parentMessage = 'Message Cha'
 const items = [
   /* ... */
 ]
 
 items.forEach((item, index) => {
-  // has access to outer scope `parentMessage`
-  // but `item` and `index` are only available in here
+  // có thể truy cập `parentMessage` ở phạm vi bên ngoài
+  // nhưng `item` và `index` chỉ có thể truy cập trong phạm vi này
   console.log(parentMessage, item.message, index)
 })
 ```
 
-Notice how the `v-for` value matches the function signature of the `forEach` callback. In fact, you can use destructuring on the `v-for` item alias similar to destructuring function arguments:
+Chú ý cách giá trị của `v-for` khớp với chữ ký hàm callback của `forEach`. Thực tế, bạn có thể sử dụng destructuring trên alias của `v-for` tương tự như destructuring đối số của hàm:
 
 ```vue-html
 <li v-for="{ message } in items">
@@ -116,7 +116,7 @@ Notice how the `v-for` value matches the function signature of the `forEach` cal
 </li>
 ```
 
-For nested `v-for`, scoping also works similar to nested functions. Each `v-for` scope has access to parent scopes:
+Đối với `v-for` lồng nhau, phạm vi cũng hoạt động tương tự như các hàm lồng nhau trong JavaScript. Mỗi phạm vi `v-for` có quyền truy cập vào phạm vi cha:
 
 ```vue-html
 <li v-for="item in items">
@@ -126,21 +126,21 @@ For nested `v-for`, scoping also works similar to nested functions. Each `v-for`
 </li>
 ```
 
-You can also use `of` as the delimiter instead of `in`, so that it is closer to JavaScript's syntax for iterators:
+Bạn cũng có thể sử dụng `of` thay vì `in` làm phân tách, để nó gần với cú pháp của JavaScript cho iterators:
 
 ```vue-html
 <div v-for="item of items"></div>
 ```
 
-## `v-for` with an Object {#v-for-with-an-object}
+## `v-for` với một Object {#v-for-with-an-object}
 
-You can also use `v-for` to iterate through the properties of an object. The iteration order will be based on the result of calling `Object.keys()` on the object:
+Bạn cũng có thể sử dụng `v-for` để lặp qua các thuộc tính của một object. Để có thể truy cập vào các giá trị của thuộc tính, chúng ta có thể sử dụng tham chiếu đến thuộc tính của object:
 
 <div class="composition-api">
 
 ```js
 const myObject = reactive({
-  title: 'How to do lists in Vue',
+  title: 'Làm sao để xử lí danh sách trong Vue',
   author: 'Jane Doe',
   publishedAt: '2016-04-10'
 })
@@ -153,7 +153,7 @@ const myObject = reactive({
 data() {
   return {
     myObject: {
-      title: 'How to do lists in Vue',
+      title: 'Làm sao để xử lí danh sách trong Vue',
       author: 'Jane Doe',
       publishedAt: '2016-04-10'
     }
@@ -171,7 +171,7 @@ data() {
 </ul>
 ```
 
-You can also provide a second alias for the property's name (a.k.a. key):
+Bạn cũng có thể cung cấp một bí danh thứ hai cho tên thuộc tính (a.k.a. key):
 
 ```vue-html
 <li v-for="(value, key) in myObject">
@@ -179,7 +179,7 @@ You can also provide a second alias for the property's name (a.k.a. key):
 </li>
 ```
 
-And another for the index:
+Và một bí danh thứ ba cho index:
 
 ```vue-html
 <li v-for="(value, key, index) in myObject">
@@ -189,28 +189,28 @@ And another for the index:
 
 <div class="composition-api">
 
-[Try it in the Playground](https://play.vuejs.org/#eNo9jjFvgzAQhf/KE0sSCQKpqg7IqRSpQ9WlWycvBC6KW2NbcKaNEP+9B7Tx4nt33917Y3IKYT9ESspE9XVnAqMnjuFZO9MG3zFGdFTVbAbChEvnW2yE32inXe1dz2hv7+dPqhnHO7kdtQPYsKUSm1f/DfZoPKzpuYdx+JAL6cxUka++E+itcoQX/9cO8SzslZoTy+yhODxlxWN2KMR22mmn8jWrpBTB1AZbMc2KVbTyQ56yBkN28d1RJ9uhspFSfNEtFf+GfnZzjP/oOll2NQPjuM4xTftZyIaU5VwuN0SsqMqtWZxUvliq/J4jmX4BTCp08A==)
+[Thử trong Playground](https://play.vuejs.org/#eNo9jjFvgzAQhf/KE0sSCQKpqg7IqRSpQ9WlWycvBC6KW2NbcKaNEP+9B7Tx4nt33917Y3IKYT9ESspE9XVnAqMnjuFZO9MG3zFGdFTVbAbChEvnW2yE32inXe1dz2hv7+dPqhnHO7kdtQPYsKUSm1f/DfZoPKzpuYdx+JAL6cxUka++E+itcoQX/9cO8SzslZoTy+yhODxlxWN2KMR22mmn8jWrpBTB1AZbMc2KVbTyQ56yBkN28d1RJ9uhspFSfNEtFf+GfnZzjP/oOll2NQPjuM4xTftZyIaU5VwuN0SsqMqtWZxUvliq/J4jmX4BTCp08A==)
 
 </div>
 <div class="options-api">
 
-[Try it in the Playground](https://play.vuejs.org/#eNo9T8FqwzAM/RWRS1pImnSMHYI3KOwwdtltJ1/cRqXe3Ng4ctYS8u+TbVJjLD3rPelpLg7O7aaARVeI8eS1ozc54M1ZT9DjWQVDMMsBoFekNtucS/JIwQ8RSQI+1/vX8QdP1K2E+EmaDHZQftg/IAu9BaNHGkEP8B2wrFYxgAp0sZ6pn2pAeLepmEuSXDiy7oL9gduXT+3+pW6f631bZoqkJY/kkB6+onnswoDw6owijIhEMByjUBgNU322/lUWm0mZgBX84r1ifz3ettHmupYskjbanedch2XZRcAKTnnvGVIPBpkqGqPTJNGkkaJ5+CiWf4KkfBs=)
+[Thử trong Playground](https://play.vuejs.org/#eNo9T8FqwzAM/RWRS1pImnSMHYI3KOwwdtltJ1/cRqXe3Ng4ctYS8u+TbVJjLD3rPelpLg7O7aaARVeI8eS1ozc54M1ZT9DjWQVDMMsBoFekNtucS/JIwQ8RSQI+1/vX8QdP1K2E+EmaDHZQftg/IAu9BaNHGkEP8B2wrFYxgAp0sZ6pn2pAeLepmEuSXDiy7oL9gduXT+3+pW6f631bZoqkJY/kkB6+onnswoDw6owijIhEMByjUBgNU322/lUWm0mZgBX84r1ifz3ettHmupYskjbanedch2XZRcAKTnnvGVIPBpkqGqPTJNGkkaJ5+CiWf4KkfBs=)
 
 </div>
 
-## `v-for` with a Range {#v-for-with-a-range}
+## `v-for` với một Khoảng {#v-for-with-a-range}
 
-`v-for` can also take an integer. In this case it will repeat the template that many times, based on a range of `1...n`.
+`v-for` cũng có thể lặp qua một khoảng số. Trong trường hợp này nó sẽ lặp lại template một số lần, dựa trên một khoảng số `1...n`:
 
 ```vue-html
 <span v-for="n in 10">{{ n }}</span>
 ```
 
-Note here `n` starts with an initial value of `1` instead of `0`.
+Lưu rằng `n` ở đây bắt đầu với giá trị `1` thay vì `0`.
 
-## `v-for` on `<template>` {#v-for-on-template}
+## `v-for` trong `<template>` {#v-for-on-template}
 
-Similar to template `v-if`, you can also use a `<template>` tag with `v-for` to render a block of multiple elements. For example:
+Tương tự với template `v-if`, bạn cũng có thể sử dụng một thẻ `<template>` với `v-for` để render một block của nhiều elements. Ví dụ:
 
 ```vue-html
 <ul>
@@ -223,23 +223,22 @@ Similar to template `v-if`, you can also use a `<template>` tag with `v-for` to 
 
 ## `v-for` with `v-if` {#v-for-with-v-if}
 
-:::warning Note
-It's **not** recommended to use `v-if` and `v-for` on the same element due to implicit precedence. Refer to [style guide](/style-guide/rules-essential#avoid-v-if-with-v-for) for details.
+:::warning Lưu ý
+**Không** nên sử dụng `v-if` và `v-for` trên cùng một element. Đọc thêm tại [style guide](/style-guide/rules-essential#avoid-v-if-with-v-for).
 :::
 
-When they exist on the same node, `v-if` has a higher priority than `v-for`. That means the `v-if` condition will not have access to variables from the scope of the `v-for`:
+Khi sử dụng cùng một element với `v-if` và `v-for`, `v-if` có độ ưu tiên cao hơn. Điều đó có nghĩa là `v-if` sẽ không có quyền truy cập vào các biến trong scope của `v-for`:
 
 ```vue-html
 <!--
-This will throw an error because property "todo"
-is not defined on instance.
+Đoạn mã này sẽ bị lỗi vì property "todo" không được định nghĩa trên instance.
 -->
 <li v-for="todo in todos" v-if="!todo.isComplete">
   {{ todo.name }}
 </li>
 ```
 
-This can be fixed by moving `v-for` to a wrapping `<template>` tag (which is also more explicit):
+Việc này có thể được khắc phục bằng cách di chuyển `v-for` vào một thẻ `<template>` bọc bên ngoài (điều này cũng khiến code rõ ràng hơn):
 
 ```vue-html
 <template v-for="todo in todos">
@@ -249,21 +248,21 @@ This can be fixed by moving `v-for` to a wrapping `<template>` tag (which is als
 </template>
 ```
 
-## Maintaining State with `key` {#maintaining-state-with-key}
+## Bảo trì trạng thái với `key` {#maintaining-state-with-key}
 
-When Vue is updating a list of elements rendered with `v-for`, by default it uses an "in-place patch" strategy. If the order of the data items has changed, instead of moving the DOM elements to match the order of the items, Vue will patch each element in-place and make sure it reflects what should be rendered at that particular index.
+Khi Vue đang cập nhật một danh sách các element được render với `v-for`, nó sử dụng mặc định một chiến lược "in-place patch". Nếu thứ tự của các item dữ liệu đã thay đổi, thay vì di chuyển các element DOM để phù hợp với thứ tự của các item, Vue sẽ patch từng element tại chỗ và đảm bảo nó phản ánh những gì nên được render tại chỉ số cụ thể đó.
 
-This default mode is efficient, but **only suitable when your list render output does not rely on child component state or temporary DOM state (e.g. form input values)**.
+Chế độ mặc định này hiệu quả, nhưng **chỉ phù hợp khi output của danh sách render không phụ thuộc vào trạng thái của các component con hoặc trạng thái DOM tạm thời (ví dụ: giá trị của input form)**.
 
-To give Vue a hint so that it can track each node's identity, and thus reuse and reorder existing elements, you need to provide a unique `key` attribute for each item:
+Để gợi ý cho Vue biết cách theo dõi các node để nó có thể tái sử dụng và sắp xếp lại các element hiện có, bạn cần cung cấp một thuộc tính `key` duy nhất cho mỗi item. Một ví dụ đơn giản như sau:
 
 ```vue-html
 <div v-for="item in items" :key="item.id">
-  <!-- content -->
+  <!-- nội dung -->
 </div>
 ```
 
-When using `<template v-for>`, the `key` should be placed on the `<template>` container:
+Khi sử dụng `<template v-for>`, `key` nên được đặt trên container `<template>`:
 
 ```vue-html
 <template v-for="todo in todos" :key="todo.name">
@@ -271,25 +270,25 @@ When using `<template v-for>`, the `key` should be placed on the `<template>` co
 </template>
 ```
 
-:::tip Note
-`key` here is a special attribute being bound with `v-bind`. It should not be confused with the property key variable when [using `v-for` with an object](#v-for-with-an-object).
+:::tip Lưu ý
+`key` ở đây là một thuộc tính đặc biệt được gắn với `v-bind`. Nó không nên bị nhầm lẫn với biến key của object khi [sử dụng `v-for` với một object](#v-for-with-an-object).
 :::
 
-[It is recommended](/style-guide/rules-essential#use-keyed-v-for) to provide a `key` attribute with `v-for` whenever possible, unless the iterated DOM content is simple (i.e. contains no components or stateful DOM elements), or you are intentionally relying on the default behavior for performance gains.
+[Khuyến khích việc cung cấp một thuộc tính](/style-guide/rules-essential#use-keyed-v-for) `key` với `v-for` nếu có thể, trừ khi nội dung DOM được lặp lại là đơn giản (ví dụ: không chứa các component hoặc các element DOM có trạng thái), hoặc bạn đang cố ý sử dụng hành vi mặc định để tăng hiệu suất.
 
-The `key` binding expects primitive values - i.e. strings and numbers. Do not use objects as `v-for` keys. For detailed usage of the `key` attribute, please see the [`key` API documentation](/api/built-in-special-attributes#key).
+Ràng buộc `key` thường sử dụng các giá trị nguyên thuỷ - ví dụ như string hoặc number. Không được sử dụng object hoặc mảng như là các giá trị `key`. Để biết thêm chi tiết về cách sử dụng thuộc tính `key`, hãy xem [API documentation](/api/built-in-directives#v-for).
 
-## `v-for` with a Component {#v-for-with-a-component}
+## `v-for` với Component {#v-for-with-a-component}
 
-> This section assumes knowledge of [Components](/guide/essentials/component-basics). Feel free to skip it and come back later.
+> Phần này giả định bạn đã biết về [Components](/guide/essentials/component-basics). Bạn có thể bỏ qua nó và quay lại sau.
 
-You can directly use `v-for` on a component, like any normal element (don't forget to provide a `key`):
+Bạn có thể sử dụng `v-for` trên một component, giống như bất kỳ element thông thường nào (đừng quên cung cấp một `key`):
 
 ```vue-html
 <MyComponent v-for="item in items" :key="item.id" />
 ```
 
-However, this won't automatically pass any data to the component, because components have isolated scopes of their own. In order to pass the iterated data into the component, we should also use props:
+Tuy nhiên, điều này sẽ không tự động truyền bất kỳ dữ liệu nào vào component, vì component có phạm vi cô lập riêng của chúng. Để truyền dữ liệu được lặp vào component, chúng ta cũng nên sử dụng props:
 
 ```vue-html
 <MyComponent
@@ -300,24 +299,24 @@ However, this won't automatically pass any data to the component, because compon
 />
 ```
 
-The reason for not automatically injecting `item` into the component is because that makes the component tightly coupled to how `v-for` works. Being explicit about where its data comes from makes the component reusable in other situations.
+Lý do cho việc không tự động truyền dữ liệu vào component là vì nó làm cho component bị ràng buộc chặt chẽ với cách `v-for` hoạt động. Việc rõ ràng về nơi dữ liệu được truyền vào component làm cho component có thể tái sử dụng được trong các tình huống khác.
 
 <div class="composition-api">
 
-Check out [this example of a simple todo list](https://play.vuejs.org/#eNp1U8Fu2zAM/RXCGGAHTWx02ylwgxZYB+ywYRhyq3dwLGYRYkuCJTsZjPz7KMmK3ay9JBQfH/meKA/Rk1Jp32G0jnJdtVwZ0Gg6tSkEb5RsDQzQ4h4usG9lAzGVxldoK5n8ZrAZsTQLCduRygAKUUmhDQg8WWyLZwMPtmESx4sAGkL0mH6xrMH+AHC2hvuljw03Na4h/iLBHBAY1wfUbsTFVcwoH28o2/KIIDuaQ0TTlvrwNu/TDe+7PDlKXZ6EZxTiN4kuRI3W0dk4u4yUf7bZfScqw6WAkrEf3m+y8AOcw7Qv6w5T1elDMhs7Nbq7e61gdmme60SQAvgfIhExiSSJeeb3SBukAy1D1aVBezL5XrYN9Csp1rrbNdykqsUehXkookl0EVGxlZHX5Q5rIBLhNHFlbRD6xBiUzlOeuZJQz4XqjI+BxjSSYe2pQWwRBZizV01DmsRWeJA1Qzv0Of2TwldE5hZRlVd+FkbuOmOksJLybIwtkmfWqg+7qz47asXpSiaN3lxikSVwwfC8oD+/sEnV+oh/qcxmU85mebepgLjDBD622Mg+oDrVquYVJm7IEu4XoXKTZ1dho3gnmdJhedEymn9ab3ysDPdc4M9WKp28xE5JbB+rzz/Trm3eK3LAu8/E7p2PNzYM/i3ChR7W7L7hsSIvR7L2Aal1EhqTp80vF95sw3WcG7r8A0XaeME=) to see how to render a list of components using `v-for`, passing different data to each instance.
+Xem qua [ví dụ về một todo list cơ bản](https://play.vuejs.org/#eNp1U8Fu2zAM/RXCGGAHTWx02ylwgxZYB+ywYRhyq3dwLGYRYkuCJTsZjPz7KMmK3ay9JBQfH/meKA/Rk1Jp32G0jnJdtVwZ0Gg6tSkEb5RsDQzQ4h4usG9lAzGVxldoK5n8ZrAZsTQLCduRygAKUUmhDQg8WWyLZwMPtmESx4sAGkL0mH6xrMH+AHC2hvuljw03Na4h/iLBHBAY1wfUbsTFVcwoH28o2/KIIDuaQ0TTlvrwNu/TDe+7PDlKXZ6EZxTiN4kuRI3W0dk4u4yUf7bZfScqw6WAkrEf3m+y8AOcw7Qv6w5T1elDMhs7Nbq7e61gdmme60SQAvgfIhExiSSJeeb3SBukAy1D1aVBezL5XrYN9Csp1rrbNdykqsUehXkookl0EVGxlZHX5Q5rIBLhNHFlbRD6xBiUzlOeuZJQz4XqjI+BxjSSYe2pQWwRBZizV01DmsRWeJA1Qzv0Of2TwldE5hZRlVd+FkbuOmOksJLybIwtkmfWqg+7qz47asXpSiaN3lxikSVwwfC8oD+/sEnV+oh/qcxmU85mebepgLjDBD622Mg+oDrVquYVJm7IEu4XoXKTZ1dho3gnmdJhedEymn9ab3ysDPdc4M9WKp28xE5JbB+rzz/Trm3eK3LAu8/E7p2PNzYM/i3ChR7W7L7hsSIvR7L2Aal1EhqTp80vF95sw3WcG7r8A0XaeME=) để xem cách render một danh sách các component sử dụng `v-for`, truyền dữ liệu khác nhau cho mỗi instance.
 
 </div>
 <div class="options-api">
 
-Check out [this example of a simple todo list](https://play.vuejs.org/#eNqNVE2PmzAQ/SsjVIlEm4C27Qmx0a7UVuqhPVS5lT04eFKsgG2BSVJF+e8d2xhIu10tihR75s2bNx9wiZ60To49RlmUd2UrtNkUUjRatQa2iquvBhvYt6qBOEmDwQbEhQQoJJ4dlOOe9bWBi7WWiuIlStNlcJlYrivr5MywxdIDAVo0fSvDDUDiyeK3eDYZxLGLsI8hI7H9DHeYQuwjeAb3I9gFCFMjUXxSYCoELroKO6fZP17Mf6jev0i1ZQcE1RtHaFrWVW/l+/Ai3zd1clQ1O8k5Uzg+j1HUZePaSFwfvdGhfNIGTaW47bV3Mc6/+zZOfaaslegS18ZE9121mIm0Ep17ynN3N5M8CB4g44AC4Lq8yTFDwAPNcK63kPTL03HR6EKboWtm0N5MvldtA8e1klnX7xphEt3ikTbpoYimsoqIwJY0r9kOa6Ag8lPeta2PvE+cA3M7k6cOEvBC6n7UfVw3imPtQ8eiouAW/IY0mElsiZWqOdqkn5NfCXxB5G6SJRvj05By1xujpJWUp8PZevLUluqP/ajPploLasmk0Re3sJ4VCMnxvKQ//0JMqrID/iaYtSaCz+xudsHjLpPzscVGHYO3SzpdixIXLskK7pcBucnTUdgg3kkmcxhetIrmH4ebr8m/n4jC6FZp+z7HTlLsVx1p4M7odcXPr6+Lnb8YOne5+C2F6/D6DH2Hx5JqOlCJ7yz7IlBTbZsf7vjXVBzjvLDrH5T0lgo=) to see how to render a list of components using `v-for`, passing different data to each instance.
+Xem qua [ví dụ về một todo list cơ bản](https://play.vuejs.org/#eNqNVE2PmzAQ/SsjVIlEm4C27Qmx0a7UVuqhPVS5lT04eFKsgG2BSVJF+e8d2xhIu10tihR75s2bNx9wiZ60To49RlmUd2UrtNkUUjRatQa2iquvBhvYt6qBOEmDwQbEhQQoJJ4dlOOe9bWBi7WWiuIlStNlcJlYrivr5MywxdIDAVo0fSvDDUDiyeK3eDYZxLGLsI8hI7H9DHeYQuwjeAb3I9gFCFMjUXxSYCoELroKO6fZP17Mf6jev0i1ZQcE1RtHaFrWVW/l+/Ai3zd1clQ1O8k5Uzg+j1HUZePaSFwfvdGhfNIGTaW47bV3Mc6/+zZOfaaslegS18ZE9121mIm0Ep17ynN3N5M8CB4g44AC4Lq8yTFDwAPNcK63kPTL03HR6EKboWtm0N5MvldtA8e1klnX7xphEt3ikTbpoYimsoqIwJY0r9kOa6Ag8lPeta2PvE+cA3M7k6cOEvBC6n7UfVw3imPtQ8eiouAW/IY0mElsiZWqOdqkn5NfCXxB5G6SJRvj05By1xujpJWUp8PZevLUluqP/ajPploLasmk0Re3sJ4VCMnxvKQ//0JMqrID/iaYtSaCz+xudsHjLpPzscVGHYO3SzpdixIXLskK7pcBucnTUdgg3kkmcxhetIrmH4ebr8m/n4jC6FZp+z7HTlLsVx1p4M7odcXPr6+Lnb8YOne5+C2F6/D6DH2Hx5JqOlCJ7yz7IlBTbZsf7vjXVBzjvLDrH5T0lgo=) để xem cách render một danh sách các component sử dụng `v-for`, truyền dữ liệu khác nhau cho mỗi instance.
 
 </div>
 
-## Array Change Detection {#array-change-detection}
+## Kiểm tra thay đổi trong mảng {#array-change-detection}
 
-### Mutation Methods {#mutation-methods}
+### Các phương thức biến đổi {#mutation-methods}
 
-Vue is able to detect when a reactive array's mutation methods are called and trigger necessary updates. These mutation methods are:
+Vue có thể phát hiện khi các phương thức thay đổi mảng được gọi và kích hoạt các cập nhật cần thiết. Các phương thức thay đổi này là:
 
 - `push()`
 - `pop()`
@@ -327,14 +326,14 @@ Vue is able to detect when a reactive array's mutation methods are called and tr
 - `sort()`
 - `reverse()`
 
-### Replacing an Array {#replacing-an-array}
+### Thay thế mảng {#replacing-an-array}
 
-Mutation methods, as the name suggests, mutate the original array they are called on. In comparison, there are also non-mutating methods, e.g. `filter()`, `concat()` and `slice()`, which do not mutate the original array but **always return a new array**. When working with non-mutating methods, we should replace the old array with the new one:
+Các phương thức biến đổi, như tên gọi của chúng, sẽ thay đổi mảng gốc. Ngoài ra, cũng có các phương thức không biến đổi, ví dụ như `filter()`, `concat()` và `slice()`. Các phương thức này không thay đổi mảng gốc mà **luôn luôn trả về một mảng mới**. Khi làm việc với các phương thức không biến đổi, chúng ta nên thay thế mảng cũ bằng mảng mới:
 
 <div class="composition-api">
 
 ```js
-// `items` is a ref with array value
+// `items` là một ref với value là mảng
 items.value = items.value.filter((item) => item.message.match(/Foo/))
 ```
 
@@ -347,13 +346,13 @@ this.items = this.items.filter((item) => item.message.match(/Foo/))
 
 </div>
 
-You might think this will cause Vue to throw away the existing DOM and re-render the entire list - luckily, that is not the case. Vue implements some smart heuristics to maximize DOM element reuse, so replacing an array with another array containing overlapping objects is a very efficient operation.
+Bạn có thể nghĩ rằng điều này sẽ khiến Vue phải vứt bỏ DOM hiện tại và render lại toàn bộ danh sách - may mắn thay, điều đó không phải là sự thật. Vue sử dụng một số hướng giải quyết thông minh để tối đa hóa việc tái sử dụng các phần tử DOM hiện có, vì vậy việc thay thế một mảng bằng một mảng khác chứa các đối tượng trùng lặp là một hoạt động rất hiệu quả.
 
-## Displaying Filtered/Sorted Results {#displaying-filtered-sorted-results}
+## Hiển thị kết quả đã lọc/sắp xếp {#displaying-filtered-sorted-results}
 
-Sometimes we want to display a filtered or sorted version of an array without actually mutating or resetting the original data. In this case, you can create a computed property that returns the filtered or sorted array.
+Đôi khi chúng ta muốn hiển thị một phiên bản đã lọc hoặc sắp xếp của một mảng mà không thực sự thay đổi hoặc đặt lại dữ liệu gốc. Trong trường hợp này, bạn có thể tạo một computed property trả về mảng đã lọc hoặc sắp xếp.
 
-For example:
+Ví dụ:
 
 <div class="composition-api">
 
@@ -387,7 +386,7 @@ computed: {
 <li v-for="n in evenNumbers">{{ n }}</li>
 ```
 
-In situations where computed properties are not feasible (e.g. inside nested `v-for` loops), you can use a method:
+Trong các trường hợp mà thuộc tính computed không khả thi (ví dụ: bên trong vòng lặp `v-for` lồng nhau), bạn có thể sử dụng một method:
 
 <div class="composition-api">
 
@@ -426,7 +425,7 @@ methods: {
 </ul>
 ```
 
-Be careful with `reverse()` and `sort()` in a computed property! These two methods will mutate the original array, which should be avoided in computed getters. Create a copy of the original array before calling these methods:
+Hãy cẩn thận với `reverse()` và `sort()` trong thuộc tính computed! Hai phương thức này sẽ thay đổi mảng gốc, điều này nên được tránh trong computed property. Tạo một bản sao của mảng gốc trước khi gọi các phương thức này:
 
 ```diff
 - return numbers.reverse()
