@@ -652,6 +652,11 @@ export default defineConfigWithTheme<ThemeConfig>({
         repo: 'https://github.com/vuejs-translations/docs-bn'
       },
       {
+        link: 'https://vi.vuejs.org',
+        text: 'Tiếng Việt',
+        repo: 'https://github.com/vuejs-translations/docs-vi'
+      },
+      {
         link: '/translations/',
         text: 'Help Us Translate!',
         isTranslationsDesc: true

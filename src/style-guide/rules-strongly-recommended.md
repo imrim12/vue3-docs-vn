@@ -1,15 +1,15 @@
-# Priority B Rules: Strongly Recommended {#priority-b-rules-strongly-recommended}
+### Ưu tiên mức B: Rất khuyên dùng {#priority-b-rules-strongly-recommended}
 
-These rules have been found to improve readability and/or developer experience in most projects. Your code will still run if you violate them, but violations should be rare and well-justified.
+Các quy tắc này giúp code dễ đọc hơn và/hoặc tăng cường trải nghiệm của lập trình viên trong phần lớn các dự án. Nếu bạn vi phạm các quy tắc này, code vẫn sẽ chạy, tuy nhiên nên tránh vi phạm trừ phi có lí do chính đáng.
 
-## Component files {#component-files}
+## Các file component {#component-files}
 
-**Whenever a build system is available to concatenate files, each component should be in its own file.**
+**Nếu hệ thống build hỗ trợ kết nối các file, mỗi component nên nằm trong một file riêng.**
 
-This helps you to more quickly find a component when you need to edit it or review how to use it.
+Việc này giúp bạn mau chóng tìm ra một component khi cần chỉnh sửa hoặc xem lại cách dùng component đó.
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 ```js
 app.component('TodoList', {
@@ -24,7 +24,7 @@ app.component('TodoItem', {
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```
 components/
@@ -40,14 +40,14 @@ components/
 
 </div>
 
-## Single-file component filename casing {#single-file-component-filename-casing}
+## Sử dụng quy chuẩn đặt tên cho file component {#single-file-component-filename-casing}
 
-**Filenames of [Single-File Components](/guide/scaling-up/sfc) should either be always PascalCase or always kebab-case.**
+**Toàn bộ tên của các [Single-File Components](/guide/scaling-up/sfc) chỉ nên được đặt theo quy chuẩn hoặc là PascalCase hoặc là kebab-case.**
 
-PascalCase works best with autocompletion in code editors, as it's consistent with how we reference components in JS(X) and templates, wherever possible. However, mixed case filenames can sometimes create issues on case-insensitive file systems, which is why kebab-case is also perfectly acceptable.
+PascalCase hoạt động tốt nhất với tính năng tự điền (autocomplete) của các trình soạn thảo, vì nó nhất quán với cách chúng ta tham chiếu đến các component trong JS(X) và template, bất cứ khi nào có thể. Tuy nhiên, vì tên file trộn lẫn cả chữ hoa và chữ thường đôi khi tạo phiền toái trên các hệ thống phân biệt hoa thường, kebab-case cũng hoàn toàn có thể chấp nhận được.
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 ```
 components/
@@ -62,7 +62,7 @@ components/
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```
 components/
@@ -76,28 +76,28 @@ components/
 
 </div>
 
-## Base component names {#base-component-names}
+## Tên component nền tảng {#base-component-names}
 
-**Base components (a.k.a. presentational, dumb, or pure components) that apply app-specific styling and conventions should all begin with a specific prefix, such as `Base`, `App`, or `V`.**
+**Tên của các component nền tảng (base component, dumb hoặc pure component), dùng để áp dụng style và các nguyên tắc chung theo cả ứng dụng, nên bắt đầu bằng một tiền tố đặc biệt, chẳng hạn như Base, App, hoặc V.**
 
-::: details Detailed Explanation
-These components lay the foundation for consistent styling and behavior in your application. They may **only** contain:
+::: details Giải thích cụ thể
+Những component này đặt nền móng cho style và hành vi cho ứng dụng của bạn, và **chỉ có thể** chứa:
 
-- HTML elements,
-- other base components, and
-- 3rd-party UI components.
+- Các phần tử HTML,
+- Các component nền tảng khác, và
+- Các component UI của bên thứ 3
 
-But they'll **never** contain global state (e.g. from a [Pinia](https://pinia.vuejs.org/) store).
+Nhưng chúng không bao giờ chứa trạng thái (biến) toàn cục (ví dụ từ một store [Pinia](https://pinia.vuejs.org/)).
 
-Their names often include the name of an element they wrap (e.g. `BaseButton`, `BaseTable`), unless no element exists for their specific purpose (e.g. `BaseIcon`). If you build similar components for a more specific context, they will almost always consume these components (e.g. `BaseButton` may be used in `ButtonSubmit`).
+Tên của các component này thường chứa tên của phần tử được bọc bên trong (ví dụ `BaseButton`, `BaseTable`), trừ phi không có phần tử nào tồn tại cho mục đích cụ thể của nó (chẳng hạn `BaseIcon` - không có phần tử HTML nào tên là icon). Nếu bạn xây dựng các component tương tự dành cho một ngữ cảnh cụ thể nào đó, các component này gần như luôn luôn dùng các base component (ví dụ `BaseButton` có thể được dùng trong `ButtonSubmit`).
 
-Some advantages of this convention:
+Một số lợi thế của quy tắc này:
 
-- When organized alphabetically in editors, your app's base components are all listed together, making them easier to identify.
+- Khi xếp theo thứ tự chữ cái trong các trình soạn thảo, base component trong ứng dụng của bạn sẽ nằm cùng một chỗ, giúp bạn dễ xác định hơn.
 
-- Since component names should always be multi-word, this convention prevents you from having to choose an arbitrary prefix for simple component wrappers (e.g. `MyButton`, `VueButton`).
+- Vì tên của component nên là hai từ đơn trở lên, quy tắc này giúp bạn tránh được việc chọn tùy tiện một tiền tố cho các wrapper component (như `MyButton`, `VueButton`).
 
-- Since these components are so frequently used, you may want to simply make them global instead of importing them everywhere. A prefix makes this possible with Webpack:
+- Vì các component này được dùng thường xuyên, bạn có thể sẽ muốn chuyển chúng thành component toàn cục thay vì phải import khắp nơi. Điều này thực hiện được khá dễ dàng nếu bạn sử dụng một tiền tố kết hợp với Webpack:
 
   ```js
   const requireComponent = require.context(
@@ -119,7 +119,7 @@ Some advantages of this convention:
   :::
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 ```
 components/
@@ -131,7 +131,7 @@ components/
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```
 components/
@@ -156,14 +156,14 @@ components/
 
 </div>
 
-## Single-instance component names {#single-instance-component-names}
+## Tên của các component dạng single-instance {#single-instance-component-names}
 
-**Components that should only ever have a single active instance should begin with the `The` prefix, to denote that there can be only one.**
+**Tên của các component dạng single-instance (chỉ có một đối tượng được khởi tạo trong toàn bộ vòng đời của ứng dụng) nên bắt đầu với mạo từ xác định `The`, đánh dấu tính chất “một và chỉ một mà thôi.”**
 
-This does not mean the component is only used in a single page, but it will only be used once _per page_. These components never accept any props, since they are specific to your app, not their context within your app. If you find the need to add props, it's a good indication that this is actually a reusable component that is only used once per page _for now_.
+Điều này không có nghĩa là một component dạng này chỉ được dùng trên một trang duy nhất, mà là chỉ được dùng một lần mỗi trang. Các component này không bao giờ nhận vào các prop, vì prop là dấu hiệu của một component tái sử dụng lại được. Nếu bạn cảm thấy cần phải thêm prop, đó là dấu hiệu cho thấy component này thực sự là một component có thể tái sử dụng, nhưng hiện tại chỉ được dùng một lần mỗi trang.
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 ```
 components/
@@ -174,7 +174,7 @@ components/
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```
 components/
@@ -190,7 +190,7 @@ components/
 
 If a component only makes sense in the context of a single parent component, that relationship should be evident in its name. Since editors typically organize files alphabetically, this also keeps these related files next to each other.
 
-::: details Detailed Explanation
+::: details Giải thích cụ thể
 You might be tempted to solve this problem by nesting child components in directories named after their parent. For example:
 
 ```
@@ -220,7 +220,7 @@ This isn't recommended, as it results in:
   :::
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 ```
 components/
@@ -238,7 +238,7 @@ components/
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```
 components/
@@ -259,7 +259,7 @@ components/
 
 **Component names should start with the highest-level (often most general) words and end with descriptive modifying words.**
 
-::: details Detailed Explanation
+::: details Giải thích cụ thể
 You may be wondering:
 
 > "Why would we force component names to use less natural language?"
@@ -306,7 +306,7 @@ You might be tempted to solve this problem differently, nesting all the search c
   :::
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 ```
 components/
@@ -321,7 +321,7 @@ components/
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```
 components/
@@ -344,7 +344,7 @@ Components that self-close communicate that they not only have no content, but a
 Unfortunately, HTML doesn't allow custom elements to be self-closing - only [official "void" elements](https://www.w3.org/TR/html/syntax.html#void-elements). That's why the strategy is only possible when Vue's template compiler can reach the template before the DOM, then serve the DOM spec-compliant HTML.
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 ```vue-html
 <!-- In Single-File Components, string templates, and JSX -->
@@ -359,7 +359,7 @@ Unfortunately, HTML doesn't allow custom elements to be self-closing - only [off
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```vue-html
 <!-- In Single-File Components, string templates, and JSX -->
@@ -388,7 +388,7 @@ Unfortunately, due to HTML's case insensitivity, in-DOM templates must still use
 Also note that if you've already invested heavily in kebab-case, consistency with HTML conventions and being able to use the same casing across all your projects may be more important than the advantages listed above. In those cases, **using kebab-case everywhere is also acceptable.**
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 ```vue-html
 <!-- In Single-File Components and string templates -->
@@ -408,7 +408,7 @@ Also note that if you've already invested heavily in kebab-case, consistency wit
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```vue-html
 <!-- In Single-File Components and string templates -->
@@ -433,7 +433,7 @@ OR
 
 **Component names in JS/[JSX](/guide/extras/render-function#jsx-tsx) should always be PascalCase, though they may be kebab-case inside strings for simpler applications that only use global component registration through `app.component`.**
 
-::: details Detailed Explanation
+::: details Giải thích cụ thể
 In JavaScript, PascalCase is the convention for classes and prototype constructors - essentially, anything that can have distinct instances. Vue components also have instances, so it makes sense to also use PascalCase. As an added benefit, using PascalCase within JSX (and templates) allows readers of the code to more easily distinguish between components and HTML elements.
 
 However, for applications that use **only** global component definitions via `app.component`, we recommend kebab-case instead. The reasons are:
@@ -443,7 +443,7 @@ However, for applications that use **only** global component definitions via `ap
   :::
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 ```js
 app.component('myComponent', {
@@ -472,7 +472,7 @@ export default {
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```js
 app.component('MyComponent', {
@@ -506,7 +506,7 @@ export default {
 The autocompletion in editors make the cost of writing longer names very low, while the clarity they provide is invaluable. Uncommon abbreviations, in particular, should always be avoided.
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 ```
 components/
@@ -517,7 +517,7 @@ components/
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```
 components/
@@ -532,7 +532,7 @@ components/
 **Prop names should always use camelCase during declaration. When used inside in-DOM templates, props should be kebab-cased. Single-File Components templates and [JSX](/guide/extras/render-function#jsx-tsx) can use either kebab-case or camelCase props. Casing should be consistent - if you choose to use camelCased props, make sure you don't use kebab-cased ones in your application**
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 <div class="options-api">
 
@@ -562,7 +562,7 @@ const props = defineProps({
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 <div class="options-api">
 
@@ -606,7 +606,7 @@ const props = defineProps({
 In JavaScript, splitting objects with multiple properties over multiple lines is widely considered a good convention, because it's much easier to read. Our templates and [JSX](/guide/extras/render-function#jsx-tsx) deserve the same consideration.
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 ```vue-html
 <img src="https://vuejs.org/images/logo.png" alt="Vue Logo">
@@ -619,7 +619,7 @@ In JavaScript, splitting objects with multiple properties over multiple lines is
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```vue-html
 <img
@@ -645,7 +645,7 @@ In JavaScript, splitting objects with multiple properties over multiple lines is
 Complex expressions in your templates make them less declarative. We should strive to describe _what_ should appear, not _how_ we're computing that value. Computed properties and methods also allow the code to be reused.
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 ```vue-html
 {{
@@ -658,7 +658,7 @@ Complex expressions in your templates make them less declarative. We should stri
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```vue-html
 <!-- In a template -->
@@ -700,7 +700,7 @@ const normalizedFullName = computed(() =>
 
 **Complex computed properties should be split into as many simpler properties as possible.**
 
-::: details Detailed Explanation
+::: details Giải thích cụ thể
 Simpler, well-named computed properties are:
 
 - **Easier to test**
@@ -719,7 +719,7 @@ Simpler, well-named computed properties are:
   :::
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 <div class="options-api">
 
@@ -751,7 +751,7 @@ const price = computed(() => {
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 <div class="options-api">
 
@@ -798,7 +798,7 @@ const finalPrice = computed(() => basePrice.value - discount.value)
 While attribute values without any spaces are not required to have quotes in HTML, this practice often leads to _avoiding_ spaces, making attribute values less readable.
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 ```vue-html
 <input type=text>
@@ -811,7 +811,7 @@ While attribute values without any spaces are not required to have quotes in HTM
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```vue-html
 <input type="text">
@@ -828,7 +828,7 @@ While attribute values without any spaces are not required to have quotes in HTM
 **Directive shorthands (`:` for `v-bind:`, `@` for `v-on:` and `#` for `v-slot`) should be used always or never.**
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 ```vue-html
 <input
@@ -857,7 +857,7 @@ While attribute values without any spaces are not required to have quotes in HTM
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```vue-html
 <input

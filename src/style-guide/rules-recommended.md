@@ -1,16 +1,16 @@
-# Priority C Rules: Recommended {#priority-c-rules-recommended}
+### Ưu tiên mức C: Khuyên dùng {#priority-c-rules-recommended}
 
-Where multiple, equally good options exist, an arbitrary choice can be made to ensure consistency. In these rules, we describe each acceptable option and suggest a default choice. That means you can feel free to make a different choice in your own codebase, as long as you're consistent and have a good reason. Please do have a good reason though! By adapting to the community standard, you will:
+Chúng ta có thể tự ý chọn một trong nhiều lựa chọn tốt ngang nhau để bảo đảm tính nhất quán. Trong các quy tắc này, chúng tôi sẽ mô tả từng lựa chọn được chấp nhận và đề nghị chọn một lựa chọn mặc định. Điều này có nghĩa là bạn hoàn toàn có thể chọn một lựa chọn khác cho dự án của mình, miễn là đảm bảo thống nhất và có lí do chính đáng. Việc có lí do chính đáng là rất quan trọng, vì khi tuân thủ theo tiêu chuẩn chung, bạn sẽ:
 
-1. Train your brain to more easily parse most of the community code you encounter
-2. Be able to copy and paste most community code examples without modification
-3. Often find new hires are already accustomed to your preferred coding style, at least in regards to Vue
+1. Luyện tập cho não bộ của bạn để dễ dàng đọc code của cộng đồng
+2. Có thể copy và paste các ví dụ code từ cộng đồng mà không cần chỉnh sửa
+3. Dễ tuyển được người đã quen với phong cách viết code mà bạn muốn, ít nhất là khi dùng Vue
 
-## Component/instance options order {#component-instance-options-order}
+## Thứ tự của các tùy chọn khởi tạo component/instance{#component-instance-options-order}
 
-**Component/instance options should be ordered consistently.**
+**Các tuỳ chọn khởi tạo component/instance nên được sắp xếp một cách nhất quán.**
 
-This is the default order we recommend for component options. They're split into categories, so you'll know where to add new properties from plugins.
+Đây là thứ tự mặc định mà chúng tôi đề nghị cho các tùy chọn khởi tạo component. Chúng được chia thành các nhóm, để bạn biết nên đặt các thuộc tính mới từ các plugin vào đâu.
 
 1. **Global Awareness** (requires knowledge beyond the component)
 
@@ -128,7 +128,7 @@ This is the default order we recommend for component options. They're split into
 When components begin to feel cramped or difficult to read, adding spaces between multi-line properties can make them easier to skim again. In some editors, such as Vim, formatting options like this can also make them easier to navigate with the keyboard.
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```js
 props: {
@@ -189,7 +189,7 @@ computed: {
 **[Single-File Components](/guide/scaling-up/sfc) should always order `<script>`, `<template>`, and `<style>` tags consistently, with `<style>` last, because at least one of the other two is always necessary.**
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>Không nên</h3>
 
 ```vue-html
 <style>/* ... */</style>
@@ -212,7 +212,7 @@ computed: {
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>Nên</h3>
 
 ```vue-html
 <!-- ComponentA.vue -->
